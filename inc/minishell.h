@@ -9,6 +9,19 @@
 /*   Updated: 2026/02/11 11:21:43 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+
+# include "libft.h"
+# include <stdio.h>
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <termios.h>
+
+
+extern volatile  sig_atomic_t g_sig_status;
 
 typedef enum e_type {
     WORD,         // Pour ls, -l, "mon fichier"
@@ -32,9 +45,28 @@ typedef struct s_token_list {
     int             size;
 } t_token_list;
 
-typedef struct  s_env_copy {
+typedef struct  s_env_list {
     char *line;
     char *var;
     char *content;
-    struct s_env_copy *next;
-} t_env_copy;
+    struct s_env_list *next;
+} t_env_list;
+
+//INIT
+void  ft_shell_exit(t_token_list *list, t_env_list *env_list, struct termios orig_termios);
+void  ft_init_signal(struct sigaction	*sig_a);
+void  ft_termios(struct termios *orig_termios, struct termios *new_termios);
+
+//INIT_ENV
+t_env_list  *ft_new_env(char *str);
+t_env_list *ft_env_list(char **env);
+
+//ENV_LST_UTILS
+void	ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
+void ft_clear_node_env(t_env_list *node);
+void	ft_lstclear_env(t_env_list **lst);
+t_env_list *ft_lstlast_env(t_env_list *lst);
+void	ft_printlst_env(t_env_list	*lst);
+
+
+#endif
