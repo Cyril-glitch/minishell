@@ -6,12 +6,17 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/11 11:21:43 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/12 13:52:59 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdlib.h>
+
 typedef enum e_type {
-    WORD,         // Pour ls, -l, "mon fichier"
+    WORD,         // Pour ls, "mon fichier"
     PIPE,         // |
     REDIR_IN,     // <
     REDIR_OUT,    // >
