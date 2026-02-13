@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:31:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/13 15:57:17 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/13 18:50:00 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	lexer(char *str, t_token_list *token_list)
         return;
     }
     i = 0;
-	new_token = ft_db_lstnew();
+	new_token = ft_db_lstnew_token();
 	token_list->head = new_token;
 	token_list->tail = new_token;
 	token_list->size = 1;
@@ -58,12 +58,12 @@ void	lexer(char *str, t_token_list *token_list)
     swipe_space(str, &i);
     while (str[i])
     {
-        new_token = ft_db_lstnew();
-        ft_db_lstadd_back(token_list, new_token);
+        new_token = ft_db_lstnew_token();
+        ft_db_lstadd_back_token(token_list, new_token);
         init_token(str, new_token, &i);
         swipe_space(str, &i);
     }
-    ft_display_list(token_list);
-    ft_db_lstclear(token_list, free);
+    //ft_display_list_token(token_list);
+    ft_db_lstclear_token(token_list, free);
     free(str);
 }

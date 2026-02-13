@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_token_utils.c                                 :+:      :+:    :+:   */
+/*   init_token_lst_db_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:42:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/13 12:32:03 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/13 18:42:08 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	ft_db_lstadd_front(t_token_list *token_list, t_token *new)
+void	ft_db_lstadd_front_token(t_token_list *token_list, t_token *new)
 {
 	if (token_list->head == NULL)
 	{
@@ -29,11 +29,11 @@ void	ft_db_lstadd_front(t_token_list *token_list, t_token *new)
 	token_list->size++;
 }
 
-void	ft_db_lstadd_back(t_token_list *token_list, t_token *new)
+void	ft_db_lstadd_back_token(t_token_list *token_list, t_token *new)
 {
 	if (token_list->head == NULL)
 	{
-		ft_db_lstadd_front(token_list, new);
+		ft_db_lstadd_front_token(token_list, new);
 		return ;
 	}
 	new->prev = token_list->tail;
@@ -43,13 +43,13 @@ void	ft_db_lstadd_back(t_token_list *token_list, t_token *new)
 	token_list->size++;
 }
 
-void	ft_db_lstdelone(t_token *token, void (*del)(void*))
+void	ft_db_lstdelone_token(t_token *token, void (*del)(void*))
 {
 	del(token->content);
 	free(token);
 }
 
-void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*))
+void	ft_db_lstclear_token(t_token_list *token_list, void (*del)(void*))
 {
 	t_token	*current;
 	t_token	*tmp;
@@ -59,7 +59,7 @@ void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*))
 	while (current)
 	{
 		current = current->next;
-		ft_db_lstdelone(tmp, del);
+		ft_db_lstdelone_token(tmp, del);
 		tmp = current;
 	}
 	token_list->head = NULL;
@@ -67,7 +67,7 @@ void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*))
 	token_list->size = 0;
 }
 
-t_token    *ft_db_lstnew()
+t_token    *ft_db_lstnew_token()
 {
     t_token    *new;
 

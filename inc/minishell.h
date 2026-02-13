@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 16:25:03 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/13 18:39:36 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ typedef enum e_type
 	D_REDIR_IN, // <<
 	D_REDIR_OUT // >>
 }								t_type;
+
+typedef struct s_cmd
+{
+    char          				**args;
+    int           				fd_in;
+    int           				fd_out;
+    struct s_cmd 				*next;
+	struct s_cmd				*prev;
+} 					t_cmd;
+
+typedef struct s_cmd_list
+{
+	t_cmd						*head;
+	t_cmd						*tail;
+	int							size;	
+}								t_cmd_list;
 
 typedef struct s_token
 {
@@ -75,21 +91,30 @@ t_env_list						*ft_lstlast_env(t_env_list *lst);
 void							ft_printlst_env(t_env_list *lst);
 
 //LEXER
-void	ft_db_lstadd_front(t_token_list *token_list, t_token *new);
-void	ft_db_lstadd_back(t_token_list *token_list, t_token *new);
-void	ft_db_lstdelone(t_token *token, void (*del)(void*));
-void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*));
-t_token    *ft_db_lstnew();
-void	init_word(char *str, t_token *token, int *i);
-void    init_pipe(t_token *token, int *i);
-void	init_redir_in(char *str, t_token *token, int *i);
-void	init_redir_out(char *str, t_token *token, int *i);
-void	init_token(char *str, t_token *token, int *i);
-void	swipe_space(char *str, int *i);
-int		is_separator(char c);
-void	ft_display_list(t_token_list *lst);
-void	lexer(char *str, t_token_list *token_list);
-void    nb_of_malloc(char *str, int *i, int *j, char quote);
-void    copy_word(char *str, int *i, char quote, t_token *token);
+void		ft_db_lstadd_front_token(t_token_list *token_list, t_token *new);
+void		ft_db_lstadd_back_token(t_token_list *token_list, t_token *new);
+void		ft_db_lstdelone_token(t_token *token, void (*del)(void*));
+void		ft_db_lstclear_token(t_token_list *token_list, void (*del)(void*));
+t_token		*ft_db_lstnew_token();
+void		init_word(char *str, t_token *token, int *i);
+void    	init_pipe(t_token *token, int *i);
+void		init_redir_in(char *str, t_token *token, int *i);
+void		init_redir_out(char *str, t_token *token, int *i);
+void		init_token(char *str, t_token *token, int *i);
+void		swipe_space(char *str, int *i);
+int			is_separator(char c);
+void		ft_display_list_token(t_token_list *lst);
+void		lexer(char *str, t_token_list *token_list);
+void    	nb_of_malloc(char *str, int *i, int *j, char quote);
+void    	copy_word(char *str, int *i, char quote, t_token *token);
+
+//PARSER
+void		ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);
+void		ft_db_lstadd_back_cmd(t_cmd_list *cmd_list, t_cmd *new);
+void		ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void*));
+void		ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void*));
+t_cmd		*ft_db_lstnew_cmd();
+void		ft_display_list_cmd(t_cmd_list *lst);
+void    	parser(t_token_list *token_list, t_cmd_list *cmd_list);
 
 #endif

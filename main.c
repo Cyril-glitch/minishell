@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 16:26:41 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/13 17:10:57 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ int main(int ac, char **av, char **env)
   (void)av;
   (void)env;
   struct sigaction	sig_a;
-  struct termios orig_termios;
-  struct termios new_termios;
-  //t_env_list  *env_list;
-  t_token_list token_list;
+  struct termios    orig_termios;
+  struct termios    new_termios;
+  //t_env_list      *env_list;
+  t_token_list      token_list;
+  t_cmd_list        cmd_list;
   char *line;
 
   ft_init_signal(&sig_a);
@@ -38,5 +39,6 @@ int main(int ac, char **av, char **env)
       ft_shell_exit(NULL, NULL, orig_termios);
     add_history(line);
     lexer(line, &token_list);
+    parser(&token_list, &cmd_list);
   }
 }

@@ -23,8 +23,10 @@ LEXER_SRC = lexer_src/init_token_lst_db_utils.c \
 LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 
-#PARSER_SRC = 
-#PARSER_OBJ = $(INIT_SRC:.c=.o)
+PARSER_SRC = 	parser_src/init_cmd_lst_db_utils.c \
+				parser_src/parser.c \
+				parser_src/parser_utils.c
+PARSER_OBJ = $(PARSER_SRC:.c=.o)
 
 
 #EXPAND_SRC = 
@@ -35,9 +37,9 @@ LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(LIB)
+$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB)
 	mkdir -p bin
-	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB) -lreadline -o $(NAME)
 
 $(LIB) :
 	make -C $(LIBDIR)
@@ -48,6 +50,7 @@ clean:
 	rm -f $(INIT_OBJ)
 	rm -f $(MAIN_OBJ)
 	rm -f $(LEXER_OBJ)
+	rm -f $(PARSER_OBJ)
 	make clean -C $(LIBDIR)
 
 bin: all clean
