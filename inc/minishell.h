@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 12:32:29 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/13 16:25:03 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,7 @@ void	swipe_space(char *str, int *i);
 int		is_separator(char c);
 void	ft_display_list(t_token_list *lst);
 void	lexer(char *str, t_token_list *token_list);
+void    nb_of_malloc(char *str, int *i, int *j, char quote);
+void    copy_word(char *str, int *i, char quote, t_token *token);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
+/*   Updated: 2026/02/13 16:26:41 by mtagand          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include  "./inc/minishell.h"
 
 volatile  sig_atomic_t g_sig_status;
@@ -19,15 +31,12 @@ int main(int ac, char **av, char **env)
   //env_list = ft_env_list(env);
   g_sig_status = 0;
 
-  while(1)
+  while (1)
   {
     line = readline("losmachinos:~$ ");
     if (!line)
       ft_shell_exit(NULL, NULL, orig_termios);
     add_history(line);
     lexer(line, &token_list);
-    ft_display_list(&token_list);
-    ft_db_lstclear(&token_list, free);
-    free(line);
   }
 }

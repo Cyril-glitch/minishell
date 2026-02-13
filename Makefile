@@ -15,7 +15,8 @@ INIT_SRC = 	init_src/init.c \
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 
-LEXER_SRC = lexer_src/init_token_utils.c \
+LEXER_SRC = lexer_src/init_token_lst_db_utils.c \
+			lexer_src/init_token_utils.c \
 			lexer_src/init_token.c \
 			lexer_src/lexer_utils.c \
 			lexer_src/lexer.c
