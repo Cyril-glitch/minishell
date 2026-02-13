@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:33:25 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/13 11:34:20 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/13 12:28:37 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_word(char *str, t_token *token, int *i)
 	token->type = WORD;
 }
 
-void    init_pipe(char *str, t_token *token, int *i)
+void    init_pipe(t_token *token, int *i)
 {
     token->content = malloc(sizeof(char) * 2);
     if (!token->content)
@@ -58,7 +58,7 @@ void	init_redir_in(char *str, t_token *token, int *i)
 	token->content = malloc(sizeof(char) * (j + 1));
     if (!token->content)
         return;
-	j = 0;
+    j = 0;
 	while (str[*i] == '<')
 	{
         token->content[j] = str[*i];
@@ -106,7 +106,7 @@ void	init_token(char *str, t_token *token, int *i)
     }
 	if (str[*i] == '|')
     {
-        init_pipe(str, token, i);
+        init_pipe(token, i);
         return;
     }
     if (str[*i] == '<')

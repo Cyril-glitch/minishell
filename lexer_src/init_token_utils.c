@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:42:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/13 11:54:05 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/13 12:32:03 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,22 @@ void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*))
 	while (current)
 	{
 		current = current->next;
-		ft_lstdelone(tmp, del);
+		ft_db_lstdelone(tmp, del);
 		tmp = current;
 	}
 	token_list->head = NULL;
 	token_list->tail = NULL;
 	token_list->size = 0;
+}
+
+t_token    *ft_db_lstnew()
+{
+    t_token    *new;
+
+    new = malloc(sizeof(t_token));
+    if (!new)
+        return (NULL);
+    new->next = NULL;
+    new->prev = NULL;
+    return (new);
 }

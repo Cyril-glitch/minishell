@@ -9,16 +9,16 @@ LIB = ./libft/lib/libft.a
 MAIN = ./main.c
 MAIN_OBJ = $(MAIN:.c=.o)
 
-INIT_SRC = init_src/init.c \
-					 init_src/init_env.c \
-					 init_src/env_lst_utils.c
+INIT_SRC = 	init_src/init.c \
+			init_src/init_env.c \
+			init_src/env_lst_utils.c
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 
 LEXER_SRC = lexer_src/init_token_utils.c \
-					init_token.c \
-					lexer_utils.c \
-					lexer.c
+			lexer_src/init_token.c \
+			lexer_src/lexer_utils.c \
+			lexer_src/lexer.c
 LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 
@@ -34,7 +34,7 @@ LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LIB)
+$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(LIB)
 	mkdir -p bin
 	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(LIB) -lreadline -o $(NAME)
 

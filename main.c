@@ -26,6 +26,7 @@ int main(int ac, char **av, char **env)
       ft_shell_exit(NULL, NULL, orig_termios);
     add_history(line);
     lexer(line, &token_list);
+    ft_display_list(&token_list);
     ft_db_lstclear(&token_list, free);
     free(line);
   }

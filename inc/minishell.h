@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 11:54:00 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/13 12:32:29 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void	ft_db_lstadd_front(t_token_list *token_list, t_token *new);
 void	ft_db_lstadd_back(t_token_list *token_list, t_token *new);
 void	ft_db_lstdelone(t_token *token, void (*del)(void*));
 void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*));
+t_token    *ft_db_lstnew();
 void	init_word(char *str, t_token *token, int *i);
-void    init_pipe(char *str, t_token *token, int *i);
+void    init_pipe(t_token *token, int *i);
 void	init_redir_in(char *str, t_token *token, int *i);
 void	init_redir_out(char *str, t_token *token, int *i);
 void	init_token(char *str, t_token *token, int *i);
