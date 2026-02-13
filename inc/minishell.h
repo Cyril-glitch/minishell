@@ -55,6 +55,16 @@ typedef struct s_env_list
 	struct s_env_list			*next;
 }								t_env_list;
 
+typedef struct  s_expand
+{
+  char *prefix;
+  char *val;
+  char *suffixe;
+
+  int quote;
+  int d_quote;
+} t_expand;
+
 //INIT
 void	ft_shell_exit(t_token_list *list,\
     t_env_list *env_list,struct termios orig_termios);
