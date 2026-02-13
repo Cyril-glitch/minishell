@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 10:34:26 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/13 11:54:00 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,20 @@ void							ft_clear_node_env(t_env_list *node);
 void							ft_lstclear_env(t_env_list **lst);
 t_env_list						*ft_lstlast_env(t_env_list *lst);
 void							ft_printlst_env(t_env_list *lst);
+
+//LEXER
+void	ft_db_lstadd_front(t_token_list *token_list, t_token *new);
+void	ft_db_lstadd_back(t_token_list *token_list, t_token *new);
+void	ft_db_lstdelone(t_token *token, void (*del)(void*));
+void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*));
+void	init_word(char *str, t_token *token, int *i);
+void    init_pipe(char *str, t_token *token, int *i);
+void	init_redir_in(char *str, t_token *token, int *i);
+void	init_redir_out(char *str, t_token *token, int *i);
+void	init_token(char *str, t_token *token, int *i);
+void	swipe_space(char *str, int *i);
+int		is_separator(char c);
+void	ft_display_list(t_token_list *lst);
+void	lexer(char *str, t_token_list *token_list);
 
 #endif

@@ -15,8 +15,11 @@ INIT_SRC = init_src/init.c \
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 
-#LEXER_SRC =
-#LEXER_OBJ = $(INIT_SRC:.c=.o)
+LEXER_SRC = lexer_src/init_token_utils.c \
+					init_token.c \
+					lexer_utils.c \
+					lexer.c
+LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 
 #PARSER_SRC = 
@@ -33,7 +36,7 @@ all: $(NAME)
 
 $(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LIB)
 	mkdir -p bin
-	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(LIB) -lreadline -o $(NAME)
 
 $(LIB) :
 	make -C $(LIBDIR)
@@ -43,6 +46,7 @@ $(LIB) :
 clean:
 	rm -f $(INIT_OBJ)
 	rm -f $(MAIN_OBJ)
+	rm -f $(LEXER_OBJ)
 	make clean -C $(LIBDIR)
 
 bin: all clean
