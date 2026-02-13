@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   readline_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:47:45 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/12 15:28:08 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/13 10:45:13 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	ft_display_list(t_token_list *lst)
+{
+	t_token	*current;
+
+	current = lst->head;
+	while (current)
+	{
+		printf("%s -> ", current->content);
+		current = current->next;
+	}
+	printf("NULL\n");
+	current = lst->head;
+	while (current)
+	{
+		printf("%u -> ", current->type);
+		current = current->next;
+	}
+	printf("NULL\n");
+	printf("size = %d\n", lst->size);
+}
 
 void	ft_db_lstadd_front(t_token_list *token_list, t_token *new)
 {
@@ -37,12 +58,34 @@ void	ft_db_lstadd_back(t_token_list *token_list, t_token *new)
 		return ;
 	}
 	new->prev = token_list->tail;
-    
 	token_list->tail->next = new;
-    dprintf(2, "ici");
 	new->next = NULL;
 	token_list->tail = new;
 	token_list->size++;
+}
+
+void	ft_lstdelone(t_token *token, void (*del)(void*))
+{
+	del(token->content);
+	free(token);
+}
+
+void	ft_db_lstclear(t_token_list *token_list, void (*del)(void*))
+{
+	t_token	*current;
+	t_token	*tmp;
+
+	current = token_list->head;
+	tmp = current;
+	while (current)
+	{
+		current = current->next;
+		ft_lstdelone(tmp, del);
+		tmp = current;
+	}
+	token_list->head = NULL;
+	token_list->tail = NULL;
+	token_list->size = 0;
 }
 
 t_token	*ft_db_lstnew()
@@ -52,7 +95,6 @@ t_token	*ft_db_lstnew()
 	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->content = NULL;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
@@ -73,10 +115,10 @@ void	init_word(char *str, t_token *token, int *i)
     j = 0;
     k = 0;
 	while (!is_separator(str[*i + j]) && str[*i + j])
-            j++;
-    token->content = malloc(sizeof(char) * (j + 1));
-    if (!token->content)
-        return;
+        j++;
+	token->content = malloc(sizeof(char) * (j + 1));
+	if (!token->content)
+		return;
 	j = 0;
     k = 0;
 	while (!is_separator(str[*i + j - k]) && str[*i + j - k])
@@ -173,6 +215,11 @@ void	init_head(char *str, t_token *token, int *i)
         init_redir_in(str, token, i);
         return;
     }
+    if (str[*i] == '>')
+    {
+        init_redir_out(str, token, i);
+        return;
+    }
 }
 
 void	lexer(char *str, t_token_list *token_list)
@@ -181,6 +228,10 @@ void	lexer(char *str, t_token_list *token_list)
     t_token *new_token;
     
     i = 0;
+	new_token = ft_db_lstnew();
+	token_list->head = new_token;
+	token_list->tail = new_token;
+	token_list->size = 1;
 	init_head(str, token_list->head, &i);
     swipe_space(str, &i);
     while (str[i])
@@ -199,8 +250,8 @@ void	loop(char *str, t_token_list *token_list)
 		str = readline("losmakinos:~$ ");
 		add_history(str);
 		lexer(str, token_list);
-        printf("content = %s\n", token_list->head->content);
-        printf("type = %u\n", token_list->head->type);
+        ft_display_list(token_list);
+		ft_db_lstclear(token_list, free);
 		free(str);
 	}
 }
