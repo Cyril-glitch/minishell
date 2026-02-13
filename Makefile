@@ -12,9 +12,22 @@ MAIN_OBJ = $(MAIN:.c=.o)
 INIT_SRC = init_src/init.c \
 					 init_src/init_env.c \
 					 init_src/env_lst_utils.c
-
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
+
+#LEXER_SRC =
+#LEXER_OBJ = $(INIT_SRC:.c=.o)
+
+
+#PARSER_SRC = 
+#PARSER_OBJ = $(INIT_SRC:.c=.o)
+
+
+#EXPAND_SRC = 
+#EXPAND_OBJ = $(INIT_SRC:.c=.o)
+
+#EXEC_SRC =
+#EXEC_OBJ = $(INIT_SRC:.c=.o)
 
 all: $(NAME)
 
