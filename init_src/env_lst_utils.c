@@ -1,20 +1,33 @@
-#include  "../inc/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_lst_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/13 10:28:39 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/02/13 10:28:48 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_printlst_env(t_env_list	*lst)
+#include "../inc/minishell.h"
+
+void	ft_printlst_env(t_env_list *lst)
 {
-	t_env_list	*current = NULL;
-	current = lst;
+	t_env_list	*current;
 
-	while(current)
+	current = NULL;
+	current = lst;
+	while (current)
 	{
-		printf("export %s\n",(char*)current->line);
+		printf("export %s\n", (char *)current->line);
 		current = current->next;
 	}
 }
 
-t_env_list  *ft_lstlast_env(t_env_list *lst)
+t_env_list	*ft_lstlast_env(t_env_list *lst)
 {
-  t_env_list	*current;
+	t_env_list	*current;
 
 	if (!lst)
 		return (NULL);
@@ -39,18 +52,18 @@ void	ft_lstadd_back_env(t_env_list **lst, t_env_list *new)
 		*lst = new;
 }
 
-void ft_clear_node_env(t_env_list *node)
+void	ft_clear_node_env(t_env_list *node)
 {
-  if (!node)
-    return;
-  if (node->line)
-    free(node->line);
-  if (node->var)
-    free(node->var);
-  if (node->content)
-    free(node->content);
-  if (node)
-    free(node);
+	if (!node)
+		return ;
+	if (node->line)
+		free(node->line);
+	if (node->var)
+		free(node->var);
+	if (node->content)
+		free(node->content);
+	if (node)
+		free(node);
 }
 
 void	ft_lstclear_env(t_env_list **lst)
@@ -61,9 +74,9 @@ void	ft_lstclear_env(t_env_list **lst)
 		return ;
 	while (*lst)
 	{
-	  tmp = (*lst)->next;
-    ft_clear_node_env(*lst);
+		tmp = (*lst)->next;
+		ft_clear_node_env(*lst);
 		*lst = tmp;
 	}
-  lst = NULL;
+	lst = NULL;
 }
