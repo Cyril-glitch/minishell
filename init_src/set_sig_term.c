@@ -12,15 +12,6 @@
 
 #include "../inc/minishell.h"
 
-void	ft_shell_exit(t_token_list *list, t_env_list *env,
-		struct termios orig_termios)
-{
-	(void)list;
-	(void)env;
-	tcsetattr(0, TCSANOW, &orig_termios);
-	rl_clear_history();
-	exit(0);
-}
 
 static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 {
@@ -47,7 +38,7 @@ void	ft_init_signal(struct sigaction *sig_a)
 	sigaction(SIGQUIT, sig_a, NULL);
 }
 
-void	ft_termios(struct termios *orig_termios, struct termios *new_termios)
+void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios)
 {
 	tcgetattr(0, orig_termios);
 	*new_termios = *orig_termios;

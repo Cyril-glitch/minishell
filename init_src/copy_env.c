@@ -15,11 +15,9 @@
 t_env_list	*ft_new_env(char *str)
 {
 	int			i;
-	int			j;
 	t_env_list	*new;
 
 	i = 0;
-	j = 0;
 	new = malloc(sizeof(t_env_list));
 	if (!new)
 		return (NULL);

@@ -78,5 +78,5 @@ void	ft_lstclear_env(t_env_list **lst)
 		ft_clear_node_env(*lst);
 		*lst = tmp;
 	}
-	lst = NULL;
+	*lst = NULL;
 }

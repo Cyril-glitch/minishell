@@ -9,9 +9,11 @@ LIB = ./libft/lib/libft.a
 MAIN = ./main.c
 MAIN_OBJ = $(MAIN:.c=.o)
 
-INIT_SRC = 	init_src/init.c \
-			init_src/init_env.c \
-			init_src/env_lst_utils.c
+INIT_SRC = 	init_src/init_data.c \
+			init_src/env_lst_utils.c \
+			init_src/set_sig_term.c \
+			init_src/copy_env.c \
+			init_src/shell_exit.c
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 

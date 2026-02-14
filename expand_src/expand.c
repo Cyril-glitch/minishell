@@ -1,6 +1,7 @@
 #include  "../inc/minishell.h"
 
 
+/*
 int ft_expd_normalise(char c, t_token_list *token_lst )
 {
   if (c == '?')
@@ -62,4 +63,5 @@ Cas particuliers à gérer dans ton code :
 
     $  (suivi d'un espace) ou $ en fin de ligne : Le $ est traité comme un caractère normal, on ne cherche pas de variable.
 
+*/
 */
