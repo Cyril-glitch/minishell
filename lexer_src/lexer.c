@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:31:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/13 18:50:00 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/15 12:02:22 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int     verif_quote(char *str)
     return (1);
 }
 
-void	lexer(char *str, t_token_list *token_list)
+int     lexer(char *str, t_token_list *token_list)
 {
     int i;
     t_token *new_token;
@@ -47,7 +47,7 @@ void	lexer(char *str, t_token_list *token_list)
     if (!verif_quote(str))
     {
         printf(">\n");
-        return;
+        return (0);
     }
     i = 0;
 	new_token = ft_db_lstnew_token();
@@ -64,6 +64,5 @@ void	lexer(char *str, t_token_list *token_list)
         swipe_space(str, &i);
     }
     //ft_display_list_token(token_list);
-    ft_db_lstclear_token(token_list, free);
-    free(str);
+    return (1);
 }

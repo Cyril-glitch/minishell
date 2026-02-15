@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 17:10:57 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/15 20:53:55 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ int main(int ac, char **av, char **env)
     if (!line)
       ft_shell_exit(NULL, NULL, orig_termios);
     add_history(line);
-    lexer(line, &token_list);
-    parser(&token_list, &cmd_list);
+    if (lexer(line, &token_list))
+    {
+      if (parser(&token_list, &cmd_list))
+        ft_db_lstclear_cmd(&cmd_list, free);
+      ft_db_lstclear_token(&token_list, free);
+      free(line);
+    }
   }
 }

@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 18:39:36 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/15 20:55:50 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <signal.h>
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "libft.h"
+# include <signal.h>
 # include <termios.h>
+
+# ifdef __APPLE__
+    /* Ces fonctions sont dans la lib readline mais absentes des headers par défaut du Mac */
+    void	rl_replace_line(const char *text, int clear_undo);
+    void	rl_clear_history(void);
+# endif
 
 extern volatile sig_atomic_t	g_sig_status;
 
@@ -104,7 +110,7 @@ void		init_token(char *str, t_token *token, int *i);
 void		swipe_space(char *str, int *i);
 int			is_separator(char c);
 void		ft_display_list_token(t_token_list *lst);
-void		lexer(char *str, t_token_list *token_list);
+int		lexer(char *str, t_token_list *token_list);
 void    	nb_of_malloc(char *str, int *i, int *j, char quote);
 void    	copy_word(char *str, int *i, char quote, t_token *token);
 
@@ -115,6 +121,8 @@ void		ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void*));
 void		ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void*));
 t_cmd		*ft_db_lstnew_cmd();
 void		ft_display_list_cmd(t_cmd_list *lst);
-void    	parser(t_token_list *token_list, t_cmd_list *cmd_list);
+int	    	parser(t_token_list *token_list, t_cmd_list *cmd_list);
+int			is_redir(t_token *current);
+int			check_error(t_token_list *token_list);
 
 #endif

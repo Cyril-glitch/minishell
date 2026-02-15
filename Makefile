@@ -1,7 +1,21 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
+    # Sur Mac, on force les chemins de Homebrew
+    # La commande brew --prefix readline donne /opt/homebrew/opt/readline
+    RL_PATH = $(shell brew --prefix readline 2>/dev/null || echo "/opt/homebrew/opt/readline")
+    RL_INC  = -I$(RL_PATH)/include
+    RL_LIB  = -L$(RL_PATH)/lib -lreadline
+else
+    # Sur Linux (École)
+    RL_INC  = 
+    RL_LIB  = -lreadline
+endif
 
 LIBDIR = ./libft/
 LIB = ./libft/lib/libft.a
@@ -25,7 +39,8 @@ LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 PARSER_SRC = 	parser_src/init_cmd_lst_db_utils.c \
 				parser_src/parser.c \
-				parser_src/parser_utils.c
+				parser_src/parser_utils.c \
+				parser_src/check_error.c
 PARSER_OBJ = $(PARSER_SRC:.c=.o)
 
 
@@ -39,7 +54,10 @@ all: $(NAME)
 
 $(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB)
 	mkdir -p bin
-	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB) $(RL_LIB) -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
 
 $(LIB) :
 	make -C $(LIBDIR)

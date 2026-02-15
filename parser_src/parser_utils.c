@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 18:48:52 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/15 20:46:08 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,24 @@ void	ft_display_list_cmd(t_cmd_list *lst)
 	t_cmd	*current;
     int i;
 
-    i = 0;
 	current = lst->head;
 	while (current)
 	{
-		printf("%s -> ", current->args[i]);
-        i++;
+		i = 0;
+		while (current->args[i])
+		{
+			printf("%s -> ", current->args[i]);
+			i++;
+		}
+		printf("NULL\n");
 		current = current->next;
 	}
-	printf("NULL\n");
 	printf("size = %d\n", lst->size);
+}
+
+int is_redir(t_token *current)
+{
+    if (current->type >= 2 && current->type <= 5)
+        return (1);
+    return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_lst_db_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:12:11 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/13 18:45:43 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:13:50 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ void	ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void*))
     i = 0;
     while (token->args[i])
     {
-        del(token->args[i]);
+    	del(token->args[i]);
         i++;
     }
-	free(token->args);
-    free(token);
+	if (token->args)
+		free(token->args);
+	if (token)
+    	free(token);
 }
 
 void	ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void*))
@@ -84,5 +86,8 @@ t_cmd    *ft_db_lstnew_cmd()
         return (NULL);
     new->next = NULL;
     new->prev = NULL;
+	new->args = NULL;
+	new->fd_in = 0;
+	new->fd_out = 1;
     return (new);
 }

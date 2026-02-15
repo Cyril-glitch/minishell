@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:33:25 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/13 16:25:39 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:22:19 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void 	init_word(char *str, t_token *token, int *i)
 	if (!token->content)
 		return;
     copy_word(str, i, quote, token);
-	token->content[*i] = '\0';
+	token->content[j] = '\0';
 	token->type = WORD;
 }
 
@@ -56,10 +56,10 @@ void	init_redir_in(char *str, t_token *token, int *i)
 		(*i)++;
 		j++;
 	}
-	token->content[*i] = '\0';
+	token->content[j] = '\0';
 	if (j == 1)
         token->type = REDIR_IN;
-    if (j == 2)
+    if (j >= 2)
         token->type = D_REDIR_IN;
 }
 
@@ -80,10 +80,10 @@ void	init_redir_out(char *str, t_token *token, int *i)
 		(*i)++;
 		j++;
 	}
-	token->content[*i] = '\0';
+	token->content[j] = '\0';
 	if (j == 1)
         token->type = REDIR_OUT;
-    if (j == 2)
+    if (j >= 2)
         token->type = D_REDIR_OUT;
 }
 

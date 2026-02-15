@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:53 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/13 10:28:57 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/14 10:03:51 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 t_env_list	*ft_new_env(char *str)
 {
 	int			i;
-	int			j;
 	t_env_list	*new;
 
 	i = 0;
-	j = 0;
 	new = malloc(sizeof(t_env_list));
 	if (!new)
 		return (NULL);
 	while (str[i] != '=')
 		i++;
-	new->line = strdup(str);
+	new->line = ft_strdup(str);
 	new->var = ft_substr(str, 0, i);
 	new->content = ft_substr(str, (i + 1), ft_strlen(&str[i + 1]));
 	new->next = NULL;

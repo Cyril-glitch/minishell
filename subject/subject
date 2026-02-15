@@ -6,64 +6,64 @@ Fonctions externes	readline, rl_clear_history, rl_on_new_line, rl_replace_line, 
 Libft autorisée	Oui
 🛠️ Fonctionnalités requises
 
-Votre shell doit :
+Votre shell doit : ⏳
 
-    Afficher un prompt en attendant une nouvelle commande.
+    Afficher un prompt en attendant une nouvelle commande. ✅ 
 
-    Posséder un historique fonctionnel.
+    Posséder un historique fonctionnel. ✅ 
 
-    Chercher et lancer le bon exécutable (basé sur la variable PATH ou via un chemin relatif/absolu).
+    Chercher et lancer le bon exécutable (basé sur la variable PATH ou via un chemin relatif/absolu). ❌
 
-    Utiliser au plus une variable globale pour gérer les signaux (pour s'assurer que le gestionnaire de signaux n'accède pas à vos structures de données principales).
+    Utiliser au plus une variable globale pour gérer les signaux (pour s'assurer que le gestionnaire de signaux n'accède pas à vos structures de données principales). ✅ 
 
-    Ne pas interpréter les guillemets non fermés ou les caractères spéciaux non demandés (comme \ ou ;).
+    Ne pas interpréter les guillemets non fermés ou les caractères spéciaux non demandés (comme \ ou ;). ✅ 
 
-    Gérer les guillemets simples (') : empêche l'interprétation des métacaractères.
+    Gérer les guillemets simples (') : empêche l'interprétation des métacaractères. ✅ 
 
-    Gérer les guillemets doubles (") : empêche l'interprétation des métacaractères, sauf pour le $ (signe dollar).
+    Gérer les guillemets doubles (") : empêche l'interprétation des métacaractères, ✅ sauf pour le $ (signe dollar). ❌
 
-🔄 Redirections & Pipes
+🔄 Redirections & Pipes ❌
 
-    < : Redirige l'entrée standard.
+    < : Redirige l'entrée standard. ❌
 
-    > : Redirige la sortie standard (écrase le fichier).
+    > : Redirige la sortie standard (écrase le fichier). ❌
 
-    << : "Here-doc" (lit l'entrée jusqu'à rencontrer le délimiteur). Ne met pas à jour l'historique.
+    << : "Here-doc" (lit l'entrée jusqu'à rencontrer le délimiteur). Ne met pas à jour l'historique. ❌
 
-    >> : Redirige la sortie standard en mode append (ajoute à la fin du fichier).
+    >> : Redirige la sortie standard en mode append (ajoute à la fin du fichier). ❌
 
-    | (Pipes) : La sortie de chaque commande est connectée à l'entrée de la suivante.
+    | (Pipes) : La sortie de chaque commande est connectée à l'entrée de la suivante. ❌
 
 💲 Variables d'environnement
 
-    Gérer les variables d'environnement ($variable) qui doivent s'étendre à leur valeur.
+    Gérer les variables d'environnement ($variable) qui doivent s'étendre à leur valeur. ❌
 
-    Gérer $? : Doit s'étendre au statut de sortie du dernier pipeline exécuté au premier plan.
+    Gérer $? : Doit s'étendre au statut de sortie du dernier pipeline exécuté au premier plan. ❌
 
 ⚡ Signaux
 
-Comportement identique à bash en mode interactif :
+Comportement identique à bash en mode interactif : ✅
 
-    Ctrl-C : Affiche un nouveau prompt sur une nouvelle ligne.
+    Ctrl-C : Affiche un nouveau prompt sur une nouvelle ligne. ✅
 
-    Ctrl-D : Quitte le shell.
+    Ctrl-D : Quitte le shell. ✅
 
-    Ctrl-\ : Ne fait rien.
+    Ctrl-\ : Ne fait rien. ✅
 
 🏗️ Commandes Internes (Built-ins)
 
-Le shell doit implémenter les commandes suivantes :
+Le shell doit implémenter les commandes suivantes : ❌
 
-    echo (avec l'option -n)
+    echo (avec l'option -n) ❌
 
-    cd (uniquement avec un chemin relatif ou absolu)
+    cd (uniquement avec un chemin relatif ou absolu) ❌
 
-    pwd (sans options)
+    pwd (sans options) ❌
 
-    export (sans options)
+    export (sans options) ❌
 
-    unset (sans options)
+    unset (sans options) ❌
 
-    env (sans options ni arguments)
+    env (sans options ni arguments) ❌
 
-    exit (sans options)
+    exit (sans options) ❌
