@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_lst_db_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:12:11 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/15 21:13:50 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/16 15:45:08 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void*))
     	del(token->args[i]);
         i++;
     }
+	ft_db_lstclear_redir(token->redirs_list, del);
 	if (token->args)
 		free(token->args);
 	if (token)
@@ -83,10 +84,11 @@ t_cmd    *ft_db_lstnew_cmd()
 
     new = malloc(sizeof(t_cmd));
     if (!new)
-        return (NULL);
-    new->next = NULL;
-    new->prev = NULL;
+		return (NULL);
+	new->next = NULL;
+	new->prev = NULL;
 	new->args = NULL;
+	new->redirs_list = NULL;
 	new->fd_in = 0;
 	new->fd_out = 1;
     return (new);

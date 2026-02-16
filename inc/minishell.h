@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/15 23:53:52 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/16 15:46:58 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,22 @@ typedef struct s_redir
     struct s_redir  			*prev;
 }   							t_redir;
 
+typedef struct s_redir_list
+{
+	t_redir						*head;
+	t_redir						*tail;
+	int							size;	
+}								t_redir_list;
+
 typedef struct s_cmd
 {
     char          				**args;
-	t_redir						*redirs;
+	t_redir_list				*redirs_list;
     int           				fd_in;
     int           				fd_out;
     struct s_cmd 				*next;
 	struct s_cmd				*prev;
-} 					t_cmd;
+} 								t_cmd;
 
 typedef struct s_cmd_list
 {
@@ -133,5 +140,11 @@ void		ft_display_list_cmd(t_cmd_list *lst);
 int	    	parser(t_token_list *token_list, t_cmd_list *cmd_list);
 int			is_redir(t_token *current);
 int			check_error(t_token_list *token_list);
+void		ft_db_lstadd_front_redir(t_redir_list *redir_list, t_redir *new);
+void		ft_db_lstadd_back_redir(t_redir_list *redir_list, t_redir *new);
+void		ft_db_lstdelone_redir(t_redir *token, void (*del)(void*));
+void		ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*));
+t_redir    	*ft_db_lstnew_redir();
+void		ft_display_list_redir(t_redir_list *lst);
 
 #endif

@@ -3,63 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir_lst_db_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:46:58 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/15 23:54:51 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/16 15:49:34 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	ft_db_lstadd_front_redir(t_redir *redir, t_redir *new)
+void	ft_db_lstadd_front_redir(t_redir_list *redir_list, t_redir *new)
 {
-	if (redir == NULL)
-		redir = new;
+	if (redir_list->head == NULL)
+	{
+		redir_list->head = new;
+		redir_list->tail = new;
+	}
 	else
 	{
-		new->next = redir;
-		redir->prev = new;
+		new->next = redir_list->head;
+		redir_list->head->prev = new;
 		new->prev = NULL;
-		redir = new;
+		redir_list->head = new;
 	}
+	redir_list->size++;
 }
 
-void	ft_db_lstadd_back_cmd(t_redir *redir, t_redir *new)
+void	ft_db_lstadd_back_redir(t_redir_list *redir_list, t_redir *new)
 {
-	if (redir == NULL)
+	if (redir_list->head == NULL)
 	{
-		ft_db_lstadd_front_redir(redir, new);
+		ft_db_lstadd_front_redir(redir_list, new);
 		return ;
 	}
-	new->prev = redir;
-	redir->next = new;
+	new->prev = redir_list->tail;
+	redir_list->tail->next = new;
 	new->next = NULL;
-	redir = new;
+	redir_list->tail = new;
+	redir_list->size++;
 }
 
 void	ft_db_lstdelone_redir(t_redir *token, void (*del)(void*))
 {
-    int i;
-
-    i = 0;
-    while (token->file[i])
-    {
-    	del(token->file[i]);
-        i++;
-    }
-	if (token->file)
-		free(token->file);
+    if (token->file)
+	{
+		del(token->file);
+	}	
 	if (token)
-    	free(token);
+	{
+		free(token);
+	}
 }
 
-void	ft_db_lstclear_redir(t_redir *redir, void (*del)(void*))
+void	ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*))
 {
 	t_redir	*current;
 	t_redir	*tmp;
 
-	current = redir;
+	current = redir_list->head;
 	tmp = current;
 	while (current)
 	{
@@ -67,7 +68,9 @@ void	ft_db_lstclear_redir(t_redir *redir, void (*del)(void*))
 		ft_db_lstdelone_redir(tmp, del);
 		tmp = current;
 	}
-	redir = NULL;
+	redir_list->head = NULL;
+	redir_list->tail = NULL;
+	redir_list->size = 0;
 }
 
 t_redir    *ft_db_lstnew_redir()
@@ -76,8 +79,9 @@ t_redir    *ft_db_lstnew_redir()
 
     new = malloc(sizeof(t_redir));
     if (!new)
-        return (NULL);
-    new->next = NULL;
-    new->prev = NULL;
+		return (NULL);
+	new->next = NULL;
+	new->prev = NULL;
 	new->file = NULL;
+    return (new);
 }

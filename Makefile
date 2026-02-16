@@ -1,7 +1,7 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 UNAME_S := $(shell uname -s)
 
@@ -40,7 +40,8 @@ LEXER_OBJ = $(LEXER_SRC:.c=.o)
 PARSER_SRC = 	parser_src/init_cmd_lst_db_utils.c \
 				parser_src/parser.c \
 				parser_src/parser_utils.c \
-				parser_src/check_error.c
+				parser_src/check_error.c \
+				parser_src/init_redir_lst_db_utils.c
 PARSER_OBJ = $(PARSER_SRC:.c=.o)
 
 
