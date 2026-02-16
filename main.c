@@ -14,7 +14,8 @@ int main(int ac, char **av, char **env)
       ft_shell_exit(data);
     add_history(data->line);
     lexer(data->line, data->token_list);
-    //ft_display_list(data->token_list);
+    ft_display_list(data->token_list);
+    ft_expand(data->token_list->head, data->env_list,data);
     ft_db_lstclear(data->token_list, free);
     free(data->line);
   }

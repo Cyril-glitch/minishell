@@ -12,14 +12,14 @@
 
 #include "../inc/libft.h"
 /*
-void	ft_putlst(t_list	*lst)
+void	ft_print_lst(t_list	*lst)
 {
 	t_list	*current = NULL;
 	current = lst;
 
 	while(current)
 	{
-		printf("%s",(char*)current->content);
+		ft_printf("%s",(char*)current->content);
 		current = current->next;
 	}
 }

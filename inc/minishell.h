@@ -58,8 +58,10 @@ typedef struct s_env_list
 typedef struct  s_expand
 {
     char *prefix;
+    char *key;
     char *val;
-    char *suffixe;
+    char *suffix;
+    char *cat;
 
     int quote;
     int d_quote;
@@ -72,10 +74,16 @@ typedef struct s_data {
     struct sigaction	*sig_a;
     struct termios  *orig_termios;
     struct termios  *new_termios;
+    t_expand *expd;
+    t_list *expd_lst;
     int             last_exit_code;
 } t_data;
 
-
+//EXPAND
+void ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
+void ft_free_cat(t_expand *expd);
+void    ft_quote_status(t_expand *expd, char c);
+void ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
 
 //INIT
 void	ft_init_signal(struct sigaction *sig_a);

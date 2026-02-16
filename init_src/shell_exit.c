@@ -16,6 +16,13 @@ void    ft_free_data(t_data *data)
         free(data->orig_termios);
     if (data->new_termios)
         free(data->new_termios);
+    if (data->expd)
+    {
+        ft_free_cat(data->expd);
+        free(data->expd);
+    }
+    if (data->expd_lst)
+        ft_lstclear(&data->expd_lst, free);
     free(data);
     data = NULL;
 }
