@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/15 21:15:55 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/15 23:46:18 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,31 @@
 
 void    init_cmd_utils(t_token **current, t_cmd *cmd)
 {
-    int j;
     int i;
+    int j;
+    int k;
+    t_redir *new_redir;
 
     i = 0;
+    // CREER LST_DB_REDIR
+    
     while (*current && (*current)->type != PIPE)
     {
         j = 0;
+        if (is_redir(*current))
+        {
+            k = 0;
+            new_redir = ft_db_lstnew_redir();
+            ft_db_lstadd_back_redir(cmd->redirs, new_redir);
+            new_redir->type = (*current)->type;
+            *current = (*current)->next;
+            new_redir->file = malloc(sizeof(char) * (ft_strlen((*current)->content) + 1));
+            while ((*current)->content[k])
+            {
+                new_redir->file = (*current)->content[k];
+                i++;
+            }
+        }
         cmd->args[i] = malloc(sizeof(char) * (ft_strlen((*current)->content) + 1));
         if (!cmd->args[i])
         {
@@ -48,6 +66,11 @@ void init_cmd(t_cmd *cmd, t_token **current)
     tmp = *current;
     while (tmp && tmp->type != PIPE)
     {
+        if (is_redir(tmp))
+        {
+            tmp = tmp->next;
+            tmp = tmp->next;
+        }
         i++;
         tmp = tmp->next;
     }

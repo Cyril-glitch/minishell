@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/15 20:55:50 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/15 23:53:52 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,26 @@ extern volatile sig_atomic_t	g_sig_status;
 
 typedef enum e_type
 {
-	WORD,       // Pour ls, -l, "mon fichier"
-	PIPE,       // |
+	WORD,       // Pour ls, -l, file.txt
+	PIPE,
 	REDIR_IN,   // <
 	REDIR_OUT,  // >
 	D_REDIR_IN, // <<
 	D_REDIR_OUT // >>
 }								t_type;
 
+typedef struct s_redir
+{
+    t_type						type;
+    char            			*file;
+    struct s_redir  			*next;
+    struct s_redir  			*prev;
+}   							t_redir;
+
 typedef struct s_cmd
 {
     char          				**args;
+	t_redir						*redirs;
     int           				fd_in;
     int           				fd_out;
     struct s_cmd 				*next;
