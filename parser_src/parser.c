@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/16 16:01:28 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/17 13:31:19 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void    init_cmd_utils(t_token **current, t_cmd *cmd)
                 new_redir->file[k] = (*current)->content[k];
                 k++;
             }
+            new_redir->file[k] = '\0';
         }
         else
         {
@@ -66,7 +67,6 @@ void init_cmd(t_cmd *cmd, t_token **current)
     
     i = 0;
     tmp = *current;
-    
     while (tmp && tmp->type != PIPE)
     {
         if (is_redir(tmp))
@@ -114,7 +114,5 @@ int    parser(t_token_list *token_list, t_cmd_list *cmd_list)
         ft_db_lstadd_back_cmd(cmd_list, new_cmd);
         init_cmd(new_cmd, &current);
     }
-    //ft_display_list_redir(cmd_list->head->redirs_list);
     return (1);
-    //ft_display_list_cmd(cmd_list);
 }

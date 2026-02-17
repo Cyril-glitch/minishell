@@ -20,7 +20,7 @@ Votre shell doit : ⏳
 
     Gérer les guillemets simples (') : empêche l'interprétation des métacaractères. ✅ 
 
-    Gérer les guillemets doubles (") : empêche l'interprétation des métacaractères, ✅ sauf pour le $ (signe dollar). ❌
+    Gérer les guillemets doubles (") : empêche l'interprétation des métacaractères, ✅ sauf pour le $ (signe dollar). ✅ 
 
 🔄 Redirections & Pipes ❌
 
@@ -36,9 +36,9 @@ Votre shell doit : ⏳
 
 💲 Variables d'environnement
 
-    Gérer les variables d'environnement ($variable) qui doivent s'étendre à leur valeur. ❌
+    Gérer les variables d'environnement ($variable) qui doivent s'étendre à leur valeur.  ✅
 
-    Gérer $? : Doit s'étendre au statut de sortie du dernier pipeline exécuté au premier plan. ❌
+    Gérer $? : Doit s'étendre au statut de sortie du dernier pipeline exécuté au premier plan. ✅
 
 ⚡ Signaux
 

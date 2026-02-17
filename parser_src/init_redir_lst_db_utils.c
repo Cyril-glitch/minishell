@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:46:58 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/16 15:49:34 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/17 14:19:21 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_db_lstdelone_redir(t_redir *token, void (*del)(void*))
     if (token->file)
 	{
 		del(token->file);
-	}	
+	}
 	if (token)
 	{
 		free(token);
@@ -71,6 +71,8 @@ void	ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*))
 	redir_list->head = NULL;
 	redir_list->tail = NULL;
 	redir_list->size = 0;
+	free(redir_list);
+	redir_list = NULL;
 }
 
 t_redir    *ft_db_lstnew_redir()
