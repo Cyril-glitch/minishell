@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 14:24:35 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/17 14:58:54 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int main(int ac, char **av, char **env)
     if (lexer(line, &token_list))
     {
       if (parser(&token_list, &cmd_list))
+      {
+        ft_display_list_cmd(&cmd_list);
         ft_db_lstclear_cmd(&cmd_list, free);
+      }
       ft_db_lstclear_token(&token_list, free);
       free(line);
     }

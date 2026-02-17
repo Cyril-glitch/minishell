@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 13:39:00 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/17 14:58:08 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_display_list_cmd(t_cmd_list *lst)
 		printf("NULL\n");
 		if (current->redirs_list)
 			ft_display_list_redir(current->redirs_list);
+		printf("is_build = %d\n", current->is_build);
 		current = current->next;
 	}
 	printf("size = %d\n", lst->size);

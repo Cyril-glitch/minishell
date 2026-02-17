@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/16 15:46:58 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/17 14:47:29 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_cmd
 	t_redir_list				*redirs_list;
     int           				fd_in;
     int           				fd_out;
+	int							is_build;
     struct s_cmd 				*next;
 	struct s_cmd				*prev;
 } 								t_cmd;
