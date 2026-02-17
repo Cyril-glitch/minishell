@@ -13,7 +13,8 @@ INIT_SRC = 	init_src/init_data.c \
 			init_src/env_lst_utils.c \
 			init_src/set_sig_term.c \
 			init_src/copy_env.c \
-			init_src/shell_exit.c 
+			init_src/shell_exit.c \
+			init_src/init_list.c 
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 LEXER_SRC = lexer_src/init_token_utils.c \
@@ -23,7 +24,8 @@ LEXER_SRC = lexer_src/init_token_utils.c \
 LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 EXPAND_SRC = expand_src/expand.c \
-			 expand_src/subtitute.c
+						 expand_src/expand_utils.c \
+			 			 expand_src/subtitute.c
 EXPAND_OBJ = $(EXPAND_SRC:.c=.o)
 
 #PARSER_SRC = 

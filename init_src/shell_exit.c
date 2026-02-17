@@ -18,7 +18,7 @@ void    ft_free_data(t_data *data)
         free(data->new_termios);
     if (data->expd)
     {
-        ft_free_cat(data->expd);
+        ft_expd_zero(data->expd);
         free(data->expd);
     }
     if (data->expd_lst)

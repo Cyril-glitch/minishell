@@ -21,20 +21,6 @@ static void    ft_add_termios(t_data *data)
     ft_init_termios(data->orig_termios, data->new_termios);
 }
 
-static void    ft_add_env_list(t_data *data, char **env)
-{
-  t_env_list  *env_list;
-
-  env_list = ft_env_list(env);
-  data->env_list = env_list;
-}
-
-static void    ft_add_token_list(t_data *data)
-{
-    data->token_list = malloc(sizeof(t_token_list));
-    if (!data->token_list)
-      ft_shell_exit(data);
-}
 
 t_data *ft_init_data(int ac, char **av, char **env)
 {
@@ -48,6 +34,8 @@ t_data *ft_init_data(int ac, char **av, char **env)
   ft_add_termios(data);
   ft_add_env_list(data, env);
   ft_add_token_list(data);
+  ft_add_expand(data);
+  data->expd_lst = NULL;
   data->last_exit_code = 0;
   return data;
 }

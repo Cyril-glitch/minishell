@@ -33,7 +33,7 @@ void	init_word(char *str, t_token *token, int *i)
 		j++;
         k++;
 	}
-	token->content[*i] = '\0';
+	token->content[j] = '\0';
 	token->type = WORD;
 }
 

@@ -81,14 +81,19 @@ typedef struct s_data {
 
 //EXPAND
 void ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
-void ft_free_cat(t_expand *expd);
+void ft_expd_zero(t_expand *expd);
 void    ft_quote_status(t_expand *expd, char c);
 void ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
+void  ft_delquote(t_expand *expd, t_data *data);
 
 //INIT
 void	ft_init_signal(struct sigaction *sig_a);
 void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
 t_data  *ft_init_data(int ac, char **av, char **env);
+void    ft_add_env_list(t_data *data, char **env);
+void    ft_add_token_list(t_data *data);
+void  ft_add_expand(t_data *data);
+
 
 //COPY_ENV
 t_env_list						*ft_new_env(char *str);
