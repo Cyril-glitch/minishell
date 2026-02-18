@@ -30,35 +30,20 @@ void ft_expd_zero(t_expand *expd)
 
 void    ft_quote_status(t_expand *expd, char c)
 {
-        if (c == 39 )
+        if (c == '\'' )
         {
-            if (expd->quote == 0 && !expd->d_quote)
+            if (expd->quote == 0 && expd->d_quote == 0)
                 expd->quote = 1;
-            else if  (expd->quote == 1)
-                expd->quote = 0;
+            else if(expd->quote == 1 && expd->d_quote == 0)
+              expd->quote = 0;
         }
-        else if (c == 34)
+        else if (c == '\"')
         {
-            if (expd->d_quote == 0 && !expd->quote)
+            if (expd->d_quote == 0 && expd->quote ==0)
                 expd->d_quote = 1;
-            else if  (expd->d_quote == 1)
-                expd->d_quote = 0;
+            else if(expd->d_quote == 1 && expd->quote == 0)
+              expd->d_quote = 0;
         }
-}
-
-static int  ft_strlens(char **tab)
-{
-  int len;
-  int i;
-
-  len = 0;
-  i = 0;
-  while(tab[i])
-  {
-    len += ft_strlen(tab[i]);
-    i++;
-  }
-  return len;
 }
 
 static void ft_jointab(char **tab, char *str)
@@ -72,6 +57,7 @@ static void ft_jointab(char **tab, char *str)
   k = 0;
   while(tab[i])
   {
+    //printf("tab[%d] = %s\n", i,tab[i]);
     j = 0;
     while(tab[i][j])
     {
@@ -91,10 +77,11 @@ void  ft_delquote(t_expand *expd, t_data *data)
 
   len = 0;
   tab = NULL;
+  printf("quote = %d \n d_quote = %d\n", data->expd->quote, data->expd->d_quote);
   if (expd->quote)
-    tab = ft_split(expd->cat, 39);
+    tab = ft_split(expd->cat, '\'');
   else if (expd->d_quote)
-    tab = ft_split(expd->cat, 34);
+    tab = ft_split_set(expd->cat, '\"');
   else
     return ;
   if (!tab)

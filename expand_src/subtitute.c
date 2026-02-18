@@ -20,8 +20,15 @@ static int ft_prefix(char *str,t_expand *expd, t_data *data)
 static char *ft_replace(char *key, t_env_list *env_lst,t_data *data)
 {
     char *tmp;
-
+    
     tmp = NULL;
+    if (data->expd->quote)
+    {
+      tmp = ft_strjoin("$", key);
+      if (!tmp)
+        ft_shell_exit(data);
+      return tmp;
+    } 
     while(env_lst)
     {
         if (ft_strcmp(key, env_lst->var) == 0)
@@ -46,20 +53,19 @@ static int ft_val(char *str,t_expand *expd,t_env_list *env_lst, t_data *data)
       expd->val= ft_strdup("");
       if (!expd->val)
         ft_shell_exit(data);
-      return 0;
+      return (1);
     }
     if (str[i + 1] == '?')
     {
         expd->val = ft_itoa(g_sig_status);
         if (!expd->val)
             ft_shell_exit(data);
-        return (i);
+        return (1);
     }
     i++;
     while (ft_isalnum(str[i]) && str[i] != 39 && str[i] != 34)
         i++;
-    expd->key = ft_substr(str, 1, (i-1));
-    //printf("key is = %s\n", expd->key);
+    expd->key = ft_substr(str, 1, (i - 1));
     if (!expd->key)
         ft_shell_exit(data);
     expd->val = ft_replace(expd->key, env_lst,data);

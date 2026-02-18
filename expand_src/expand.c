@@ -18,7 +18,6 @@ void ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
   { 
       ft_subtitute(token_lst->content, token_lst, env_lst, data);
       ft_print_lst(data->expd_lst);
-      //printf("quote = %d \n d_quote = %d", data->expd->quote, data->expd->d_quote);
       token_lst = token_lst->next;
   }
 }

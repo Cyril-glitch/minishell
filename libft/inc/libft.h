@@ -57,6 +57,7 @@ void				ft_freedtab(void *t);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 size_t				ft_strlen(const char *s);
+int  ft_strlens(char **tab);
 size_t				ft_dtablen(void *s);
 void				ft_putstr(char *str);
 char				*ft_strcpy(char *dst, const char *src);
@@ -78,7 +79,9 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 int					ft_countword(const char *s, char set);
+int         ft_scountword(const char *s, char *set);
 char				**ft_split(char const *s, char c);
+char	      **ft_split_set(char const *s, char *set);
 
 //manipulation de chaines avec pointeur de fonctions
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));

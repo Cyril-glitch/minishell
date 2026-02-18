@@ -12,20 +12,21 @@
 
 #include "../inc/libft.h"
 
-static	int	ft_load(char **tab, char const *s, char c, int  index)
+static	int	ft_load(char **tab, char const *s, char *set, int  index)
 {
 	size_t	len;
 
 	len = 0;
 
-	while (*s && *s == c)
+
+  while (*s && ft_isset(*s, set))
 		s++;
   if (!*s)
   {
     tab[index] = NULL;
     return (1);
   }
-	while (s[len] && s[len] != c)
+	while (s[len] && !ft_isset(s[len], set))
 		len++;
   tab[index] = malloc(sizeof(char) * (len + 1));
   if (!tab[index])
@@ -33,44 +34,27 @@ static	int	ft_load(char **tab, char const *s, char c, int  index)
 
   ft_strncpy(tab[index], s, len);
 
-  if(ft_load(tab, s + len, c, index + 1))
+  if(ft_load(tab, s + len, set, index + 1))
     return (1);
   free(tab[index]);
   return (0);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_set(char const *s, char *set)
 {
 	char	**tab;
 	int		len;
 
   if (!s)
     return (NULL);
-	len = ft_countword(s, c);
+	len = ft_scountword(s, set);
 	tab = malloc(sizeof(char *) * (len + 1));
   if (!tab)
     return (NULL);
-	if (ft_load(tab, s, c, 0) == 0)
+	if (ft_load(tab, s, set, 0) == 0)
   {
     free(tab);
     return (NULL);
   }
 	return (tab);
 }
-
-/*
-int main()
-{
-	int i = 0;
-	char  **tab = NULL;
-
-	tab = ft_split("^^^1^^2a,^^^^3^^^^--h^^^^", '^');
-	while (i < 4)
-	{
-		printf("tab[%d] = %s \n",i,tab[i]);
-		i++;
-	}
-	ft_freeiter(tab,i);
-	tab = NULL;
-}
-*/
