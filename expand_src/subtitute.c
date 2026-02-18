@@ -1,6 +1,5 @@
 #include  "../inc/minishell.h"
 
-
 static int ft_prefix(char *str,t_expand *expd, t_data *data)
 {
     int i;
@@ -17,18 +16,18 @@ static int ft_prefix(char *str,t_expand *expd, t_data *data)
     return (i);
 }
 
-static char *ft_replace(char *key, t_env_list *env_lst,t_data *data)
+static char *ft_expansion(char *key, t_env_list *env_lst,t_data *data)
 {
     char *tmp;
-    
+
     tmp = NULL;
-    if (data->expd->quote)
+    if (data->expd->quote == '\'')
     {
       tmp = ft_strjoin("$", key);
       if (!tmp)
         ft_shell_exit(data);
       return tmp;
-    } 
+    }
     while(env_lst)
     {
         if (ft_strcmp(key, env_lst->var) == 0)
@@ -63,12 +62,12 @@ static int ft_val(char *str,t_expand *expd,t_env_list *env_lst, t_data *data)
         return (1);
     }
     i++;
-    while (ft_isalnum(str[i]) && str[i] != 39 && str[i] != 34)
+    while (ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"')
         i++;
     expd->key = ft_substr(str, 1, (i - 1));
     if (!expd->key)
         ft_shell_exit(data);
-    expd->val = ft_replace(expd->key, env_lst,data);
+    expd->val = ft_expansion(expd->key, env_lst,data);
     if (!expd->val)
         ft_shell_exit(data);
     return (i);
@@ -85,13 +84,19 @@ static int ft_cat(char *str,t_expand *expd, t_data *data)
         i++;
     expd->suffix = ft_substr(str, 0, i);
     tmp = ft_strjoin(expd->prefix, expd->val);
-    if (!tmp)
+    if (!tmp || !expd->suffix)
         ft_shell_exit(data);
     expd->cat = ft_strjoin(tmp, expd->suffix);
+    printf("cat = %s\n",expd->cat);
     free(tmp);
     if (!expd->cat)
         ft_shell_exit(data);
-    ft_delquote(expd, data);
+    tmp = ft_delquote(expd->cat);
+    printf("tmp = %s\n",tmp);
+    if (!tmp)
+        ft_shell_exit(data);
+    free(expd->cat);
+    expd->cat = tmp;
     return (i);
 }
 

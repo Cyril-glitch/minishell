@@ -10,7 +10,6 @@ void  ft_add_expand(t_data *data)
   data->expd->cat = NULL;  
 
   data->expd->quote = 0;
-  data->expd->d_quote = 0;
 }
 
 void    ft_add_env_list(t_data *data, char **env)

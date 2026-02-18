@@ -1,79 +1,63 @@
 #include  "../inc/minishell.h"
 
-void    ft_quote_status(t_expand *expd, char c)
+int    ft_quote_status(t_expand *expd, char c)
 {
-        if (c == '\'' )
+        if (!expd->quote && (c == '\'' || c == '\"'))
         {
-            if (expd->quote == 0 && expd->d_quote == 0)
-                expd->quote = 1;
-            else if(expd->quote == 1 && expd->d_quote == 0)
-              expd->quote = 0;
+            expd->quote = c;
+            return 1;
         }
-        else if (c == '\"')
+        else if (expd->quote && c == expd->quote)
         {
-            if (expd->d_quote == 0 && expd->quote ==0)
-                expd->d_quote = 1;
-            else if(expd->d_quote == 1 && expd->quote == 0)
-              expd->d_quote = 0;
+            expd->quote = 0;
+            return 1;
         }
+        return 0;
 }
 
-static int  ft_quotelen(t_expand *expd, char *s)
+static int  new_len(char *s)
 {
-  int i;
-  int len;
+    int i = 0;
+    int len = 0;
+    char quote = 0;
 
-  i = 0;
-  len = 0;
-  while(s[i])
-  {
-    ft_quote_status(expd, s[i]);
-    if (s[i] != '\"' && s[i] != '\'')
-      len++;
-    else if (s[i] == '\"' && expd->quote)
-      len++;
-    else if (s[i] == '\'' && expd->d_quote)
-      len++;
-    i++;
-  }
-  return len;
+    while (s[i])
+    {
+        if (!quote && (s[i] == '\'' || s[i] == '\"'))
+            quote = s[i];
+        else if (quote && s[i] == quote)
+            quote = 0;
+        else
+            len++;
+        i++;
+    }
+    return len;
 }
 
-static char *ft_supquote(t_expand *expd, char *s, int len, t_data *data)
+char    *ft_delquote(char *s)
 {
-  int i;
-  int j;
-  char *tmp;
+    int i = 0;
+    int j = 0;
+    int len;
+    char quote = 0;
+    char *res;
 
-
-  i = 0;
-  j = 0;
-  tmp = 0;
-  tmp = malloc(sizeof(char) * (len + 1));
-  if (!tmp)
-    ft_shell_exit(data);
-  while(s[i])
-  {
-    ft_quote_status(expd, s[i]);
-    if (s[i] != '\"' && s[i] != '\'')
-      tmp[j++] = s[i];
-    else if (s[i] == '\"' && expd->quote)
-      tmp[j++] = s[i];
-    else if (s[i] == '\'' && expd->d_quote)
-      tmp[j++] = s[i];
-    i++;
-  }
-  return tmp;
-}
-
-void ft_delquote(t_expand *expd, t_data *data)
-{
-  int len;
-
-  len = ft_quotelen(expd, expd->cat);
-  if (len)
-  {
-    free(expd->cat);
-    expd->cat = ft_supquote(expd, expd->cat, len, data);
-  }
+    if (!s)
+        return NULL;
+    len = new_len(s);
+    res = malloc(sizeof(char) * (len + 1));
+    if (!res)
+        return NULL;
+    while (s[i])
+    {
+        if (!quote && (s[i] == '\'' || s[i] == '\"'))
+            quote = s[i];
+        else if (quote && s[i] == quote)
+            quote = 0;
+        else
+            res[j++] = s[i];
+        i++;
+    }
+    res[j] = 0;
+    return res;
 }
