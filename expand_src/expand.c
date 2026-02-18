@@ -1,5 +1,33 @@
 #include  "../inc/minishell.h"
 
+void ft_expd_zero(t_expand *expd)
+{
+    if (!expd)
+        return ;
+    if (expd->prefix)
+    {
+        free(expd->prefix);
+        expd->prefix = NULL;
+    }
+    if (expd->key)
+    {
+        free(expd->key);
+        expd->key = NULL;
+    }
+    if (expd->val)
+    {
+        free(expd->val);
+        expd->val = NULL;
+    }
+    if (expd->suffix)
+    {
+        free(expd->suffix);
+        expd->suffix = NULL;
+    }
+    expd->quote = 0;
+    expd->d_quote = 0;
+}
+
 static void	ft_print_lst(t_list	*lst)
 {
 	t_list	*current = NULL;

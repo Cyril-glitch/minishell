@@ -24,8 +24,8 @@ LEXER_SRC = lexer_src/init_token_utils.c \
 LEXER_OBJ = $(LEXER_SRC:.c=.o)
 
 EXPAND_SRC = expand_src/expand.c \
-						 expand_src/expand_utils.c \
-			 			 expand_src/subtitute.c
+			 			 expand_src/subtitute.c \
+						 expand_src/quote.c
 EXPAND_OBJ = $(EXPAND_SRC:.c=.o)
 
 #PARSER_SRC = 
