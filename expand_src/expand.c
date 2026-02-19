@@ -15,7 +15,7 @@ static size_t  ft_newlen(t_list *expd_lst)
   return len;
 }
 
-static void ft_expanded(char *content, t_list *expd_lst, t_data *data)
+static void ft_expanded(t_token *token_lst, t_list *expd_lst, t_data *data)
 {
   size_t  len;
   size_t  i;
@@ -27,30 +27,38 @@ static void ft_expanded(char *content, t_list *expd_lst, t_data *data)
   len = 0;
   len = ft_newlen(expd_lst);
   current = expd_lst;
-  free(content);
-  content = malloc(sizeof(char) * (len + 1));
-  if (!content)
+  free(token_lst->content);
+  token_lst->content = malloc(sizeof(char) * (len + 1));
+  if (!token_lst->content)
     ft_shell_exit(data);
   while(current)
   {
     i = 0;
-    while(((char*)expd_lst->content)[i])
+    while(((char*)current->content)[i])
     {
-      content[j] = ((char*)expd_lst->content)[i];
+      token_lst->content[j] = ((char*)current->content)[i];
       i++;
       j++;
     }
-    content[j] = 0;
+    token_lst->content[j] = 0;
     current = current->next;
   }
 }
 
 void ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
 {
-  while (token_lst)
+  t_token *current;
+
+  current = token_lst;
+  while (current)
   {
-      ft_subtitute(token_lst->content, token_lst, env_lst, data);
-      ft_expanded(token_lst->content, data->expd_lst,data);
-      token_lst = token_lst->next;
+      ft_subtitute(current->content, current, env_lst, data);
+      //printf("EXPAND NODE :\n\n");
+      //printf("%s\n", (char*)current->content);
+      ft_expanded(current, data->expd_lst,data);
+      //ft_print_lst(data->expd_lst);
+      //printf("\n\n");
+      ft_lstclear(&data->expd_lst, free); 
+      current = current->next;
   }
 }

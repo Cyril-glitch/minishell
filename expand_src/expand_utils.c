@@ -35,7 +35,7 @@ void	ft_print_lst(t_list	*lst)
 
 	while(current)
 	{
-		printf("%s->",(char*)current->content);
+		printf("%s",(char*)current->content);
 		current = current->next;
 	}
   printf("\n");
