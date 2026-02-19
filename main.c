@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 14:58:54 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/19 14:37:21 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,21 @@ int main(int ac, char **av, char **env)
 {
   (void)ac;
   (void)av;
-  (void)env;
   struct sigaction	sig_a;
   struct termios    orig_termios;
   struct termios    new_termios;
   //t_env_list      *env_list;
   t_token_list      token_list;
   t_cmd_list        cmd_list;
+  t_cmd             *current;
   char *line;
+  int   fd_tmp;
 
   ft_init_signal(&sig_a);
   ft_termios(&orig_termios, &new_termios);
   //env_list = ft_env_list(env);
   g_sig_status = 0;
-
+  
   while (1)
   {
     line = readline("losmachinos:~$ ");
@@ -42,7 +43,18 @@ int main(int ac, char **av, char **env)
     {
       if (parser(&token_list, &cmd_list))
       {
-        ft_display_list_cmd(&cmd_list);
+        fd_tmp = 0;
+        exec(cmd_list.head, env, &fd_tmp);
+        current = cmd_list.head->next;
+        while (current)
+        {
+          exec(current, env, &fd_tmp);
+          current = current->next;
+        }
+        while (wait(NULL) > 0)
+          ;
+        if (fd_tmp != 0)
+            close(fd_tmp);
         ft_db_lstclear_cmd(&cmd_list, free);
       }
       ft_db_lstclear_token(&token_list, free);

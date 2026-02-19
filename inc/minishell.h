@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 14:47:29 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/19 13:16:41 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include "libft.h"
 # include <signal.h>
 # include <termios.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # ifdef __APPLE__
     /* Ces fonctions sont dans la lib readline mais absentes des headers par défaut du Mac */
@@ -57,8 +61,6 @@ typedef struct s_cmd
 {
     char          				**args;
 	t_redir_list				*redirs_list;
-    int           				fd_in;
-    int           				fd_out;
 	int							is_build;
     struct s_cmd 				*next;
 	struct s_cmd				*prev;
@@ -147,5 +149,12 @@ void		ft_db_lstdelone_redir(t_redir *token, void (*del)(void*));
 void		ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*));
 t_redir    	*ft_db_lstnew_redir();
 void		ft_display_list_redir(t_redir_list *lst);
+
+//EXEC
+void    	exec(t_cmd *cmd, char **env, int *fd_tmp);
+void    	redirection(t_cmd *cmd);
+int			ft_tabclear(char **tab);
+char		**parse_path(char **env);
+char		*find_way_path(char **path_tab, char *cmd);
 
 #endif

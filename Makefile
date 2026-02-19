@@ -48,14 +48,16 @@ PARSER_OBJ = $(PARSER_SRC:.c=.o)
 #EXPAND_SRC = 
 #EXPAND_OBJ = $(INIT_SRC:.c=.o)
 
-#EXEC_SRC =
-#EXEC_OBJ = $(INIT_SRC:.c=.o)
+EXEC_SRC =		exec_src/exec.c \
+				exec_src/redir.c \
+				exec_src/exec_utils.c
+EXEC_OBJ = $(EXEC_SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB)
+$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(EXEC_OBJ) $(LIB)
 	mkdir -p bin
-	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(LIB) $(RL_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(EXEC_OBJ) $(LIB) $(RL_LIB) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
@@ -70,6 +72,7 @@ clean:
 	rm -f $(MAIN_OBJ)
 	rm -f $(LEXER_OBJ)
 	rm -f $(PARSER_OBJ)
+	rm -f $(EXEC_OBJ)
 	make clean -C $(LIBDIR)
 
 bin: all clean

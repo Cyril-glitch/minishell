@@ -12,7 +12,7 @@ Votre shell doit : ⏳
 
     Posséder un historique fonctionnel. ✅ 
 
-    Chercher et lancer le bon exécutable (basé sur la variable PATH ou via un chemin relatif/absolu). ❌
+    Chercher et lancer le bon exécutable (basé sur la variable PATH ou via un chemin relatif/absolu). ✅ 
 
     Utiliser au plus une variable globale pour gérer les signaux (pour s'assurer que le gestionnaire de signaux n'accède pas à vos structures de données principales). ✅ 
 
@@ -22,17 +22,17 @@ Votre shell doit : ⏳
 
     Gérer les guillemets doubles (") : empêche l'interprétation des métacaractères, ✅ sauf pour le $ (signe dollar). ✅ 
 
-🔄 Redirections & Pipes ❌
+🔄 Redirections & Pipes ✅ 
 
-    < : Redirige l'entrée standard. ❌
+    < : Redirige l'entrée standard. ✅ 
 
-    > : Redirige la sortie standard (écrase le fichier). ❌
+    > : Redirige la sortie standard (écrase le fichier). ✅ 
 
-    << : "Here-doc" (lit l'entrée jusqu'à rencontrer le délimiteur). Ne met pas à jour l'historique. ❌
+    << : "Here-doc" (lit l'entrée jusqu'à rencontrer le délimiteur). Ne met pas à jour l'historique. ✅ 
 
-    >> : Redirige la sortie standard en mode append (ajoute à la fin du fichier). ❌
+    >> : Redirige la sortie standard en mode append (ajoute à la fin du fichier). ✅ 
 
-    | (Pipes) : La sortie de chaque commande est connectée à l'entrée de la suivante. ❌
+    | (Pipes) : La sortie de chaque commande est connectée à l'entrée de la suivante. ✅ 
 
 💲 Variables d'environnement
 

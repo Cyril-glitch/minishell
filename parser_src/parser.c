@@ -3,18 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 15:08:22 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/18 09:42:49 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "../inc/minishell.h"
 
-int is_build()
-{
-    return (1);
+int is_build(t_cmd **cmd)
+{   
+    if (!ft_strcmp((*cmd)->args[0], "echo") || 
+    !ft_strcmp((*cmd)->args[0], "cd") || 
+    !ft_strcmp((*cmd)->args[0], "pwd") || 
+    !ft_strcmp((*cmd)->args[0], "export") || 
+    !ft_strcmp((*cmd)->args[0], "unset") || 
+    !ft_strcmp((*cmd)->args[0], "env") || 
+    !ft_strcmp((*cmd)->args[0], "exit"))
+        return (1);
+    else
+        return (0);
 }
 
 void    init_redir(t_token **current, t_cmd **cmd)
@@ -62,8 +71,6 @@ void    init_cmd_utils(t_token **current, t_cmd **cmd)
             (*cmd)->args[i][j] = '\0';
             i++;
         }
-        if (is_build())
-            (*cmd)->is_build = 1;
         *current = (*current)->next;
     }
     (*cmd)->args[i] = NULL;
@@ -93,9 +100,11 @@ void init_cmd(t_cmd **cmd, t_token **current)
     if (!(*cmd)->args)
     {
         //fonction free
-        exit(1);
     }
     init_cmd_utils(current, cmd);
+    // fonction pour enlever les quote sur tout les arguments de la commande
+    if (is_build(cmd))
+            (*cmd)->is_build = 1;
 }
 
 int    parser(t_token_list *token_list, t_cmd_list *cmd_list)

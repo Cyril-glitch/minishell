@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_lst_db_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:12:11 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 13:14:28 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/19 09:42:06 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ t_cmd    *ft_db_lstnew_cmd()
 	new_cmd->prev = NULL;
 	new_cmd->args = NULL;
 	new_cmd->redirs_list = NULL;
-	new_cmd->fd_in = 0;
-	new_cmd->fd_out = 1;
+	new_cmd->is_build = 0;
 	new_cmd->redirs_list = malloc(sizeof(t_redir_list)); 
     if (new_cmd->redirs_list)
     {
