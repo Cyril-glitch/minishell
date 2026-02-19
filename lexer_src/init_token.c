@@ -6,53 +6,53 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:33:25 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/15 21:22:19 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:18:17 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void 	init_word(char *str, t_token *token, int *i)
+void 	init_word(t_data *data, t_token *token, int *i)
 {
     int j;
     char quote;
     
     j = 0;
     quote = 'c';
-    nb_of_malloc(str, i, &j, quote);
+    nb_of_malloc(data->line, i, &j, quote);
 	token->content = malloc(sizeof(char) * (j + 1));
 	if (!token->content)
-		return;
-    copy_word(str, i, quote, token);
+		ft_shell_exit(data);
+    copy_word(data->line, i, quote, token);
 	token->content[j] = '\0';
 	token->type = WORD;
 }
 
-void    init_pipe(t_token *token, int *i)
+void    init_pipe(t_data *data, t_token *token, int *i)
 {
     token->content = malloc(sizeof(char) * 2);
     if (!token->content)
-        return;
+        ft_shell_exit(data);
     token->content[0] = '|';
     token->content[1] = '\0';
     (*i)++;
     token->type = PIPE;
 }
 
-void	init_redir_in(char *str, t_token *token, int *i)
+void	init_redir_in(t_data *data, t_token *token, int *i)
 {
     int j;
     
     j = 0;
-	while (str[*i + j] == '<')
+	while (data->line[*i + j] == '<')
         j++;
 	token->content = malloc(sizeof(char) * (j + 1));
     if (!token->content)
-        return;
+        ft_shell_exit(data);
     j = 0;
-	while (str[*i] == '<')
+	while (data->line[*i] == '<')
 	{
-        token->content[j] = str[*i];
+        token->content[j] = data->line[*i];
 		(*i)++;
 		j++;
 	}
@@ -63,20 +63,20 @@ void	init_redir_in(char *str, t_token *token, int *i)
         token->type = D_REDIR_IN;
 }
 
-void	init_redir_out(char *str, t_token *token, int *i)
+void	init_redir_out(t_data *data, t_token *token, int *i)
 {
     int j;
     
     j = 0;
-	while (str[*i + j] == '>')
+	while (data->line[*i + j] == '>')
         j++;
 	token->content = malloc(sizeof(char) * (j + 1));
 	if (!token->content)
-        return;
+        ft_shell_exit(data);
     j = 0;
-	while (str[*i] == '>')
+	while (data->line[*i] == '>')
 	{
-        token->content[j] = str[*i];
+        token->content[j] = data->line[*i];
 		(*i)++;
 		j++;
 	}
@@ -87,27 +87,15 @@ void	init_redir_out(char *str, t_token *token, int *i)
         token->type = D_REDIR_OUT;
 }
 
-void 	init_token(char *str, t_token *token, int *i)
+void 	init_token(t_data *data, t_token *token, int *i)
 {
-    swipe_space(str, i);
-	if (!is_separator(str[*i]))
-    {
-        init_word(str, token, i);
-        return;
-    }
-	if (str[*i] == '|')
-    {
-        init_pipe(token, i);
-        return;
-    }
-    if (str[*i] == '<')
-    {
-        init_redir_in(str, token, i);
-        return;
-    }
-    if (str[*i] == '>')
-    {
-        init_redir_out(str, token, i);
-        return;
-    }
+    swipe_space(data->line, i);
+	if (!is_separator(data->line[*i]))
+        init_word(data, token, i);
+	if (data->line[*i] == '|')
+        init_pipe(data, token, i);
+    if (data->line[*i] == '<')
+        init_redir_in(data, token, i);
+    if (data->line[*i] == '>')
+        init_redir_out(data, token, i);
 }

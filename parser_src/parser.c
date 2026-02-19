@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/18 09:42:49 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:06:25 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,18 @@ void init_cmd(t_cmd **cmd, t_token **current)
             (*cmd)->is_build = 1;
 }
 
-int    parser(t_token_list *token_list, t_cmd_list *cmd_list)
+int    parser(t_data *data)
 {
     t_token *current;
     t_cmd *new_cmd;
     
-    if (!check_error(token_list))
+    if (!check_error(data->token_list))
         return (0);
-    current = token_list->head;
+    current = data->token_list->head;
     new_cmd = ft_db_lstnew_cmd();
-    cmd_list->head = new_cmd;
-    cmd_list->tail = new_cmd;
-    cmd_list->size = 1;
+    data->cmd_list->head = new_cmd;
+    data->cmd_list->tail = new_cmd;
+    data->cmd_list->size = 1;
     init_cmd(&new_cmd, &current);
     while (current)
     {
@@ -129,7 +129,7 @@ int    parser(t_token_list *token_list, t_cmd_list *cmd_list)
             break;
         }
         new_cmd = ft_db_lstnew_cmd();
-        ft_db_lstadd_back_cmd(cmd_list, new_cmd);
+        ft_db_lstadd_back_cmd(data->cmd_list, new_cmd);
         init_cmd(&new_cmd, &current);
     }
     return (1);

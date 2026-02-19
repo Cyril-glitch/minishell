@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:31:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/15 12:02:22 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/19 15:53:41 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,29 @@ int     verif_quote(char *str)
     return (1);
 }
 
-int     lexer(char *str, t_token_list *token_list)
+int     lexer(t_data *data)
 {
     int i;
     t_token *new_token;
     
-    if (!verif_quote(str))
+    if (!verif_quote(data->line))
     {
         printf(">\n");
         return (0);
     }
     i = 0;
 	new_token = ft_db_lstnew_token();
-	token_list->head = new_token;
-	token_list->tail = new_token;
-	token_list->size = 1;
-	init_token(str, token_list->head, &i);
-    swipe_space(str, &i);
-    while (str[i])
+	data->token_list->head = new_token;
+	data->token_list->tail = new_token;
+	data->token_list->size = 1;
+	init_token(data, data->token_list->head, &i);
+    swipe_space(data->line, &i);
+    while (data->line[i])
     {
         new_token = ft_db_lstnew_token();
-        ft_db_lstadd_back_token(token_list, new_token);
-        init_token(str, new_token, &i);
-        swipe_space(str, &i);
+        ft_db_lstadd_back_token(data->token_list, new_token);
+        init_token(data, new_token, &i);
+        swipe_space(data->line, &i);
     }
-    //ft_display_list_token(token_list);
     return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/19 13:16:41 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:22:41 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,45 @@ typedef struct s_env_list
 	struct s_env_list			*next;
 }								t_env_list;
 
+typedef struct  s_expand
+{
+    char *prefix;
+    char *key;
+    char *val;
+    char *suffix;
+    char *cat;
+
+    char quote;
+} t_expand;
+
+typedef struct s_data {
+    char *line;
+	int					fd_tmp;
+    t_env_list      *env_list;
+    t_token_list    *token_list;
+	t_cmd_list		*cmd_list;
+    struct sigaction	*sig_a;
+    struct termios  *orig_termios;
+    struct termios  *new_termios;
+    t_expand *expd;
+    t_list *expd_lst;
+    int             last_exit_code;
+} t_data;
+
+//EXPAND
+void ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
+void ft_expd_zero(t_expand *expd);
+int    ft_quote_status(t_expand *expd, char c);
+void ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
+char *ft_delquote(char *str);
+
 //INIT
-void	ft_shell_exit(t_token_list *list,\
-    t_env_list *env_list,struct termios orig_termios);
-void							ft_init_signal(struct sigaction *sig_a);
-void	ft_termios(struct termios *orig_termios,
-				struct termios *new_termios);
+void	ft_init_signal(struct sigaction *sig_a);
+void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
+t_data  *ft_init_data(int ac, char **av, char **env);
+void    ft_add_env_list(t_data *data, char **env);
+void    ft_add_token_list(t_data *data);
+void  ft_add_expand(t_data *data);
 
 //INIT_ENV
 t_env_list						*ft_new_env(char *str);
@@ -121,17 +154,21 @@ void		ft_db_lstadd_back_token(t_token_list *token_list, t_token *new);
 void		ft_db_lstdelone_token(t_token *token, void (*del)(void*));
 void		ft_db_lstclear_token(t_token_list *token_list, void (*del)(void*));
 t_token		*ft_db_lstnew_token();
-void		init_word(char *str, t_token *token, int *i);
-void    	init_pipe(t_token *token, int *i);
-void		init_redir_in(char *str, t_token *token, int *i);
-void		init_redir_out(char *str, t_token *token, int *i);
-void		init_token(char *str, t_token *token, int *i);
+void		init_word(t_data *data, t_token *token, int *i);
+void    	init_pipe(t_data *data, t_token *token, int *i);
+void		init_redir_in(t_data *data, t_token *token, int *i);
+void		init_redir_out(t_data *data, t_token *token, int *i);
+void		init_token(t_data *data, t_token *token, int *i);
 void		swipe_space(char *str, int *i);
 int			is_separator(char c);
 void		ft_display_list_token(t_token_list *lst);
-int		lexer(char *str, t_token_list *token_list);
+int			lexer(t_data *data);
 void    	nb_of_malloc(char *str, int *i, int *j, char quote);
 void    	copy_word(char *str, int *i, char quote, t_token *token);
+
+//SHELL_EXIT
+void	ft_shell_exit(t_data *data);
+void    ft_free_data(t_data *data);
 
 //PARSER
 void		ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);
@@ -140,7 +177,7 @@ void		ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void*));
 void		ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void*));
 t_cmd		*ft_db_lstnew_cmd();
 void		ft_display_list_cmd(t_cmd_list *lst);
-int	    	parser(t_token_list *token_list, t_cmd_list *cmd_list);
+int	    	parser(t_data *data);
 int			is_redir(t_token *current);
 int			check_error(t_token_list *token_list);
 void		ft_db_lstadd_front_redir(t_redir_list *redir_list, t_redir *new);
@@ -151,10 +188,11 @@ t_redir    	*ft_db_lstnew_redir();
 void		ft_display_list_redir(t_redir_list *lst);
 
 //EXEC
-void    	exec(t_cmd *cmd, char **env, int *fd_tmp);
-void    	redirection(t_cmd *cmd);
+void    	exec(t_cmd *cmd, char **env, t_data *data);
+void    	redirection(t_cmd *cmd, t_data *data);
 int			ft_tabclear(char **tab);
 char		**parse_path(char **env);
 char		*find_way_path(char **path_tab, char *cmd);
+void 		execut(t_data *data, char **env);
 
 #endif

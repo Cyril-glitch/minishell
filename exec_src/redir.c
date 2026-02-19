@@ -6,13 +6,13 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:26:44 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/19 13:32:36 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:27:48 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int    d_redir_in(char *str)
+int    d_redir_in(char *file, t_data *data)
 {
     char *line;
     int fd[2];
@@ -22,10 +22,8 @@ int    d_redir_in(char *str)
     {
         line = readline("> ");
         if (!line)
-        {
-            // fonction free
-        }
-        if (!ft_strcmp(line, str))
+            ft_shell_exit(data);
+        if (!ft_strcmp(line, file))
         {
             free(line);
             break;
@@ -38,14 +36,14 @@ int    d_redir_in(char *str)
     return(fd[0]);
 }
 
-void    open_file(t_redir *current, int *fd, int *flag)
+void    open_file(t_redir *current, int *fd, int *flag, t_data *data)
 {
         if (current->type == REDIR_IN || current->type == D_REDIR_IN)
         {
             if (current->type == REDIR_IN)
                 *fd = open(current->file, O_RDONLY);
             if (current->type == D_REDIR_IN)
-                *fd = d_redir_in(current->file);
+                *fd = d_redir_in(current->file, data);
             *flag = 1;
         }
         if (current->type == REDIR_OUT || current->type == D_REDIR_OUT)
@@ -58,7 +56,7 @@ void    open_file(t_redir *current, int *fd, int *flag)
         }
 }
 
-void    redirection(t_cmd *cmd)
+void    redirection(t_cmd *cmd, t_data *data)
 {
     t_redir *current;
     int fd;
@@ -69,11 +67,9 @@ void    redirection(t_cmd *cmd)
     flag = 0;
     while (current)
     {
-        open_file(current, &fd, &flag);
+        open_file(current, &fd, &flag, data);
         if (fd == -1)
-        {
-            //fonction free;
-        }
+            ft_shell_exit(data);
         if (flag == 1)
             dup2(fd, 0);
         if (flag == 2)
