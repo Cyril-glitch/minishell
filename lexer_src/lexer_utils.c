@@ -32,7 +32,7 @@ void	ft_display_list(t_token_list *lst)
 	current = lst->head;
 	while (current)
 	{
-		printf("%s -> ", current->content);
+		printf("%s->", current->content);
 		current = current->next;
 	}
 	printf("NULL\n");

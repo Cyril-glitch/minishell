@@ -52,14 +52,14 @@ static int ft_val(char *str,t_expand *expd,t_env_list *env_lst, t_data *data)
       expd->val= ft_strdup("");
       if (!expd->val)
         ft_shell_exit(data);
-      return (1);
+      return (0);
     }
-    if (str[i + 1] == '?')
+    if (str[i] && str[i] == '$' && str[i + 1] == '?')
     {
         expd->val = ft_itoa(g_sig_status);
         if (!expd->val)
             ft_shell_exit(data);
-        return (1);
+        return (2);
     }
     i++;
     while (ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"')
@@ -80,19 +80,17 @@ static int ft_cat(char *str,t_expand *expd, t_data *data)
 
     i = 0;
     tmp = NULL;
-    while (str[i] != '$' && str[i])
+    while (str[i] && str[i] != '$')
         i++;
     expd->suffix = ft_substr(str, 0, i);
     tmp = ft_strjoin(expd->prefix, expd->val);
     if (!tmp || !expd->suffix)
         ft_shell_exit(data);
     expd->cat = ft_strjoin(tmp, expd->suffix);
-    printf("cat = %s\n",expd->cat);
     free(tmp);
     if (!expd->cat)
         ft_shell_exit(data);
     tmp = ft_delquote(expd->cat);
-    printf("tmp = %s\n",tmp);
     if (!tmp)
         ft_shell_exit(data);
     free(expd->cat);

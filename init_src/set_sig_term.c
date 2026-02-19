@@ -23,7 +23,7 @@ static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_sig_status = 1;
+		g_sig_status = signum;
 	}
 }
 
