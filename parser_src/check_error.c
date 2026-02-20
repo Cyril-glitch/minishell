@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 20:46:59 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/15 20:48:00 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 15:30:08 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 int check_error_pipe(t_token *current)
 {
-    if (current->type == 1 && (!current->prev || !current->next))
-        return (0);
-    if (current->type == 1 && current->next)
+    if ((current->type == 1) && (!current->prev || !current->next))
+        return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2), 0);
+    if ((current->type == 1) && current->next)
     {
         if (current->next->type == 1)
-            return (0);
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2), 0);
+    }
+    if ((current->type == 6) && (!current->prev || !current->next))
+        return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2), 0);
+    if ((current->type == 6) && current->next)
+    {
+        if (current->next->type == 1)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2), 0);
     }
     return (1);
 }
@@ -30,18 +37,30 @@ int check_error_redir(t_token *current)
 
     i = 0;
     if (is_redir(current) && !current->next)
-        return (0);
+        return (ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2), 0);
     if (is_redir(current) && current->next)
     {
-        if (is_redir(current->next) || current->next->type == 1)
-            return (0);
+        if (current->next->type == 1)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2), 0);
+        if (current->next->type == 2)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2), 0);
+        if (current->next->type == 3)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2), 0);
+        if (current->next->type == 4)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2), 0);
+        if (current->next->type == 5)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `>>'\n", 2), 0);
+        if (current->next->type == 6)
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2), 0);
     }
     if (is_redir(current))
     {
         while (current->content[i])
             i++;
-        if (i > 2)
-            return (0);
+        if (i > 2 && current->content[0] == '<')
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2), 0);
+        if (i > 2 && current->content[0] == '>')
+            return (ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2), 0);
     }
     return (1);
 }
@@ -54,15 +73,9 @@ int check_error(t_token_list *token_list)
     while (current)
     {
         if (!check_error_pipe(current))
-        {
-            //fonction free
-            return (printf("error pipe\n"), 0);
-        }
+            return (0);
         if (!check_error_redir(current))
-        {
-            //fonction free
-            return (printf("error redir\n"), 0); 
-        }
+            return (0); 
         current = current->next;
     }
     return (1);

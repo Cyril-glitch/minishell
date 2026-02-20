@@ -34,6 +34,7 @@ t_data *ft_init_data(int ac, char **av, char **env)
   ft_add_termios(data);
   ft_add_env_list(data, env);
   ft_add_token_list(data);
+  ft_add_cmd_list(data);
   ft_add_expand(data);
   data->expd_lst = NULL;
   data->last_exit_code = 0;

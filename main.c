@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 12:01:09 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 12:36:52 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int ac, char **av, char **env)
 	add_history(data->line);
 	lexer(data);
     ft_expand(data->token_list->head, data->env_list,data);
-	parser(data);
-    execut(data, env);
+	if (parser(data))
+    	execut(data, env);
     ft_db_lstclear_token(data->token_list, free);
     ft_db_lstclear_cmd(data->cmd_list, free);
 		free(data->line);

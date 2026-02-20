@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:12:11 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/19 09:42:06 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 12:48:36 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ t_cmd    *ft_db_lstnew_cmd()
 	new_cmd->args = NULL;
 	new_cmd->redirs_list = NULL;
 	new_cmd->is_build = 0;
-	new_cmd->redirs_list = malloc(sizeof(t_redir_list)); 
-    if (new_cmd->redirs_list)
-    {
-        new_cmd->redirs_list->head = NULL;
-        new_cmd->redirs_list->tail = NULL;
-        new_cmd->redirs_list->size = 0;
-    }
+	new_cmd->redirs_list = malloc(sizeof(t_redir_list));
+	if (!new_cmd->redirs_list)
+		return (NULL);
+    new_cmd->redirs_list->head = NULL;
+    new_cmd->redirs_list->tail = NULL;
+    new_cmd->redirs_list->size = 0;
     return (new_cmd);
 }

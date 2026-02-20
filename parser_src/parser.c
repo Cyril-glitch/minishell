@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 11:35:13 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 15:42:36 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int is_build(t_cmd **cmd)
 {   
+    if (!((*cmd)->args[0]))
+        return (1);
     if (!ft_strcmp((*cmd)->args[0], "echo") || 
     !ft_strcmp((*cmd)->args[0], "cd") || 
     !ft_strcmp((*cmd)->args[0], "pwd") || 
@@ -39,7 +41,7 @@ void    init_redir(t_token **current, t_cmd **cmd, t_data *data)
     new_redir->type = (*current)->type;
     *current = (*current)->next;
     new_redir->file = malloc(sizeof(char) * (ft_strlen((*current)->content) + 1));
-    if (new_redir->file)
+    if (!new_redir->file)
         ft_shell_exit(data);
     while ((*current)->content[k])
     {
@@ -113,9 +115,6 @@ int    parser(t_data *data)
     
     if (!check_error(data->token_list))
         return (0);
-    data->cmd_list = malloc(sizeof(t_cmd_list));
-    if (!data->cmd_list)
-            ft_shell_exit(data);
     current = data->token_list->head;
     new_cmd = ft_db_lstnew_cmd();
     if (!new_cmd)

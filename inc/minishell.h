@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 11:45:42 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 14:30:54 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef enum e_type
 	REDIR_IN,   // <
 	REDIR_OUT,  // >
 	D_REDIR_IN, // <<
-	D_REDIR_OUT // >>
+	D_REDIR_OUT, // >>
+	DOUBLE_PIPE
 }								t_type;
 
 typedef struct s_redir
@@ -135,6 +136,7 @@ t_data  *ft_init_data(int ac, char **av, char **env);
 void    ft_add_env_list(t_data *data, char **env);
 void    ft_add_token_list(t_data *data);
 void  ft_add_expand(t_data *data);
+void    ft_add_cmd_list(t_data *data);
 
 //INIT_ENV
 t_env_list						*ft_new_env(char *str);

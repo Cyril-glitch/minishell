@@ -25,6 +25,17 @@ void    ft_add_token_list(t_data *data)
     data->token_list = malloc(sizeof(t_token_list));
     if (!data->token_list)
       ft_shell_exit(data);
+    data->token_list->head = NULL;
+    data->token_list->tail = NULL;
+    data->token_list->size = 0;
 }
-
+void    ft_add_cmd_list(t_data *data)
+{
+    data->cmd_list = malloc(sizeof(t_cmd_list));
+    if (!data->cmd_list)
+      ft_shell_exit(data);
+    data->cmd_list->head = NULL;
+    data->cmd_list->tail = NULL;
+    data->cmd_list->size = 0;
+}
 
