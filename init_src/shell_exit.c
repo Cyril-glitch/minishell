@@ -9,7 +9,9 @@ void    ft_free_data(t_data *data)
     if (data->env_list)
         ft_lstclear_env(&data->env_list);
     if (data->token_list)
-        ft_db_lstclear(data->token_list, free);
+        ft_db_lstclear_token(data->token_list, free);
+    if (data->cmd_list)
+        ft_db_lstclear_cmd(data->cmd_list, free);
     if (data->sig_a)
         free(data->sig_a);
     if (data->orig_termios)

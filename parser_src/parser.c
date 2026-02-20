@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/19 16:06:25 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 10:49:00 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int    parser(t_data *data)
     
     if (!check_error(data->token_list))
         return (0);
+    data->cmd_list = malloc(sizeof(t_cmd_list));
     current = data->token_list->head;
     new_cmd = ft_db_lstnew_cmd();
     data->cmd_list->head = new_cmd;

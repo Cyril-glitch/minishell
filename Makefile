@@ -23,9 +23,12 @@ LIB = ./libft/lib/libft.a
 MAIN = ./main.c
 MAIN_OBJ = $(MAIN:.c=.o)
 
-INIT_SRC = 	init_src/init.c \
-			init_src/init_env.c \
-			init_src/env_lst_utils.c
+INIT_SRC =	init_src/init_data.c \
+			init_src/env_lst_utils.c \
+			init_src/set_sig_term.c \
+			init_src/copy_env.c \
+			init_src/shell_exit.c \
+			init_src/init_list.c 
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 
@@ -45,8 +48,11 @@ PARSER_SRC = 	parser_src/init_cmd_lst_db_utils.c \
 PARSER_OBJ = $(PARSER_SRC:.c=.o)
 
 
-#EXPAND_SRC = 
-#EXPAND_OBJ = $(INIT_SRC:.c=.o)
+EXPAND_SRC = 	expand_src/expand.c \
+			 	expand_src/subtitute.c \
+				expand_src/quote.c \
+				expand_src/expand_utils.c 
+EXPAND_OBJ = $(EXPAND_SRC:.c=.o)
 
 EXEC_SRC =		exec_src/exec.c \
 				exec_src/redir.c \
@@ -55,15 +61,15 @@ EXEC_OBJ = $(EXEC_SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(EXEC_OBJ) $(LIB)
+$(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(EXEC_OBJ) $(EXPAND_OBJ) $(LIB)
 	mkdir -p bin
-	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(EXEC_OBJ) $(LIB) $(RL_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(PARSER_OBJ) $(EXEC_OBJ) $(EXPAND_OBJ) $(LIB) $(RL_LIB) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
 
 $(LIB) :
-	make -C $(LIBDIR)
+	make bonus -C $(LIBDIR)
  
 .PHONY: all clean fclean re
 
@@ -73,6 +79,7 @@ clean:
 	rm -f $(LEXER_OBJ)
 	rm -f $(PARSER_OBJ)
 	rm -f $(EXEC_OBJ)
+	rm -f $(EXPAND_OBJ)
 	make clean -C $(LIBDIR)
 
 bin: all clean
