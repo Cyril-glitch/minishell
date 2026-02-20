@@ -88,6 +88,7 @@ clean:
 	rm -f $(PARSER_OBJ)
 	rm -f $(EXEC_OBJ)
 	rm -f $(EXPAND_OBJ)
+	rm -f $(BUILD_OBJ)
 	make clean -C $(LIBDIR)
 
 bin: all clean
