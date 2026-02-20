@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 10:50:38 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 12:01:09 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ volatile sig_atomic_t	g_sig_status;
 
 int	main(int ac, char **av, char **env)
 {
-  t_data *data;
+  	t_data *data;
 
-  data = ft_init_data(ac,av,env);
+  	data = ft_init_data(ac,av,env);
 	while (1)
 	{
     data->fd_tmp = 0;
     data->line = readline("losmachinos:~$ ");
-		if (!data->line)
-			ft_shell_exit(data);
+	if (!data->line)
+		ft_shell_exit(data);
 	add_history(data->line);
 	lexer(data);
     ft_expand(data->token_list->head, data->env_list,data);
