@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/19 16:22:41 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 11:45:42 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void    	exec(t_cmd *cmd, char **env, t_data *data);
 void    	redirection(t_cmd *cmd, t_data *data);
 int			ft_tabclear(char **tab);
 char		**parse_path(char **env);
-char		*find_way_path(char **path_tab, char *cmd);
+char		*find_way_path(char **path_tab, char *cmd, t_data *data);
 void 		execut(t_data *data, char **env);
 
 #endif

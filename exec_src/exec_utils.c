@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/19 13:17:51 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 11:48:22 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ char	**parse_path(char **env)
 	if (!env[i])
 		return (NULL);
 	path_str = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
+	if (!path_str)
+		return (NULL);
 	path_tab = ft_split(path_str, ':');
+	if (!path_tab)
+		return (NULL);
 	return (path_tab);
 }
 
-char	*find_way_path(char **path_tab, char *cmd)
+char	*find_way_path(char **path_tab, char *cmd, t_data *data)
 {
 	int		i;
 	char	*way;
@@ -58,12 +62,16 @@ char	*find_way_path(char **path_tab, char *cmd)
 	while (path_tab[i])
 	{
 		tmp = ft_strjoin(path_tab[i], "/");
+		if (!tmp)
+			ft_shell_exit(data);
 		way = ft_strjoin(tmp, cmd);
-		if (!access(way, X_OK))
+		if (!way)
 		{
 			free(tmp);
-			return (way);
+			ft_shell_exit(data);
 		}
+		if (!access(way, X_OK))
+			return (free(tmp), way);
 		free(way);
 		free(tmp);
 		i++;

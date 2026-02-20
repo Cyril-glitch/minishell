@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/19 16:23:31 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 11:43:05 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void    exec(t_cmd *cmd, char **env, t_data *data)
     if (cmd->is_build == 0)
     {
         path_tab = parse_path(env);
-        way = find_way_path(path_tab, cmd->args[0]);
+        if (!path_tab)
+            ft_shell_exit(data);
+        way = find_way_path(path_tab, cmd->args[0], data);
         if (!way)
         {
             printf("command no found : %s\n", cmd->args[0]);

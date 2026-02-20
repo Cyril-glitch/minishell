@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 10:49:00 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 11:35:13 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,21 @@ int is_build(t_cmd **cmd)
         return (0);
 }
 
-void    init_redir(t_token **current, t_cmd **cmd)
+void    init_redir(t_token **current, t_cmd **cmd, t_data *data)
 {
     int k;
     t_redir *new_redir;
     
     k = 0;
     new_redir = ft_db_lstnew_redir();
+    if (!new_redir)
+            ft_shell_exit(data);
     ft_db_lstadd_back_redir((*cmd)->redirs_list, new_redir);
     new_redir->type = (*current)->type;
     *current = (*current)->next;
     new_redir->file = malloc(sizeof(char) * (ft_strlen((*current)->content) + 1));
+    if (new_redir->file)
+        ft_shell_exit(data);
     while ((*current)->content[k])
     {
         new_redir->file[k] = (*current)->content[k];
@@ -45,7 +49,7 @@ void    init_redir(t_token **current, t_cmd **cmd)
     new_redir->file[k] = '\0';
 }
 
-void    init_cmd_utils(t_token **current, t_cmd **cmd)
+void    init_cmd_utils(t_token **current, t_cmd **cmd, t_data *data)
 {
     int i;
     int j;
@@ -55,14 +59,12 @@ void    init_cmd_utils(t_token **current, t_cmd **cmd)
     {
         j = 0;
         if (is_redir(*current))
-            init_redir(current, cmd);
+            init_redir(current, cmd, data);
         else
         {
             (*cmd)->args[i] = malloc(sizeof(char) * (ft_strlen((*current)->content) + 1));
             if (!(*cmd)->args[i])
-            {
-                //fonction free
-            }
+                ft_shell_exit(data);
             while ((*current)->content[j])
             {
                 (*cmd)->args[i][j] = (*current)->content[j];
@@ -76,7 +78,7 @@ void    init_cmd_utils(t_token **current, t_cmd **cmd)
     (*cmd)->args[i] = NULL;
 }
 
-void init_cmd(t_cmd **cmd, t_token **current)
+void init_cmd(t_cmd **cmd, t_token **current, t_data *data)
 {
     int     i;
     t_token *tmp;
@@ -98,11 +100,8 @@ void init_cmd(t_cmd **cmd, t_token **current)
     }
     (*cmd)->args = malloc(sizeof(char *) * (i + 1));
     if (!(*cmd)->args)
-    {
-        //fonction free
-    }
-    init_cmd_utils(current, cmd);
-    // fonction pour enlever les quote sur tout les arguments de la commande
+            ft_shell_exit(data);
+    init_cmd_utils(current, cmd, data);
     if (is_build(cmd))
             (*cmd)->is_build = 1;
 }
@@ -115,12 +114,16 @@ int    parser(t_data *data)
     if (!check_error(data->token_list))
         return (0);
     data->cmd_list = malloc(sizeof(t_cmd_list));
+    if (!data->cmd_list)
+            ft_shell_exit(data);
     current = data->token_list->head;
     new_cmd = ft_db_lstnew_cmd();
+    if (!new_cmd)
+            ft_shell_exit(data);
     data->cmd_list->head = new_cmd;
     data->cmd_list->tail = new_cmd;
     data->cmd_list->size = 1;
-    init_cmd(&new_cmd, &current);
+    init_cmd(&new_cmd, &current, data);
     while (current)
     {
         if (current->content[0] == '|')
@@ -130,8 +133,10 @@ int    parser(t_data *data)
             break;
         }
         new_cmd = ft_db_lstnew_cmd();
+        if (!new_cmd)
+            ft_shell_exit(data);
         ft_db_lstadd_back_cmd(data->cmd_list, new_cmd);
-        init_cmd(&new_cmd, &current);
+        init_cmd(&new_cmd, &current, data);
     }
     return (1);
 }

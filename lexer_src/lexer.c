@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:31:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/20 11:14:02 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/20 11:21:47 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int     lexer(t_data *data)
         return (0);
     }
     i = 0;
-	new_token = ft_db_lstnew_token(data);
+	new_token = ft_db_lstnew_token();
     if (!new_token)
         ft_shell_exit(data);
 	data->token_list->head = new_token;
@@ -61,6 +61,8 @@ int     lexer(t_data *data)
     while (data->line[i])
     {
         new_token = ft_db_lstnew_token();
+        if (!new_token)
+            ft_shell_exit(data);
         ft_db_lstadd_back_token(data->token_list, new_token);
         init_token(data, new_token, &i);
         swipe_space(data->line, &i);
