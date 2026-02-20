@@ -24,10 +24,10 @@ t_env_list	*ft_new_env(char *str)
 	while (str[i] != '=')
 		i++;
 	new->line = strdup(str);
-	new->var = ft_substr(str, 0, i);
+	new->key = ft_substr(str, 0, i);
 	new->content = ft_substr(str, (i + 1), ft_strlen(&str[i + 1]));
 	new->next = NULL;
-	if (!new->line || !new->var || !new->content)
+	if (!new->line || !new->key || !new->content)
 		return (ft_clear_node_env(new), (NULL));
 	return (new);
 }

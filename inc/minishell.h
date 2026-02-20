@@ -23,6 +23,9 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
+
+# define  PATH_MAX 4096
 
 # ifdef __APPLE__
     /* Ces fonctions sont dans la lib readline mais absentes des headers par défaut du Mac */
@@ -91,7 +94,7 @@ typedef struct s_token_list
 typedef struct s_env_list
 {
 	char						*line;
-	char						*var;
+	char						*key;
 	char						*content;
 	struct s_env_list			*next;
 }								t_env_list;
@@ -186,6 +189,10 @@ void		ft_db_lstdelone_redir(t_redir *token, void (*del)(void*));
 void		ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*));
 t_redir    	*ft_db_lstnew_redir();
 void		ft_display_list_redir(t_redir_list *lst);
+
+//BUILD IN
+int  ft_cd(char *path,t_env_list *env_list, t_data *data);
+void  ft_pwd(t_env_list *env_list);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);

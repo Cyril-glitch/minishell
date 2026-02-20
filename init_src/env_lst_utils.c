@@ -58,8 +58,8 @@ void	ft_clear_node_env(t_env_list *node)
 		return ;
 	if (node->line)
 		free(node->line);
-	if (node->var)
-		free(node->var);
+	if (node->key)
+		free(node->key);
 	if (node->content)
 		free(node->content);
 	if (node)
