@@ -30,9 +30,11 @@ void  ft_export(char **args, t_env_list **env_list, t_data *data)
 {
     int			i;
     t_env_list	*tmp;
+    t_env_list	*dup;
 
     i = 1;
     tmp = NULL;
+    dup = NULL;
     if (!args[i])
     {
         ft_printlst_env(*env_list);
@@ -43,8 +45,11 @@ void  ft_export(char **args, t_env_list **env_list, t_data *data)
         if (ft_valid_args(args[i]))
         {
             tmp = ft_new_env(args[i]);
+            dup = ft_key_hunter(args[i], env_list);
             if (!tmp)
                 ft_shell_exit(data);
+            if (dup && dup->key == tmp->key)
+                ft_del_env(dup, env_list);
             ft_lstadd_back_env(env_list, tmp);
         }
         i++;

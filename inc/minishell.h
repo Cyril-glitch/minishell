@@ -97,6 +97,7 @@ typedef struct s_env_list
 	char						*key;
 	char						*content;
 	struct s_env_list			*next;
+	struct s_env_list			*prev;
 }								t_env_list;
 
 typedef struct  s_expand
@@ -194,6 +195,7 @@ void		ft_display_list_redir(t_redir_list *lst);
 int  ft_cd(char *path,t_env_list *env_list, t_data *data);
 void  ft_pwd(t_env_list *env_list);
 void  ft_export(char **args, t_env_list **env_list, t_data *data);
+void  ft_unset(char **args, t_env_list **env_list);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);

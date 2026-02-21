@@ -29,6 +29,7 @@ t_env_list	*ft_new_env(char *str)
     {
         new->content = NULL;
         new->next = NULL;
+        new->prev = NULL;
         return (new);
     }
     else

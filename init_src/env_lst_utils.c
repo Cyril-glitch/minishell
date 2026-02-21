@@ -47,6 +47,7 @@ void	ft_lstadd_back_env(t_env_list **lst, t_env_list *new)
 	{
 		last = ft_lstlast_env(*lst);
 		last->next = new;
+        new->prev = last;
 	}
 	else
 		*lst = new;
