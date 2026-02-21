@@ -85,17 +85,14 @@ static  void ft_back_old(t_env_list *env_list, char **path, t_data *data)
       }
       cur = cur->next;
     }
+    if (!check)
+        ft_putstr_fd("cd: OLDPWD not set\n", 2);
   }
-  if (!check)
-    ft_putstr_fd("cd: OLDPWD not set\n", 2);
-
 }
 
 int  ft_cd(char *path,t_env_list *env_list, t_data *data)
 {
   char *cur_path;
-  char *old_path;
-  char *new_path;
 
   cur_path = NULL;
   if (!ft_check_home(env_list))
@@ -107,8 +104,6 @@ int  ft_cd(char *path,t_env_list *env_list, t_data *data)
   ft_back_old(env_list, &path, data);
   if (chdir(path) == -1)
     return (perror("chdir"),(-1));
-  new_path = path;
-  old_path = cur_path;
   ft_swap_pwd(cur_path,path, env_list, data);
   return (0);
 }

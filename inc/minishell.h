@@ -193,6 +193,7 @@ void		ft_display_list_redir(t_redir_list *lst);
 //BUILD IN
 int  ft_cd(char *path,t_env_list *env_list, t_data *data);
 void  ft_pwd(t_env_list *env_list);
+void  ft_export(char **args, t_env_list **env_list, t_data *data);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);
