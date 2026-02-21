@@ -2,11 +2,14 @@
 
 t_env_list *ft_key_hunter(char *args, t_env_list *env_list)
 {
-    while (env_list)
+    t_env_list *cur;
+
+    cur = env_list;
+    while (cur)
     {
-        if (ft_strcmp(args, env_list->key) == 0)
-            return env_list;
-        env_list = env_list->next;
+        if (ft_strncmp(args, cur->key, ft_strlen(cur->key)) == 0)
+            return cur;
+        cur = cur->next;
     }
     return NULL;
 }

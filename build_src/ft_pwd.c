@@ -13,5 +13,5 @@ void  ft_pwd(t_env_list *env_list)
     perror("getcwd");
     return ;
   }
-  printf("PWD = %s\n",cur_path);
+  printf("%s\n",cur_path);
 }

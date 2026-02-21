@@ -27,6 +27,8 @@ static void ft_test_build(char *line, t_data *data)
         ft_export(args, &data->env_list, data);
     if (ft_strcmp(args[0], "unset") == 0)
         ft_unset(args, &data->env_list);
+    if (ft_strcmp(args[0], "echo") == 0)
+        ft_echo(args);
 }
 
 int	main(int ac, char **av, char **env)

@@ -50,7 +50,7 @@ static  void ft_back_home(t_env_list *env_list, char **path, t_data *data)
   t_env_list *cur;
 
   cur = env_list;
-  if (**path == 0 || ((ft_strcmp(*path, "--") == 0)))
+  if (!*path || ((ft_strcmp(*path, "--") == 0) || ((ft_strcmp(*path, "~") == 0))))
   {
     while (cur)
     {
