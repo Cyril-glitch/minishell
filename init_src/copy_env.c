@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_env.c                                         :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:53 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/23 11:09:54 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/13 10:28:57 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,30 @@
 
 t_env_list	*ft_new_env(char *str)
 {
-	int			i;
-	t_env_list	*new;
+    int			i;
+    t_env_list	*new;
 
-	i = 0;
-	new = malloc(sizeof(t_env_list));
-	if (!new)
-		return (NULL);
-	while (str[i] != '=')
-		i++;
-	new->line = strdup(str);
-	new->key = ft_substr(str, 0, i);
-	new->content = ft_substr(str, (i + 1), ft_strlen(&str[i + 1]));
-	new->next = NULL;
-	if (!new->line || !new->key || !new->content)
-		return (ft_clear_node_env(new), (NULL));
-	return (new);
+    i = 0;
+    new = malloc(sizeof(t_env_list));
+    if (!new)
+        return (NULL);
+    while (str[i] && str[i] != '=')
+        i++;
+    new->line = strdup(str);
+    new->key = ft_substr(str, 0, i);
+    if (!str[i])
+    {
+        new->content = NULL;
+        new->next = NULL;
+        new->prev = NULL;
+        return (new);
+    }
+    else
+        new->content = ft_substr(str, (i + 1), ft_strlen(&str[i + 1]));
+    new->next = NULL;
+    if (!new->line || !new->key || !new->content)
+        return (NULL);
+    return (new);
 }
 
 t_env_list	*ft_env_list(char **env)

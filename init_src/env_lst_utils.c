@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:39 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/23 11:09:37 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/13 10:28:48 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ t_env_list	*ft_lstlast_env(t_env_list *lst)
 void	ft_lstadd_back_env(t_env_list **lst, t_env_list *new)
 {
 	t_env_list	*last;
-
+    
 	if (*lst)
 	{
 		last = ft_lstlast_env(*lst);
 		last->next = new;
+        new->prev = last;
 	}
 	else
 		*lst = new;
