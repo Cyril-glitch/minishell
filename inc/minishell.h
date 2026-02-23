@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 14:30:54 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:22:41 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
+
+# define  PATH_MAX 4096
 
 # ifdef __APPLE__
     /* Ces fonctions sont dans la lib readline mais absentes des headers par défaut du Mac */
@@ -39,8 +42,7 @@ typedef enum e_type
 	REDIR_IN,   // <
 	REDIR_OUT,  // >
 	D_REDIR_IN, // <<
-	D_REDIR_OUT, // >>
-	DOUBLE_PIPE
+	D_REDIR_OUT // >>
 }								t_type;
 
 typedef struct s_redir
@@ -92,9 +94,10 @@ typedef struct s_token_list
 typedef struct s_env_list
 {
 	char						*line;
-	char						*var;
+	char						*key;
 	char						*content;
 	struct s_env_list			*next;
+	struct s_env_list			*prev;
 }								t_env_list;
 
 typedef struct  s_expand
@@ -136,7 +139,6 @@ t_data  *ft_init_data(int ac, char **av, char **env);
 void    ft_add_env_list(t_data *data, char **env);
 void    ft_add_token_list(t_data *data);
 void  ft_add_expand(t_data *data);
-void    ft_add_cmd_list(t_data *data);
 
 //INIT_ENV
 t_env_list						*ft_new_env(char *str);
@@ -189,12 +191,21 @@ void		ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*));
 t_redir    	*ft_db_lstnew_redir();
 void		ft_display_list_redir(t_redir_list *lst);
 
+//BUILD IN
+int  ft_cd(char *path,t_env_list *env_list, t_data *data);
+void  ft_pwd(t_env_list *env_list);
+void  ft_export(char **args, t_env_list **env_list, t_data *data);
+void  ft_unset(char **args, t_env_list **env_list);
+void ft_del_env(t_env_list *todel, t_env_list **env_list);
+t_env_list *ft_key_hunter(char *args, t_env_list *env_list);
+void ft_echo(char **args);
+
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);
 void    	redirection(t_cmd *cmd, t_data *data);
 int			ft_tabclear(char **tab);
 char		**parse_path(char **env);
-char		*find_way_path(char **path_tab, char *cmd, t_data *data);
+char		*find_way_path(char **path_tab, char *cmd);
 void 		execut(t_data *data, char **env);
 
 #endif
