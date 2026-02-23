@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:39 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/13 10:28:48 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/23 11:09:37 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	ft_clear_node_env(t_env_list *node)
 		return ;
 	if (node->line)
 		free(node->line);
-	if (node->var)
-		free(node->var);
+	if (node->key)
+		free(node->key);
 	if (node->content)
 		free(node->content);
 	if (node)

@@ -30,7 +30,7 @@ static char *ft_expansion(char *key, t_env_list *env_lst,t_data *data)
     }
     while(env_lst)
     {
-        if (ft_strcmp(key, env_lst->var) == 0)
+        if (ft_strcmp(key, env_lst->key) == 0)
         {
             tmp = ft_strdup(env_lst->content);
             if (!tmp)

@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/19 16:22:41 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 11:10:42 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ typedef enum e_type
 	REDIR_IN,   // <
 	REDIR_OUT,  // >
 	D_REDIR_IN, // <<
-	D_REDIR_OUT // >>
+	D_REDIR_OUT, // >>
+	DOUBLE_PIPE
 }								t_type;
 
 typedef struct s_redir
@@ -138,6 +139,7 @@ void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
 t_data  *ft_init_data(int ac, char **av, char **env);
 void    ft_add_env_list(t_data *data, char **env);
 void    ft_add_token_list(t_data *data);
+void	ft_add_cmd_list(t_data *data);
 void  ft_add_expand(t_data *data);
 
 //INIT_ENV
@@ -205,7 +207,7 @@ void    	exec(t_cmd *cmd, char **env, t_data *data);
 void    	redirection(t_cmd *cmd, t_data *data);
 int			ft_tabclear(char **tab);
 char		**parse_path(char **env);
-char		*find_way_path(char **path_tab, char *cmd);
+char		*find_way_path(char **path_tab, char *cmd, t_data *data);
 void 		execut(t_data *data, char **env);
 
 #endif
