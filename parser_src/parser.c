@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 15:42:36 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 11:41:22 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 int is_build(t_cmd **cmd)
 {   
     if (!((*cmd)->args[0]))
-        return (1);
-    if (!ft_strcmp((*cmd)->args[0], "echo") || 
-    !ft_strcmp((*cmd)->args[0], "cd") || 
-    !ft_strcmp((*cmd)->args[0], "pwd") || 
-    !ft_strcmp((*cmd)->args[0], "export") || 
-    !ft_strcmp((*cmd)->args[0], "unset") || 
-    !ft_strcmp((*cmd)->args[0], "env") || 
-    !ft_strcmp((*cmd)->args[0], "exit"))
-        return (1);
+        return (2);
+    if (!ft_strcmp((*cmd)->args[0], "echo"))
+        return ((*cmd)->build = ECHOO, 1);
+    if (!ft_strcmp((*cmd)->args[0], "cd"))
+        return ((*cmd)->build = CD, 1);
+    if (!ft_strcmp((*cmd)->args[0], "pwd"))
+        return ((*cmd)->build = PWD, 1); 
+    if (!ft_strcmp((*cmd)->args[0], "export")) 
+        return ((*cmd)->build = EXPORT, 1);  
+    if (!ft_strcmp((*cmd)->args[0], "unset")) 
+        return ((*cmd)->build = UNSET, 1);
+    if (!ft_strcmp((*cmd)->args[0], "env"))
+        return ((*cmd)->build = ENV, 1);
+    if (!ft_strcmp((*cmd)->args[0], "exit"))
+        return ((*cmd)->build = EXIT, 1);
     else
         return (0);
 }
@@ -104,8 +110,7 @@ void init_cmd(t_cmd **cmd, t_token **current, t_data *data)
     if (!(*cmd)->args)
             ft_shell_exit(data);
     init_cmd_utils(current, cmd, data);
-    if (is_build(cmd))
-            (*cmd)->is_build = 1;
+    (*cmd)->is_build = is_build(cmd);
 }
 
 int    parser(t_data *data)

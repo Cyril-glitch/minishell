@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/23 11:10:42 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 11:35:47 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ typedef enum e_type
 	DOUBLE_PIPE
 }								t_type;
 
+typedef enum e_build
+{
+	ECHOO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT
+}								t_build;
+
 typedef struct s_redir
 {
     t_type						type;
@@ -66,6 +77,7 @@ typedef struct s_cmd
     char          				**args;
 	t_redir_list				*redirs_list;
 	int							is_build;
+	t_build						build;
     struct s_cmd 				*next;
 	struct s_cmd				*prev;
 } 								t_cmd;
