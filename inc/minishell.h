@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/23 11:35:47 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 16:33:58 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,32 +139,31 @@ typedef struct s_data {
 } t_data;
 
 //EXPAND
-void ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
-void ft_expd_zero(t_expand *expd);
-int    ft_quote_status(t_expand *expd, char c);
-void ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
-char *ft_delquote(char *str);
+void 		ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
+void 		ft_expd_zero(t_expand *expd);
+int    		ft_quote_status(t_expand *expd, char c);
+void 		ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
+char 		*ft_delquote(char *str);
 
 //INIT
-void	ft_init_signal(struct sigaction *sig_a);
-void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
-t_data  *ft_init_data(int ac, char **av, char **env);
-void    ft_add_env_list(t_data *data, char **env);
-void    ft_add_token_list(t_data *data);
-void	ft_add_cmd_list(t_data *data);
-void  ft_add_expand(t_data *data);
+void		ft_init_signal(struct sigaction *sig_a);
+void		ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
+t_data  	*ft_init_data(int ac, char **av, char **env);
+void    	ft_add_env_list(t_data *data, char **env);
+void    	ft_add_token_list(t_data *data);
+void		ft_add_cmd_list(t_data *data);
+void  		ft_add_expand(t_data *data);
 
 //INIT_ENV
-t_env_list						*ft_new_env(char *str);
-t_env_list						*ft_env_list(char **env);
+t_env_list	*ft_new_env(char *str);
+t_env_list	*ft_env_list(char **env);
 
 //ENV_LST_UTILS
-void	ft_lstadd_back_env(t_env_list **lst,\
-    t_env_list *new);
-void							ft_clear_node_env(t_env_list *node);
-void							ft_lstclear_env(t_env_list **lst);
-t_env_list						*ft_lstlast_env(t_env_list *lst);
-void							ft_printlst_env(t_env_list *lst);
+void		ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
+void		ft_clear_node_env(t_env_list *node);
+void		ft_lstclear_env(t_env_list **lst);
+t_env_list	*ft_lstlast_env(t_env_list *lst);
+void		ft_printlst_env(t_env_list *lst);
 
 //LEXER
 void		ft_db_lstadd_front_token(t_token_list *token_list, t_token *new);
@@ -185,8 +184,8 @@ void    	nb_of_malloc(char *str, int *i, int *j, char quote);
 void    	copy_word(char *str, int *i, char quote, t_token *token);
 
 //SHELL_EXIT
-void	ft_shell_exit(t_data *data);
-void    ft_free_data(t_data *data);
+void		ft_shell_exit(t_data *data);
+void    	ft_free_data(t_data *data);
 
 //PARSER
 void		ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);
@@ -206,13 +205,14 @@ t_redir    	*ft_db_lstnew_redir();
 void		ft_display_list_redir(t_redir_list *lst);
 
 //BUILD IN
-int  ft_cd(char *path,t_env_list *env_list, t_data *data);
-void  ft_pwd(t_env_list *env_list);
-void  ft_export(char **args, t_env_list **env_list, t_data *data);
-void  ft_unset(char **args, t_env_list **env_list);
-void ft_del_env(t_env_list *todel, t_env_list **env_list);
-t_env_list *ft_key_hunter(char *args, t_env_list *env_list);
-void ft_echo(char **args);
+int  		ft_cd(char *path,t_env_list *env_list, t_data *data);
+void  		ft_pwd(t_env_list *env_list);
+void  		ft_export(char **args, t_env_list **env_list, t_data *data);
+void  		ft_unset(char **args, t_env_list **env_list);
+void 		ft_del_env(t_env_list *todel, t_env_list **env_list);
+t_env_list 	*ft_key_hunter(char *args, t_env_list *env_list);
+void 		ft_echo(char **args);
+void		ft_exit(char **args, t_data *data);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);

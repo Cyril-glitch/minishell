@@ -1,7 +1,7 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 UNAME_S := $(shell uname -s)
 
@@ -59,7 +59,8 @@ BUILD_SRC =		build_src/ft_cd.c \
 							build_src/ft_pwd.c \
 							build_src/ft_export.c \
 							build_src/ft_unset.c \
-							build_src/ft_env.c
+							build_src/ft_env.c \
+							build_src/ft_exit.c
 BUILD_OBJ = $(BUILD_SRC:.c=.o)
 
 EXEC_SRC =		exec_src/exec.c \

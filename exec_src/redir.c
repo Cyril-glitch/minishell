@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:26:44 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/19 16:27:48 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 14:45:05 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,15 @@ void    open_file(t_redir *current, int *fd, int *flag, t_data *data)
         if (current->type == REDIR_IN || current->type == D_REDIR_IN)
         {
             if (current->type == REDIR_IN)
+            {
                 *fd = open(current->file, O_RDONLY);
+                if (*fd == -1)
+                {
+                    ft_putstr_fd("minishell: ", 2);
+                    ft_putstr_fd(current->file, 2);
+                    ft_putstr_fd(": No such file or directory\n", 2);
+                }
+            }
             if (current->type == D_REDIR_IN)
                 *fd = d_redir_in(current->file, data);
             *flag = 1;

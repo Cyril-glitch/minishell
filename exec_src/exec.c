@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/23 12:03:44 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 16:34:49 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void    exec_build(t_cmd *cmd, t_data *data)
 {
     if (cmd->build == ECHOO)
         ft_echo(cmd->args);
-    if (cmd->build == CD)
-         ft_cd(cmd->args[1], data->env_list, data);
+    // if (cmd->build == CD)
+    //      ft_cd(cmd->args[1], data->env_list, data);
     if (cmd->build == PWD)
          ft_pwd(data->env_list);
     if (cmd->build == EXPORT)
@@ -39,6 +39,7 @@ void    exec_build(t_cmd *cmd, t_data *data)
          ft_unset(cmd->args, &data->env_list);
     // if (cmd->build == ENV)
     //     ft_env();
+    exit(1);
 }
 
 void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
@@ -46,6 +47,11 @@ void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
     pid_t pid;
     int fd_pipe[2];
 
+    if (cmd->build == CD)
+    {
+        ft_cd(cmd->args[1], data->env_list, data);
+        return ;
+    }
     if (cmd->next)
         pipe(fd_pipe);
     pid = fork();
@@ -56,7 +62,9 @@ void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
         pipex(cmd, data, fd_pipe);
         redirection(cmd, data);
         if (!cmd->is_build)
+        {
             execve(way, cmd->args, env);
+        }
         if (cmd->is_build == 2)
             exit(1);
         if (cmd->is_build == 1)
@@ -77,7 +85,7 @@ void    exec(t_cmd *cmd, char **env, t_data *data)
     char    *way;
 
     if (cmd->build == EXIT)
-        ft_shell_exit(data);
+        ft_exit(cmd->args, data);
     if (cmd->is_build == 0)
     {
         path_tab = parse_path(env);

@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:04:25 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/23 11:41:22 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/23 12:44:57 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int is_build(t_cmd **cmd)
 {   
-    if (!((*cmd)->args[0]))
+
+    if (!((*cmd)->args[0]) || !ft_strlen(((*cmd)->args[0])))
         return (2);
     if (!ft_strcmp((*cmd)->args[0], "echo"))
         return ((*cmd)->build = ECHOO, 1);
