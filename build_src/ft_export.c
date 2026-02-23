@@ -1,6 +1,83 @@
 #include "../inc/minishell.h"
 
-int    ft_valid_args(char *s)
+static void	ft_sort(int size, char **tab)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	j = 0;
+	temp = 0;
+	while (i < size)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (ft_strcmp(tab[i], tab[j]) > 0)
+			{
+				temp = tab[i];
+				tab[i] = tab[j];
+				tab[j] = temp;
+			}
+		j++;
+		}
+	i++;
+	}
+}
+
+static   char **ft_tab_list(t_env_list *lst)
+{
+  t_env_list *cur;
+  char **tab;
+  int len;
+
+  len = 0;
+  cur = lst;
+  while (cur)
+  {
+    len++;
+    cur = cur->next;
+  }
+  tab = malloc(sizeof(char*) * (len + 1));
+  if (!tab)
+         return NULL;
+  len = 0;
+  while (lst)
+  {
+    tab[len] = ft_strdup((char*)lst->line);
+    if (!tab[len])
+         return NULL;
+    len++;
+    lst = lst->next;
+  }
+  tab[len] = NULL;
+  return (tab);
+}
+
+static void ft_printlst_export(t_env_list *env_list, t_data *data)
+{
+  char **tab;
+  int size;
+
+  size = 0;
+  tab = ft_tab_list(env_list);
+  if (!tab)
+    ft_shell_exit(data);
+  while (tab[size])
+    size++;
+  ft_sort(size, tab);
+  size = 0;
+  while (tab[size])
+  {
+    ft_putstr("export ");
+    ft_putstr(tab[size]);
+    write(1, "\n", 1);
+    size++;
+  }
+}
+
+static int    ft_valid_args(char *s)
 {
     int i;
 
@@ -37,7 +114,7 @@ void  ft_export(char **args, t_env_list **env_list, t_data *data)
     dup = NULL;
     if (!args[i])
     {
-        ft_printlst_env(*env_list);
+        ft_printlst_export(*env_list, data);
         return ;
     }
     while (args[i])

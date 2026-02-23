@@ -199,6 +199,7 @@ void  ft_unset(char **args, t_env_list **env_list);
 void ft_del_env(t_env_list *todel, t_env_list **env_list);
 t_env_list *ft_key_hunter(char *args, t_env_list *env_list);
 void ft_echo(char **args);
+void  ft_env(char **args, t_env_list *env_list);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);
