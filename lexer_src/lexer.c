@@ -41,31 +41,31 @@ int     verif_quote(char *str)
 
 int     lexer(t_data *data)
 {
-    int i;
-    t_token *new_token;
-    
-    if (!verif_quote(data->line))
-    {
-        printf(">\n");
-        return (0);
-    }
-    i = 0;
-	new_token = ft_db_lstnew_token();
+  int i;
+  t_token *new_token;
+
+  if (!verif_quote(data->line))
+  {
+    printf(">\n");
+    return (0);
+  }
+  i = 0;
+  new_token = ft_db_lstnew_token();
+  if (!new_token)
+    ft_shell_exit(data);
+  data->token_list->head = new_token;
+  data->token_list->tail = new_token;
+  data->token_list->size = 1;
+  init_token(data, data->token_list->head, &i);
+  swipe_space(data->line, &i);
+  while (data->line[i])
+  {
+    new_token = ft_db_lstnew_token();
     if (!new_token)
-        ft_shell_exit(data);
-	data->token_list->head = new_token;
-	data->token_list->tail = new_token;
-	data->token_list->size = 1;
-	init_token(data, data->token_list->head, &i);
+      ft_shell_exit(data);
+    ft_db_lstadd_back_token(data->token_list, new_token);
+    init_token(data, new_token, &i);
     swipe_space(data->line, &i);
-    while (data->line[i])
-    {
-        new_token = ft_db_lstnew_token();
-        if (!new_token)
-            ft_shell_exit(data);
-        ft_db_lstadd_back_token(data->token_list, new_token);
-        init_token(data, new_token, &i);
-        swipe_space(data->line, &i);
-    }
-    return (1);
+  }
+  return (1);
 }
