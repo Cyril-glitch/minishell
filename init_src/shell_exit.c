@@ -31,8 +31,10 @@ void    ft_free_data(t_data *data)
 
 void	ft_shell_exit(t_data *data)
 {
-	tcsetattr(0, TCSANOW, data->orig_termios);
+  if (!data->child)
+	  tcsetattr(0, TCSANOW, data->orig_termios);
     ft_free_data(data);
-	rl_clear_history();
+  if (!data->child)
+	  rl_clear_history();
 	exit(0);
 }

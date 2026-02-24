@@ -124,18 +124,20 @@ typedef struct  s_expand
     char quote;
 } t_expand;
 
-typedef struct s_data {
-    char *line;
-	int					fd_tmp;
-    t_env_list      *env_list;
-    t_token_list    *token_list;
-	t_cmd_list		*cmd_list;
-    struct sigaction	*sig_a;
-    struct termios  *orig_termios;
-    struct termios  *new_termios;
-    t_expand *expd;
-    t_list *expd_lst;
-    int             last_exit_code;
+typedef struct s_data 
+{
+  char *line;
+  int					fd_tmp;
+  t_env_list      *env_list;
+  t_token_list    *token_list;
+  t_cmd_list		*cmd_list;
+  struct sigaction	*sig_a;
+  struct termios  *orig_termios;
+  struct termios  *new_termios;
+  t_expand *expd;
+  t_list *expd_lst;
+  int             last_exit_code;
+  int child;
 } t_data;
 
 //EXPAND
@@ -146,13 +148,15 @@ void 		ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *da
 char 		*ft_delquote(char *str);
 
 //INIT
-void		ft_init_signal(struct sigaction *sig_a);
+void		ft_interactive_mode(struct sigaction *sig_a, t_data *data);
 void		ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
 t_data  	*ft_init_data(int ac, char **av, char **env);
 void    	ft_add_env_list(t_data *data, char **env);
 void    	ft_add_token_list(t_data *data);
 void		ft_add_cmd_list(t_data *data);
 void  		ft_add_expand(t_data *data);
+void  ft_childmode(struct sigaction *sig_a, t_data *data);
+void  ft_sigmute(struct sigaction *sig_a );
 
 //INIT_ENV
 t_env_list	*ft_new_env(char *str);
@@ -213,6 +217,7 @@ void 		ft_del_env(t_env_list *todel, t_env_list **env_list);
 t_env_list 	*ft_key_hunter(char *args, t_env_list *env_list);
 void 		ft_echo(char **args);
 void		ft_exit(char **args, t_data *data);
+void  ft_prompt_pwd(t_env_list *env_list);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);
