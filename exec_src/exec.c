@@ -46,6 +46,7 @@ void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
 {
     pid_t pid;
     int fd_pipe[2];
+    int status;
 
     if (cmd->build == CD)
     {
@@ -59,16 +60,21 @@ void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
         ft_shell_exit(data);
     if (pid == 0)
     {
+        ft_childmode(data->sig_a, data);
         pipex(cmd, data, fd_pipe);
         redirection(cmd, data);
         if (!cmd->is_build)
-        {
             execve(way, cmd->args, env);
-        }
         if (cmd->is_build == 2)
             exit(1);
         if (cmd->is_build == 1)
             exec_build(cmd, data);
+    }
+    else
+    {
+      ft_sigmute(data->sig_a);
+      waitpid(pid, &status, 0);
+      ft_interactive_mode(data->sig_a, data);
     }
     if (data->fd_tmp != 0)
         close(data->fd_tmp);

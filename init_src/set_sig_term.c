@@ -17,7 +17,11 @@ static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 {
 	(void)context;
 	(void)client;
-	if (signum == SIGINT)
+  static  int client_pid = 0;
+
+  if (!client_pid)
+    client_pid = client->si_pid;
+	if (signum == SIGINT && client_pid == client->si_pid)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
@@ -27,7 +31,26 @@ static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 	}
 }
 
-void	ft_init_signal(struct sigaction *sig_a)
+void  ft_childmode(struct sigaction *sig_a, t_data *data)
+{ 
+	sig_a->sa_flags = 0;
+  sig_a->sa_handler = SIG_DFL;
+	sigemptyset(&sig_a->sa_mask);
+	sigaction(SIGINT, sig_a, NULL);
+	sigaction(SIGQUIT, sig_a, NULL);
+  data->child = 1;
+}
+
+void  ft_sigmute(struct sigaction *sig_a )
+{ 
+	sig_a->sa_flags = 0;
+  sig_a->sa_handler = SIG_IGN;
+	sigemptyset(&sig_a->sa_mask);
+	sigaction(SIGINT, sig_a, NULL);
+	sigaction(SIGQUIT, sig_a, NULL);
+}
+
+void	ft_interactive_mode(struct sigaction *sig_a, t_data *data)
 {
 	sig_a->sa_flags = SA_SIGINFO;
 	sig_a->sa_sigaction = ft_signal_handler;
@@ -36,6 +59,7 @@ void	ft_init_signal(struct sigaction *sig_a)
 	sig_a->sa_flags = 0;
 	sig_a->sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, sig_a, NULL);
+  data->child = 0;
 }
 
 void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios)
