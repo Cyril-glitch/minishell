@@ -22,8 +22,7 @@ int	main(int ac, char **av, char **env)
   while (1)
   {
     data->fd_tmp = 0;
-    data->line = readline("losmachinos🏭:~$");
-    //ft_prompt_pwd(data->env_list);
+    data->line = readline(ft_prompt_pwd(data->env_list, data));
     if (!data->line)
       ft_shell_exit(data);
     add_history(data->line);

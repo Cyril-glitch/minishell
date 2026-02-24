@@ -2,8 +2,8 @@
 
 void    ft_free_data(t_data *data)
 {
-    if (!data)
-        return ;
+    if (data->prompt)
+      free(data->prompt);
     if (data->line)
         free(data->line);
     if (data->env_list)

@@ -39,5 +39,7 @@ t_data *ft_init_data(int ac, char **av, char **env)
   data->expd_lst = NULL;
   data->last_exit_code = 0;
   data->child = 0;
+  data->prompt = NULL;
+  data->fd_tmp = 0;
   return data;
 }
