@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:53 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/13 10:28:57 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:00:32 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_env_list	*ft_new_env(char *str)
         return (NULL);
     while (str[i] && str[i] != '=')
         i++;
-    new->line = strdup(str);
+    new->line = ft_strdup(str);
     new->key = ft_substr(str, 0, i);
     if (!str[i])
     {

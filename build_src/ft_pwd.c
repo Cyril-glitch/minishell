@@ -18,7 +18,7 @@ static char *ft_user(t_env_list *lst)
 {
   while (lst)
   {
-    if (strcmp("USER", lst->key)== 0)
+    if (ft_strcmp("USER", lst->key)== 0)
       return lst->content;
     lst = lst->next;
   }
@@ -34,7 +34,7 @@ static char *ft_make_prompt(t_env_list *env_list, t_data *data, char *cur_path)
   char *pwd;
 
   user = ft_color(ft_user(env_list), MINT);
-  pwd = ft_color(strrchr(cur_path,'/'), LAVENDER);
+  pwd = ft_color(ft_strrchr(cur_path,'/'), LAVENDER);
   shell = ft_strdup(ICE_BLUE"@"RESET B_L_RED"losmachinos🏭"RESET B_BLUE" ~"RESET);
   if (!shell)
     ft_shell_exit(data);

@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/23 16:33:58 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/25 15:00:02 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,15 @@ typedef enum e_build
 	EXPORT,
 	UNSET,
 	ENV,
-	EXIT
+	EXIT,
+	DFL
 }								t_build;
 
 typedef struct s_redir
 {
     t_type						type;
     char            			*file;
+	int							fd_heredoc;
     struct s_redir  			*next;
     struct s_redir  			*prev;
 }   							t_redir;
@@ -276,7 +278,8 @@ void 		ft_del_env(t_env_list *todel, t_env_list **env_list);
 t_env_list 	*ft_key_hunter(char *args, t_env_list *env_list);
 void 		ft_echo(char **args);
 void		ft_exit(char **args, t_data *data);
-char  *ft_prompt_pwd(t_env_list *env_list, t_data *data);
+void  		ft_env(char **args, t_env_list *env_list);
+char  		*ft_prompt_pwd(t_env_list *env_list, t_data *data);
 
 //EXEC
 void    	exec(t_cmd *cmd, char **env, t_data *data);
