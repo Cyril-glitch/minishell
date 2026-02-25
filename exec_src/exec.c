@@ -14,26 +14,35 @@
 
 void    d_redir_in(t_redir *redir, t_data *data)
 {
-    char *line;
-    int fd[2];
-    
-    pipe(fd);
+  char *line;
+  int fd[2];
+  pid_t pid;
+
+  pid = fork();
+  pipe(fd);
+  if (pid == 0)
+  {
+    ft_childmode(data->sig_a, data);
     while (1)
     {
-        line = readline("> ");
-        if (!line)
-            ft_shell_exit(data);
-        if (!ft_strcmp(line, redir->file))
-        {
-            free(line);
-            break;
-        }
-        ft_putstr_fd(line, fd[1]);
-        write(fd[1], "\n", 1);
+      line = readline("> ");
+      if (!line)
+        ft_shell_exit(data);
+      if (!ft_strcmp(line, redir->file))
+      {
         free(line);
+        break;
+      }
+      ft_putstr_fd(line, fd[1]);
+      write(fd[1], "\n", 1);
+      free(line);
     }
-    close(fd[1]);
-    redir->fd_heredoc = fd[0];
+  }
+  ft_sigmute(data->sig_a);
+  waitpid(pid, &g_sig_status, 0);
+  ft_interactive_mode(data->sig_a, data);
+  close(fd[1]);
+  redir->fd_heredoc = fd[0];
 }
 
 void    check_heredoc(t_cmd_list *cmd_list, t_data *data)
@@ -86,45 +95,43 @@ void    exec_build(t_cmd *cmd, t_data *data)
 
 void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
 {
-    pid_t pid;
-    int fd_pipe[2];
-    int status;
+  pid_t pid;
+  int fd_pipe[2];
+  int status;
 
-    if (cmd->build == CD)
-    {
-        ft_cd(cmd->args[1], data->env_list, data);
-        return ;
-    }
-    if (cmd->next)
-        pipe(fd_pipe);
-    pid = fork();
-    if (pid == -1)
-        ft_shell_exit(data);
-    if (pid == 0)
-    {
-        ft_childmode(data->sig_a, data);
-        pipex(cmd, data, fd_pipe);
-        redirection(cmd, data);
-        if (!cmd->is_build)
-            execve(way, cmd->args, env);
-        if (cmd->is_build == 2)
-            exit(1);
-        if (cmd->is_build == 1)
-            exec_build(cmd, data);
-    }
-    else
-    {
-      ft_sigmute(data->sig_a);
-      waitpid(pid, &status, 0);
-      ft_interactive_mode(data->sig_a, data);
-    }
-    if (data->fd_tmp != 0)
-        close(data->fd_tmp);
-    if (cmd->next)
-    {
-        close(fd_pipe[1]);
-        data->fd_tmp = fd_pipe[0];
-    }
+  if (cmd->build == CD)
+  {
+    ft_cd(cmd->args[1], data->env_list, data);
+    return ;
+  }
+  if (cmd->next)
+    pipe(fd_pipe);
+  pid = fork();
+  if (pid == -1)
+    ft_shell_exit(data);
+  if (pid == 0)
+  {
+    ft_childmode(data->sig_a, data);
+    pipex(cmd, data, fd_pipe);
+    redirection(cmd, data);
+    if (!cmd->is_build)
+      execve(way, cmd->args, env);
+    if (cmd->is_build == 2)
+      exit(1);
+    if (cmd->is_build == 1)
+      exec_build(cmd, data);
+  }
+  ft_sigmute(data->sig_a);
+  waitpid(pid, &status, 0);
+  write(1, "\n", 1);
+  ft_interactive_mode(data->sig_a, data);
+  if (data->fd_tmp != 0)
+    close(data->fd_tmp);
+  if (cmd->next)
+  {
+    close(fd_pipe[1]);
+    data->fd_tmp = fd_pipe[0];
+  }
 }
 
 void    exec(t_cmd *cmd, char **env, t_data *data)

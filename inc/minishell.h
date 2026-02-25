@@ -44,36 +44,10 @@
 #define CYAN    "\001\033[0;36m\002"
 #define WHITE   "\001\033[0;37m\002"
 
-//couleurs grasses
-#define B_RED    "\001\033[1;31m\002"
-#define B_GREEN  "\001\033[1;32m\002"
-#define B_YELLOW "\001\033[1;33m\002"
+//bold blue
 #define B_BLUE   "\001\033[1;34m\002"
-#define B_PURPLE "\001\033[1;35m\002"
-#define B_CYAN   "\001\033[1;36m\002"
-#define B_WHITE  "\001\033[1;37m\002"
-
-//couleurs grasses claires
-#define B_L_GREY    "\001\033[0;90m\002"
+//bold light red
 #define B_L_RED    "\001\033[1;91m\002"
-#define B_L_GREEN  "\001\033[1;92m\002"
-#define B_L_YELLOW "\001\033[1;93m\002"
-#define B_L_BLUE   "\001\033[1;94m\002"
-#define B_L_PURPLE "\001\033[1;95m\002"
-#define B_L_CYAN   "\001\033[1;96m\002"
-#define B_L_WHITE  "\001\033[1;97m\002"
-
-//couleurs claires
-#define L_GREY    "\001\033[0;90m\002"
-#define L_RED     "\001\033[0;91m\002"
-#define L_GREEN   "\001\033[0;92m\002"
-#define L_YELLOW  "\001\033[0;93m\002"
-#define L_BLUE    "\001\033[0;94m\002"
-#define L_PURPLE  "\001\033[0;95m\002"
-#define L_CYAN    "\001\033[0;96m\002"
-#define L_WHITE   "\001\033[0;97m\002"
-
-//couleurs speciales
 //vert menthe doux
 #define MINT    "\001\033[38;5;121m\002"
 // Rouge Corail Doux (Coral) 
@@ -84,14 +58,8 @@
 #define LAVENDER  "\001\033[38;5;147m\002"
 //ice blue
 #define ICE_BLUE  "\001\033[38;5;117m\002"
-/* Saumon très doux (plus pâle que le corail) */
-#define PALE_SALMON "\001\033[38;5;210m\002"
-/* Pêche poudré (encore plus discret, presque pastel) */
-#define PEACH       "\001\033[38;5;216m\002"
-/* Rose Thé (très élégant et très lisible sur fond sombre) */
-#define TEA_ROSE    "\001\033[38;5;217m\002"
 
-extern volatile sig_atomic_t	g_sig_status;
+extern int	g_sig_status;
 
 typedef enum e_type
 {

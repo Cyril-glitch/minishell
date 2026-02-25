@@ -36,5 +36,6 @@ void	ft_shell_exit(t_data *data)
     ft_free_data(data);
   if (!data->child)
 	  rl_clear_history();
+  ft_putstr("exit\n");
 	exit(0);
 }

@@ -12,7 +12,7 @@
 
 #include "./inc/minishell.h"
 
-volatile sig_atomic_t	g_sig_status;
+int g_sig_status;
 
 int	main(int ac, char **av, char **env)
 {

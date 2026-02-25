@@ -33,6 +33,8 @@ static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 
 void  ft_childmode(struct sigaction *sig_a, t_data *data)
 { 
+
+	tcsetattr(0, TCSANOW, data->orig_termios);
 	sig_a->sa_flags = 0;
   sig_a->sa_handler = SIG_DFL;
 	sigemptyset(&sig_a->sa_mask);
@@ -52,6 +54,7 @@ void  ft_sigmute(struct sigaction *sig_a )
 
 void	ft_interactive_mode(struct sigaction *sig_a, t_data *data)
 {
+	tcsetattr(0, TCSANOW, data->new_termios);
 	sig_a->sa_flags = SA_SIGINFO;
 	sig_a->sa_sigaction = ft_signal_handler;
 	sigemptyset(&sig_a->sa_mask);
