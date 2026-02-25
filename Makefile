@@ -1,7 +1,7 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 UNAME_S := $(shell uname -s)
 
@@ -74,8 +74,8 @@ $(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUIL
 	mkdir -p bin
 	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ)  $(LIB) $(RL_LIB) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
+# %.o: %.c
+# 	$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
 
 $(LIB) :
 	make bonus -C $(LIBDIR)

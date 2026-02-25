@@ -125,7 +125,7 @@ void  ft_export(char **args, t_env_list **env_list, t_data *data)
             dup = ft_key_hunter(args[i], *env_list);
             if (!tmp)
                 ft_shell_exit(data);
-            if (dup && strcmp(dup->key, tmp->key) == 0)
+            if (dup && ft_strcmp(dup->key, tmp->key) == 0)
                 ft_del_env(dup, env_list);
             ft_lstadd_back_env(env_list, tmp);
         }

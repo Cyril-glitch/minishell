@@ -57,18 +57,20 @@ Comportement identique à bash en mode interactif : ✅
 
 🏗️ Commandes Internes (Built-ins)
 
-Le shell doit implémenter les commandes suivantes : ❌
+Le shell doit implémenter les commandes suivantes : ✅
 
-    echo (avec l'option -n) ❌
+    echo (avec l'option -n) ✅
 
-    cd (uniquement avec un chemin relatif ou absolu) ❌
+    cd (uniquement avec un chemin relatif ou absolu) ✅
 
-    pwd (sans options) ❌
+    pwd (sans options) ✅
 
-    export (sans options) ❌
+    export (sans options) ✅
 
-    unset (sans options) ❌
+    unset (sans options) ✅
 
-    env (sans options ni arguments) ❌
+    env (sans options ni arguments) ✅
 
-    exit (sans options) ❌
+    exit (sans options) ✅
+
+    REGLER LES ERREURS : ⏳

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir_lst_db_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:46:58 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/17 14:19:21 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/25 12:16:43 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*))
 	tmp = current;
 	while (current)
 	{
+		if (!current->next)
+		{
+			ft_db_lstdelone_redir(tmp, del);
+			break;
+		}
 		current = current->next;
 		ft_db_lstdelone_redir(tmp, del);
 		tmp = current;
