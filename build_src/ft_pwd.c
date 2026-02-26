@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:35 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:14:40 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/26 13:31:31 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,29 @@ static char	*ft_user(t_env_list *lst)
 
 static char	*ft_make_prompt(t_env_list *env_list, t_data *data, char *cur_path)
 {
-	char	*shell;
-	char	*user;
-	char	*tmp;
-	char	*tmp2;
-	char	*pwd;
+	char *tmp;
+	char *tmp2;
 
-	user = ft_color(ft_user(env_list), MINT);
-	pwd = ft_color(ft_strrchr(cur_path, '/'), LAVENDER);
-	shell = ft_strdup(ICE_BLUE "@" RESET B_L_RED "losmachinos🏭"\
+    ft_free_prompt(data);
+	data->prompt->user = ft_color(ft_user(env_list), MINT);
+	data->prompt->pwd = ft_color(ft_strrchr(cur_path, '/'), LAVENDER);
+    free(cur_path);
+	data->prompt->group = ft_strdup(ICE_BLUE "@" RESET B_L_RED "losmachinos🏭"\
 RESET B_BLUE " ~" RESET);
-	if (!shell)
+	if (!data->prompt->user || !data->prompt->pwd || !data->prompt->group)
 		ft_shell_exit(data);
-	tmp = ft_strjoin(user, shell);
+	tmp = ft_strjoin(data->prompt->user, data->prompt->group);
 	if (!tmp)
 		ft_shell_exit(data);
-	tmp2 = ft_strjoin(tmp, pwd);
+	tmp2 = ft_strjoin(tmp, data->prompt->pwd);
+    free(tmp);
 	if (!tmp2)
 		ft_shell_exit(data);
-	data->prompt = ft_strjoin(tmp2, " ");
-	if (!data->prompt)
+	data->prompt->prompt = ft_strjoin(tmp2, " ");
+    free(tmp2);
+	if (!data->prompt->prompt)
 		ft_shell_exit(data);
-	free(tmp);
-	free(tmp2);
-	free(shell);
-	return (data->prompt);
+	return (data->prompt->prompt);
 }
 
 char	*ft_prompt_pwd(t_env_list *env_list, t_data *data)
@@ -72,9 +70,11 @@ char	*ft_prompt_pwd(t_env_list *env_list, t_data *data)
 	cur_path = NULL;
 	cur_path = getcwd(cur_path, PATH_MAX);
 	if (!cur_path)
-		return (data->prompt = ft_strdup("@losmachinos🏭:~"));
+		return (data->prompt->prompt = ft_strdup("@losmachinos🏭:~"));
 	else
+    {
 		return (ft_make_prompt(env_list, data, cur_path));
+    }
 }
 
 void	ft_pwd(t_env_list *env_list)
