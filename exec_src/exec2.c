@@ -21,7 +21,7 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 	{
 		line = readline("> ");
 		if (!line)
-			ft_shell_exit(data);
+			ft_shell_exit_hd(data, redir->file);
 		if (!ft_strcmp(line, redir->file))
 		{
 			free(line);
@@ -44,6 +44,8 @@ void	d_redir_in(t_redir *redir, t_data *data)
 		child_heredoc(data, redir, fd);
 	ft_sigmute(data->sig_a);
 	waitpid(pid, &g_sig_status, 0);
+  if (g_sig_status == 2)
+    write(1, "\n", 1);
 	ft_interactive_mode(data->sig_a, data);
 	close(fd[1]);
 	redir->fd_heredoc = fd[0];

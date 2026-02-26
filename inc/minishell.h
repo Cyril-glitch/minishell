@@ -219,6 +219,7 @@ void					copy_word(char *str, int *i, char quote, t_token *token);
 // SHELL_EXIT
 void					ft_shell_exit(t_data *data);
 void					ft_free_data(t_data *data);
+void	ft_shell_exit_hd(t_data *data, char *file);
 
 // PARSER
 void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);

@@ -30,8 +30,8 @@ int	is_build(t_cmd **cmd)
 		return ((*cmd)->build = ENV, 1);
 	if (!ft_strcmp((*cmd)->args[0], "exit"))
 		return ((*cmd)->build = EXIT, 1);
-	else
-		return (0);
+	else 
+		return ((*cmd)->build = DFL, 0);
 }
 
 void	ft_display_list_cmd(t_cmd_list *lst)
