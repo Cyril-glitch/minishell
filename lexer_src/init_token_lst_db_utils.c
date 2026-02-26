@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:42:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/20 12:25:43 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/25 21:54:11 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	ft_db_lstadd_back_token(t_token_list *token_list, t_token *new)
 	token_list->size++;
 }
 
-void	ft_db_lstdelone_token(t_token *token, void (*del)(void*))
+void	ft_db_lstdelone_token(t_token *token, void (*del)(void *))
 {
 	del(token->content);
 	free(token);
 }
 
-void	ft_db_lstclear_token(t_token_list *token_list, void (*del)(void*))
+void	ft_db_lstclear_token(t_token_list *token_list, void (*del)(void *))
 {
 	t_token	*current;
 	t_token	*tmp;
@@ -67,14 +67,14 @@ void	ft_db_lstclear_token(t_token_list *token_list, void (*del)(void*))
 	token_list->size = 0;
 }
 
-t_token    *ft_db_lstnew_token()
+t_token	*ft_db_lstnew_token(void)
 {
-    t_token    *new;
+	t_token	*new;
 
-    new = malloc(sizeof(t_token));
-    if (!new)
-        return (NULL);
-    new->next = NULL;
-    new->prev = NULL;
-    return (new);
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
 }

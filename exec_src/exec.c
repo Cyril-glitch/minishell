@@ -6,174 +6,106 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/25 15:05:15 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/25 21:42:22 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void    d_redir_in(t_redir *redir, t_data *data)
+void	exec_build(t_cmd *cmd, t_data *data)
 {
-  char *line;
-  int fd[2];
-  pid_t pid;
-
-  pid = fork();
-  pipe(fd);
-  if (pid == 0)
-  {
-    ft_childmode(data->sig_a, data);
-    while (1)
-    {
-      line = readline("> ");
-      if (!line)
-        ft_shell_exit(data);
-      if (!ft_strcmp(line, redir->file))
-      {
-        free(line);
-        break;
-      }
-      ft_putstr_fd(line, fd[1]);
-      write(fd[1], "\n", 1);
-      free(line);
-    }
-  }
-  ft_sigmute(data->sig_a);
-  waitpid(pid, &g_sig_status, 0);
-  ft_interactive_mode(data->sig_a, data);
-  close(fd[1]);
-  redir->fd_heredoc = fd[0];
+	if (cmd->build == ECHOO)
+		ft_echo(cmd->args);
+	if (cmd->build == PWD)
+		ft_pwd(data->env_list);
+	if (cmd->build == EXPORT)
+		ft_export(cmd->args, &data->env_list, data);
+	if (cmd->build == UNSET)
+		ft_unset(cmd->args, &data->env_list);
+	if (cmd->build == ENV)
+		ft_env(cmd->args, data->env_list);
+	exit(1);
 }
 
-void    check_heredoc(t_cmd_list *cmd_list, t_data *data)
+void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
 {
-    t_cmd *current_cmd;
-    t_redir *current_redir;
-
-    current_cmd = cmd_list->head;
-    while (current_cmd)
-    {
-        current_redir = current_cmd->redirs_list->head;
-        while (current_redir)
-        {
-            if (current_redir->type == D_REDIR_IN)
-                d_redir_in(current_redir, data);
-            current_redir = current_redir->next;
-        }
-        current_cmd = current_cmd->next;
-    }
+	ft_childmode(data->sig_a, data);
+	pipex(cmd, data, fd_pipe);
+	redirection(cmd, data);
+	if (!cmd->is_build)
+		execve(cmd->way, cmd->args, env);
+	if (cmd->is_build == 2)
+		exit(1);
+	if (cmd->is_build == 1)
+		exec_build(cmd, data);
 }
 
-
-void pipex(t_cmd *cmd, t_data *data, int *fd_pipe)
+int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 {
-    dup2(data->fd_tmp, 0);
-    if (data->fd_tmp != 0)
-        close(data->fd_tmp);
-    if (cmd->next)
-    {
-        dup2(fd_pipe[1], 1);
-        close(fd_pipe[1]);
-        close(fd_pipe[0]);
-    }
+	pid_t	pid;
+	int		fd_pipe[2];
+	int		status;
+
+	if (cmd->build == CD)
+		return (ft_cd(cmd->args[1], data->env_list, data));
+	if (cmd->next)
+		pipe(fd_pipe);
+	pid = fork();
+	if (pid == -1)
+		ft_shell_exit(data);
+	if (pid == 0)
+		child(data, fd_pipe, cmd, env);
+	ft_sigmute(data->sig_a);
+	waitpid(pid, &status, 0);
+	write(1, "\n", 1);
+	ft_interactive_mode(data->sig_a, data);
+	if (data->fd_tmp != 0)
+		close(data->fd_tmp);
+	if (cmd->next)
+	{
+		close(fd_pipe[1]);
+		data->fd_tmp = fd_pipe[0];
+	}
+	return (1);
 }
 
-void    exec_build(t_cmd *cmd, t_data *data)
+void	exec(t_cmd *cmd, char **env, t_data *data)
 {
-    if (cmd->build == ECHOO)
-        ft_echo(cmd->args);
-    if (cmd->build == PWD)
-         ft_pwd(data->env_list);
-    if (cmd->build == EXPORT)
-         ft_export(cmd->args, &data->env_list, data);
-    if (cmd->build == UNSET)
-         ft_unset(cmd->args, &data->env_list);
-    if (cmd->build == ENV)
-         ft_env(cmd->args, data->env_list);
-    exit(1);
+	char	**path_tab;
+
+	if (cmd->build == EXIT)
+		ft_exit(cmd->args, data);
+	if (cmd->is_build == 0)
+	{
+		path_tab = parse_path(env);
+		if (!path_tab)
+			ft_shell_exit(data);
+		cmd->way = find_way_path(path_tab, cmd->args[0], data);
+		if (!cmd->way)
+		{
+			printf("command no found : %s\n", cmd->args[0]);
+			ft_tabclear(path_tab);
+			free(cmd->way);
+			return ;
+		}
+	}
+	exec_cmd(cmd, env, data);
 }
 
-void    exec_cmd(t_cmd *cmd, char *way, char **env, t_data *data)
+void	execut(t_data *data, char **env)
 {
-  pid_t pid;
-  int fd_pipe[2];
-  int status;
+	t_cmd	*current;
 
-  if (cmd->build == CD)
-  {
-    ft_cd(cmd->args[1], data->env_list, data);
-    return ;
-  }
-  if (cmd->next)
-    pipe(fd_pipe);
-  pid = fork();
-  if (pid == -1)
-    ft_shell_exit(data);
-  if (pid == 0)
-  {
-    ft_childmode(data->sig_a, data);
-    pipex(cmd, data, fd_pipe);
-    redirection(cmd, data);
-    if (!cmd->is_build)
-      execve(way, cmd->args, env);
-    if (cmd->is_build == 2)
-      exit(1);
-    if (cmd->is_build == 1)
-      exec_build(cmd, data);
-  }
-  ft_sigmute(data->sig_a);
-  waitpid(pid, &status, 0);
-  write(1, "\n", 1);
-  ft_interactive_mode(data->sig_a, data);
-  if (data->fd_tmp != 0)
-    close(data->fd_tmp);
-  if (cmd->next)
-  {
-    close(fd_pipe[1]);
-    data->fd_tmp = fd_pipe[0];
-  }
-}
-
-void    exec(t_cmd *cmd, char **env, t_data *data)
-{
-    char    **path_tab;
-    char    *way;
-
-    if (cmd->build == EXIT)
-        ft_exit(cmd->args, data);
-    if (cmd->is_build == 0)
-    {
-        path_tab = parse_path(env);
-        if (!path_tab)
-            ft_shell_exit(data);
-        way = find_way_path(path_tab, cmd->args[0], data);
-        if (!way)
-        {
-            printf("command no found : %s\n", cmd->args[0]);
-            ft_tabclear(path_tab);
-            free(way);
-            return ;
-        }
-    }
-    else
-        way = NULL;
-    exec_cmd(cmd, way, env, data);
-}
-
-void execut(t_data *data, char **env)
-{
-    t_cmd				*current;
-
-    check_heredoc(data->cmd_list, data);
-    exec(data->cmd_list->head, env, data);
-    current = data->cmd_list->head->next;
-    while (current)
-    {
-        exec(current, env, data);
-        current = current->next;
-    }
-    while (wait(NULL) > 0)
-    ;
-    if (data->fd_tmp != 0)
-    close(data->fd_tmp);
+	check_heredoc(data->cmd_list, data);
+	exec(data->cmd_list->head, env, data);
+	current = data->cmd_list->head->next;
+	while (current)
+	{
+		exec(current, env, data);
+		current = current->next;
+	}
+	while (wait(NULL) > 0)
+		;
+	if (data->fd_tmp != 0)
+		close(data->fd_tmp);
 }

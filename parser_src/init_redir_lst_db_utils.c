@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir_lst_db_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:46:58 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/17 14:19:21 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/25 21:55:04 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	ft_db_lstadd_back_redir(t_redir_list *redir_list, t_redir *new)
 	redir_list->size++;
 }
 
-void	ft_db_lstdelone_redir(t_redir *token, void (*del)(void*))
+void	ft_db_lstdelone_redir(t_redir *token, void (*del)(void *))
 {
-    if (token->file)
+	if (token->file)
 	{
 		del(token->file);
 	}
@@ -55,7 +55,7 @@ void	ft_db_lstdelone_redir(t_redir *token, void (*del)(void*))
 	}
 }
 
-void	ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*))
+void	ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void *))
 {
 	t_redir	*current;
 	t_redir	*tmp;
@@ -75,15 +75,15 @@ void	ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void*))
 	redir_list = NULL;
 }
 
-t_redir    *ft_db_lstnew_redir()
+t_redir	*ft_db_lstnew_redir(void)
 {
-    t_redir    *new;
+	t_redir	*new;
 
-    new = malloc(sizeof(t_redir));
-    if (!new)
+	new = malloc(sizeof(t_redir));
+	if (!new)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
 	new->file = NULL;
-    return (new);
+	return (new);
 }

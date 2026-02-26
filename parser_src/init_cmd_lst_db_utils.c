@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:12:11 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/20 12:48:36 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/25 21:02:16 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,25 @@ void	ft_db_lstadd_back_cmd(t_cmd_list *cmd_list, t_cmd *new)
 	cmd_list->size++;
 }
 
-void	ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void*))
+void	ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void *))
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (token->args[i])
-    {
-    	del(token->args[i]);
-        i++;
-    }
+	i = 0;
+	while (token->args[i])
+	{
+		del(token->args[i]);
+		i++;
+	}
 	if (token->redirs_list)
 		ft_db_lstclear_redir(token->redirs_list, del);
 	if (token->args)
 		free(token->args);
 	if (token)
-    	free(token);
+		free(token);
 }
 
-void	ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void*))
+void	ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void *))
 {
 	t_cmd	*current;
 	t_cmd	*tmp;
@@ -79,12 +79,12 @@ void	ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void*))
 	cmd_list->size = 0;
 }
 
-t_cmd    *ft_db_lstnew_cmd()
+t_cmd	*ft_db_lstnew_cmd(void)
 {
-    t_cmd    *new_cmd;
+	t_cmd	*new_cmd;
 
-    new_cmd = malloc(sizeof(t_cmd));
-    if (!new_cmd)
+	new_cmd = malloc(sizeof(t_cmd));
+	if (!new_cmd)
 		return (NULL);
 	new_cmd->next = NULL;
 	new_cmd->prev = NULL;
@@ -94,8 +94,8 @@ t_cmd    *ft_db_lstnew_cmd()
 	new_cmd->redirs_list = malloc(sizeof(t_redir_list));
 	if (!new_cmd->redirs_list)
 		return (NULL);
-    new_cmd->redirs_list->head = NULL;
-    new_cmd->redirs_list->tail = NULL;
-    new_cmd->redirs_list->size = 0;
-    return (new_cmd);
+	new_cmd->redirs_list->head = NULL;
+	new_cmd->redirs_list->tail = NULL;
+	new_cmd->redirs_list->size = 0;
+	return (new_cmd);
 }

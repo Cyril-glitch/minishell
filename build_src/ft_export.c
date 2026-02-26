@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/26 09:12:28 by mathis            #+#    #+#             */
+/*   Updated: 2026/02/26 09:12:31 by mathis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 static void	ft_sort(int size, char **tab)
@@ -20,115 +32,115 @@ static void	ft_sort(int size, char **tab)
 				tab[i] = tab[j];
 				tab[j] = temp;
 			}
-		j++;
+			j++;
 		}
-	i++;
+		i++;
 	}
 }
 
-static   char **ft_tab_list(t_env_list *lst)
+static char	**ft_tab_list(t_env_list *lst)
 {
-  t_env_list *cur;
-  char **tab;
-  int len;
+	t_env_list	*cur;
+	char		**tab;
+	int			len;
 
-  len = 0;
-  cur = lst;
-  while (cur)
-  {
-    len++;
-    cur = cur->next;
-  }
-  tab = malloc(sizeof(char*) * (len + 1));
-  if (!tab)
-         return NULL;
-  len = 0;
-  while (lst)
-  {
-    tab[len] = ft_strdup((char*)lst->line);
-    if (!tab[len])
-         return NULL;
-    len++;
-    lst = lst->next;
-  }
-  tab[len] = NULL;
-  return (tab);
+	len = 0;
+	cur = lst;
+	while (cur)
+	{
+		len++;
+		cur = cur->next;
+	}
+	tab = malloc(sizeof(char *) * (len + 1));
+	if (!tab)
+		return (NULL);
+	len = 0;
+	while (lst)
+	{
+		tab[len] = ft_strdup((char *)lst->line);
+		if (!tab[len])
+			return (NULL);
+		len++;
+		lst = lst->next;
+	}
+	tab[len] = NULL;
+	return (tab);
 }
 
-static void ft_printlst_export(t_env_list *env_list, t_data *data)
+static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 {
-  char **tab;
-  int size;
+	char	**tab;
+	int		size;
 
-  size = 0;
-  tab = ft_tab_list(env_list);
-  if (!tab)
-    ft_shell_exit(data);
-  while (tab[size])
-    size++;
-  ft_sort(size, tab);
-  size = 0;
-  while (tab[size])
-  {
-    ft_putstr("export ");
-    ft_putstr(tab[size]);
-    write(1, "\n", 1);
-    size++;
-  }
+	size = 0;
+	tab = ft_tab_list(env_list);
+	if (!tab)
+		ft_shell_exit(data);
+	while (tab[size])
+		size++;
+	ft_sort(size, tab);
+	size = 0;
+	while (tab[size])
+	{
+		ft_putstr("export ");
+		ft_putstr(tab[size]);
+		write(1, "\n", 1);
+		size++;
+	}
 }
 
-static int    ft_valid_args(char *s)
+static int	ft_valid_args(char *s)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if(!ft_isalpha(s[i]) && s[i] != '_')
-    {
-        ft_putstr_fd("losmaquinos: export: \" ", 2);
-        write(2, &s[i], 1);
-        ft_putstr_fd(" \" : identifiant non valable\n", 2);
-        return (0);
-    }
-    while (s[i])
-    {
-        if(!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?' && s[i] != '=')
-        {
-            ft_putstr_fd("losmaquinos: export: \" ", 2);
-            ft_putstr_fd(s, 2);
-            ft_putstr_fd(" \" : identifiant non valable\n", 2);
-            return (0);
-        }
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!ft_isalpha(s[i]) && s[i] != '_')
+	{
+		ft_putstr_fd("losmaquinos: export: \" ", 2);
+		write(2, &s[i], 1);
+		ft_putstr_fd(" \" : identifiant non valable\n", 2);
+		return (0);
+	}
+	while (s[i])
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?' && s[i] != '=')
+		{
+			ft_putstr_fd("losmaquinos: export: \" ", 2);
+			ft_putstr_fd(s, 2);
+			ft_putstr_fd(" \" : identifiant non valable\n", 2);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
-void  ft_export(char **args, t_env_list **env_list, t_data *data)
+void	ft_export(char **args, t_env_list **env_list, t_data *data)
 {
-    int			i;
-    t_env_list	*tmp;
-    t_env_list	*dup;
+	int			i;
+	t_env_list	*tmp;
+	t_env_list	*dup;
 
-    i = 1;
-    tmp = NULL;
-    dup = NULL;
-    if (!args[i])
-    {
-        ft_printlst_export(*env_list, data);
-        return ;
-    }
-    while (args[i])
-    {
-        if (ft_valid_args(args[i]))
-        {
-            tmp = ft_new_env(args[i]);
-            dup = ft_key_hunter(args[i], *env_list);
-            if (!tmp)
-                ft_shell_exit(data);
-            if (dup && ft_strcmp(dup->key, tmp->key) == 0)
-                ft_del_env(dup, env_list);
-            ft_lstadd_back_env(env_list, tmp);
-        }
-        i++;
-    }
+	i = 1;
+	tmp = NULL;
+	dup = NULL;
+	if (!args[i])
+	{
+		ft_printlst_export(*env_list, data);
+		return ;
+	}
+	while (args[i])
+	{
+		if (ft_valid_args(args[i]))
+		{
+			tmp = ft_new_env(args[i]);
+			dup = ft_key_hunter(args[i], *env_list);
+			if (!tmp)
+				ft_shell_exit(data);
+			if (dup && ft_strcmp(dup->key, tmp->key) == 0)
+				ft_del_env(dup, env_list);
+			ft_lstadd_back_env(env_list, tmp);
+		}
+		i++;
+	}
 }

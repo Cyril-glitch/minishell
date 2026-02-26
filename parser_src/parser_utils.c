@@ -3,19 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/17 14:58:08 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/25 22:19:14 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+int	is_build(t_cmd **cmd)
+{
+	if (!((*cmd)->args[0]) || !ft_strlen(((*cmd)->args[0])))
+		return (2);
+	if (!ft_strcmp((*cmd)->args[0], "echo"))
+		return ((*cmd)->build = ECHOO, 1);
+	if (!ft_strcmp((*cmd)->args[0], "cd"))
+		return ((*cmd)->build = CD, 1);
+	if (!ft_strcmp((*cmd)->args[0], "pwd"))
+		return ((*cmd)->build = PWD, 1);
+	if (!ft_strcmp((*cmd)->args[0], "export"))
+		return ((*cmd)->build = EXPORT, 1);
+	if (!ft_strcmp((*cmd)->args[0], "unset"))
+		return ((*cmd)->build = UNSET, 1);
+	if (!ft_strcmp((*cmd)->args[0], "env"))
+		return ((*cmd)->build = ENV, 1);
+	if (!ft_strcmp((*cmd)->args[0], "exit"))
+		return ((*cmd)->build = EXIT, 1);
+	else
+		return (0);
+}
+
 void	ft_display_list_cmd(t_cmd_list *lst)
 {
 	t_cmd	*current;
-    int i;
+	int		i;
 
 	current = lst->head;
 	while (current)
@@ -34,10 +56,11 @@ void	ft_display_list_cmd(t_cmd_list *lst)
 	}
 	printf("size = %d\n", lst->size);
 }
+
 void	ft_display_list_redir(t_redir_list *lst)
 {
 	t_redir	*current;
-	
+
 	current = lst->head;
 	while (current)
 	{
@@ -48,9 +71,9 @@ void	ft_display_list_redir(t_redir_list *lst)
 	printf("size = %d\n", lst->size);
 }
 
-int is_redir(t_token *current)
+int	is_redir(t_token *current)
 {
-    if (current->type >= 2 && current->type <= 5)
-        return (1);
-    return (0);
+	if (current->type >= 2 && current->type <= 5)
+		return (1);
+	return (0);
 }

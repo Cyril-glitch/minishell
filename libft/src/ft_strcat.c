@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:29:04 by cycolonn          #+#    #+#             */
-/*   Updated: 2025/12/31 11:54:21 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/26 09:22:50 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../inc/libft.h"
+#include "../inc/libft.h"
 
 char	*ft_strcat(char *dst, const char *src)
 {

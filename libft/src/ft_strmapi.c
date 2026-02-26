@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:20:41 by cycolonn          #+#    #+#             */
-/*   Updated: 2025/12/31 11:54:21 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/26 09:25:15 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../inc/libft.h"
+#include "../inc/libft.h"
 /*
    char	toupperf(unsigned int i, char c)
    {

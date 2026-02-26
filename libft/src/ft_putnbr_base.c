@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 15:43:52 by cycolonn          #+#    #+#             */
-/*   Updated: 2025/07/11 13:28:13 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/26 09:23:24 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	invalid(char *base)
 			{
 				return (1);
 			}
-		j++;
+			j++;
 		}
-	i++;
+		i++;
 	}
 	if (i < 2)
 	{
@@ -50,7 +50,7 @@ int	operator(char *base)
 		{
 			return (1);
 		}
-	i++;
+		i++;
 	}
 	return (0);
 }

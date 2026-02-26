@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/20 11:48:22 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/25 21:52:03 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,12 @@ char	**parse_path(char **env)
 	return (path_tab);
 }
 
-char	*find_way_path(char **path_tab, char *cmd, t_data *data)
+char	*shearch_way(char **path_tab, t_data *data, char *cmd)
 {
 	int		i;
-	char	*way;
 	char	*tmp;
+	char	*way;
 
-	if (!access(cmd, X_OK))
-		return (ft_strdup(cmd));
-	if (!path_tab | !cmd)
-		return (NULL);
 	i = 0;
 	while (path_tab[i])
 	{
@@ -76,5 +72,15 @@ char	*find_way_path(char **path_tab, char *cmd, t_data *data)
 		free(tmp);
 		i++;
 	}
+	return (NULL);
+}
+
+char	*find_way_path(char **path_tab, char *cmd, t_data *data)
+{
+	if (!access(cmd, X_OK))
+		return (ft_strdup(cmd));
+	if (!path_tab | !cmd)
+		return (NULL);
+	return (shearch_way(path_tab, data, cmd));
 	return (NULL);
 }

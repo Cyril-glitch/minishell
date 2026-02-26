@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 13:45:38 by cycolonn          #+#    #+#             */
-/*   Updated: 2025/12/31 11:54:21 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/26 09:21:38 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../inc/libft.h"
+#include "../inc/libft.h"
 
 void	*ft_memrchr(const void *s, int c, size_t n)
 {

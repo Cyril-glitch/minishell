@@ -1,18 +1,17 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)
-	# Sur Mac, on force les chemins de Homebrew
-	# La commande brew --prefix readline donne /opt/homebrew/opt/readline
+	# Mac
 	RL_PATH = $(shell brew --prefix readline 2>/dev/null || echo "/opt/homebrew/opt/readline")
 	RL_INC  = -I$(RL_PATH)/include
 	RL_LIB  = -L$(RL_PATH)/lib -lreadline
 else
-	# Sur Linux (École)
+	# Linux
 	RL_INC  = 
 	RL_LIB  = -lreadline
 endif
@@ -63,9 +62,10 @@ BUILD_SRC =		build_src/ft_cd.c \
 							build_src/ft_exit.c
 BUILD_OBJ = $(BUILD_SRC:.c=.o)
 
-EXEC_SRC =		exec_src/exec.c \
-							exec_src/redir.c \
-							exec_src/exec_utils.c
+EXEC_SRC =	exec_src/exec.c \
+			exec_src/redir.c \
+			exec_src/exec_utils.c \
+			exec_src/exec2.c
 EXEC_OBJ = $(EXEC_SRC:.c=.o)
 
 all: $(NAME)

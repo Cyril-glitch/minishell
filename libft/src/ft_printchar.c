@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:00:48 by cycolonn          #+#    #+#             */
-/*   Updated: 2025/12/31 12:22:55 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/26 09:24:50 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../inc/ft_printf.h"
+#include "../inc/ft_printf.h"
 
 static void	ft_local_disable(t_flags *f)
 {

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   set_sig_term.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:29:05 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/13 10:29:15 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/02/25 21:01:34 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-
 static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 {
+	static int	client_pid = 0;
+
 	(void)context;
 	(void)client;
-  static  int client_pid = 0;
-
-  if (!client_pid)
-    client_pid = client->si_pid;
+	if (!client_pid)
+		client_pid = client->si_pid;
 	if (signum == SIGINT && client_pid == client->si_pid)
 	{
 		write(1, "\n", 1);
@@ -31,22 +30,21 @@ static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 	}
 }
 
-void  ft_childmode(struct sigaction *sig_a, t_data *data)
-{ 
-
+void	ft_childmode(struct sigaction *sig_a, t_data *data)
+{
 	tcsetattr(0, TCSANOW, data->orig_termios);
 	sig_a->sa_flags = 0;
-  sig_a->sa_handler = SIG_DFL;
+	sig_a->sa_handler = SIG_DFL;
 	sigemptyset(&sig_a->sa_mask);
 	sigaction(SIGINT, sig_a, NULL);
 	sigaction(SIGQUIT, sig_a, NULL);
-  data->child = 1;
+	data->child = 1;
 }
 
-void  ft_sigmute(struct sigaction *sig_a )
-{ 
+void	ft_sigmute(struct sigaction *sig_a)
+{
 	sig_a->sa_flags = 0;
-  sig_a->sa_handler = SIG_IGN;
+	sig_a->sa_handler = SIG_IGN;
 	sigemptyset(&sig_a->sa_mask);
 	sigaction(SIGINT, sig_a, NULL);
 	sigaction(SIGQUIT, sig_a, NULL);
@@ -62,10 +60,11 @@ void	ft_interactive_mode(struct sigaction *sig_a, t_data *data)
 	sig_a->sa_flags = 0;
 	sig_a->sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, sig_a, NULL);
-  data->child = 0;
+	data->child = 0;
 }
 
-void	ft_init_termios(struct termios *orig_termios, struct termios *new_termios)
+void	ft_init_termios(struct termios *orig_termios,
+		struct termios *new_termios)
 {
 	tcgetattr(0, orig_termios);
 	*new_termios = *orig_termios;
