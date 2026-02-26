@@ -177,13 +177,6 @@ typedef struct s_data
 	t_prompt			*prompt;
 }						t_data;
 
-// EXPAND
-void					ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
-void					ft_expd_zero(t_expand *expd);
-int						ft_quote_status(t_expand *expd, char c);
-void					ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
-char					*ft_delquote(char *str);
-
 // INIT
 void					ft_interactive_mode(struct sigaction *sig_a, t_data *data);
 void					ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
@@ -206,6 +199,12 @@ void					ft_lstclear_env(t_env_list **lst);
 t_env_list				*ft_lstlast_env(t_env_list *lst);
 void					ft_printlst_env(t_env_list *lst);
 
+// SHELL_EXIT
+void					ft_shell_exit(t_data *data);
+void					ft_free_data(t_data *data);
+void	ft_shell_exit_hd(t_data *data, char *file);
+void    ft_free_prompt(t_data *data);
+
 // LEXER
 void					ft_db_lstadd_front_token(t_token_list *token_list, t_token *new);
 void					ft_db_lstadd_back_token(t_token_list *token_list, t_token *new);
@@ -224,10 +223,12 @@ int						lexer(t_data *data);
 void					nb_of_malloc(char *str, int *i, int *j, char quote);
 void					copy_word(char *str, int *i, char quote, t_token *token);
 
-// SHELL_EXIT
-void					ft_shell_exit(t_data *data);
-void					ft_free_data(t_data *data);
-void	ft_shell_exit_hd(t_data *data, char *file);
+// EXPAND
+void					ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
+void					ft_expd_zero(t_expand *expd);
+int						ft_quote_status(t_expand *expd, char c);
+void					ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
+char					*ft_delquote(char *str);
 
 // PARSER
 void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);

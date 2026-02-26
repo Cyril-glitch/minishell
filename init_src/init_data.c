@@ -14,30 +14,23 @@
 
 static void	ft_add_signal(t_data *data)
 {
-	struct sigaction	*sig_a;
-
-	sig_a = malloc(sizeof(struct sigaction));
-	if (!sig_a)
+	data->sig_a = malloc(sizeof(struct sigaction));
+	if (!data->sig_a)
 		ft_shell_exit(data);
-	data->sig_a = sig_a;
 	ft_interactive_mode(data->sig_a, data);
 }
 
 static void	ft_add_termios(t_data *data)
 {
-	struct termios	*orig_termios;
-	struct termios	*new_termios;
-
-	orig_termios = malloc(sizeof(struct termios));
-	if (orig_termios)
-		ft_shell_exit(data);
-	new_termios = malloc(sizeof(struct termios));
-	if (!new_termios)
-		ft_shell_exit(data);
-	data->orig_termios = orig_termios;
-	data->new_termios = new_termios;
-	ft_init_termios(data->orig_termios, data->new_termios);
+    data->orig_termios = malloc(sizeof(struct termios));
+    if (!data->orig_termios)
+        ft_shell_exit(data);
+    data->new_termios = malloc(sizeof(struct termios));
+    if (!data->new_termios)
+        ft_shell_exit(data);
+    ft_init_termios(data->orig_termios, data->new_termios);
 }
+
 static void ft_add_prompt(t_data *data)
 {
 	data->prompt = malloc(sizeof(t_prompt));

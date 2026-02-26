@@ -1,7 +1,7 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 UNAME_S := $(shell uname -s)
 
@@ -93,6 +93,9 @@ clean:
 	make clean -C $(LIBDIR)
 
 bin: all clean
+
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./bin/minishell
 
 fclean: clean
 	rm -rf bin

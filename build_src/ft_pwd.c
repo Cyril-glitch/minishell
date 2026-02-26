@@ -41,8 +41,10 @@ static char	*ft_make_prompt(t_env_list *env_list, t_data *data, char *cur_path)
 	char *tmp;
 	char *tmp2;
 
+    ft_free_prompt(data);
 	data->prompt->user = ft_color(ft_user(env_list), MINT);
 	data->prompt->pwd = ft_color(ft_strrchr(cur_path, '/'), LAVENDER);
+    free(cur_path);
 	data->prompt->group = ft_strdup(ICE_BLUE "@" RESET B_L_RED "losmachinos🏭"\
 RESET B_BLUE " ~" RESET);
 	if (!data->prompt->user || !data->prompt->pwd || !data->prompt->group)
@@ -51,12 +53,14 @@ RESET B_BLUE " ~" RESET);
 	if (!tmp)
 		ft_shell_exit(data);
 	tmp2 = ft_strjoin(tmp, data->prompt->pwd);
+    free(tmp);
 	if (!tmp2)
 		ft_shell_exit(data);
 	data->prompt->prompt = ft_strjoin(tmp2, " ");
+    free(tmp2);
 	if (!data->prompt->prompt)
 		ft_shell_exit(data);
-	return (data->prompt);
+	return (data->prompt->prompt);
 }
 
 char	*ft_prompt_pwd(t_env_list *env_list, t_data *data)
@@ -68,7 +72,9 @@ char	*ft_prompt_pwd(t_env_list *env_list, t_data *data)
 	if (!cur_path)
 		return (data->prompt->prompt = ft_strdup("@losmachinos🏭:~"));
 	else
+    {
 		return (ft_make_prompt(env_list, data, cur_path));
+    }
 }
 
 void	ft_pwd(t_env_list *env_list)
