@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/25 22:19:49 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/26 13:18:16 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,14 @@ typedef struct s_expand
 	char				quote;
 }						t_expand;
 
+typedef struct s_prompt
+{
+	char				*user;
+	char				*group;
+	char				*pwd;
+	char				*prompt;
+} t_prompt;
+
 typedef struct s_data
 {
 	char				*line;
@@ -166,7 +174,7 @@ typedef struct s_data
 	t_list				*expd_lst;
 	int					last_exit_code;
 	int					child;
-	char				*prompt;
+	t_prompt			*prompt;
 }						t_data;
 
 // EXPAND

@@ -1,7 +1,7 @@
 NAME = bin/minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 UNAME_S := $(shell uname -s)
 
