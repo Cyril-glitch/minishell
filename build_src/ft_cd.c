@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:12:16 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:36:23 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static void	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 	}
 }
 
-int	ft_cd(char *path, t_env_list *env_list, t_data *data)
+int	ft_cd(char **path, t_env_list *env_list, t_data *data)
 {
 	char	*cur_path;
 
@@ -114,10 +114,13 @@ int	ft_cd(char *path, t_env_list *env_list, t_data *data)
 	cur_path = getcwd(cur_path, PATH_MAX);
 	if (!cur_path)
 		return (perror("getcwd"), (-1));
-	ft_back_home(env_list, &path, data);
-	ft_back_old(env_list, &path, data);
-	if (chdir(path) == -1)
+	ft_back_home(env_list, path, data);
+	ft_back_old(env_list, path, data);
+	if (chdir(*path) == -1)
 		return (perror("chdir"), (-1));
-	ft_swap_pwd(cur_path, path, env_list, data);
+	ft_swap_pwd(cur_path, *path, env_list, data);
+	free(*path);
+	*path = NULL;
+	free(cur_path);
 	return (0);
 }

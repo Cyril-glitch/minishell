@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:40 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:19:42 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:25:59 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ void	ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
 	while (current)
 	{
 		ft_subtitute(current->content, current, env_lst, data);
-		// printf("EXPAND NODE :\n\n");
-		// printf("%s\n", (char*)current->content);
 		ft_expanded(current, data->expd_lst, data);
-		// ft_print_lst(data->expd_lst);
-		// printf("\n\n");
 		ft_lstclear(&data->expd_lst, free);
 		current = current->next;
 	}

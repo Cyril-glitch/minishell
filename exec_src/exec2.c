@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/25 21:42:38 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:43:56 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 	{
 		line = readline("> ");
 		if (!line)
+		{
+			free(line);	
 			ft_shell_exit_hd(data, redir->file);
+		}
 		if (!ft_strcmp(line, redir->file))
 		{
 			free(line);
-			break ;
+			ft_free_data(data);
+			exit(0);
 		}
 		ft_putstr_fd(line, fd[1]);
 		write(fd[1], "\n", 1);
@@ -44,8 +48,8 @@ void	d_redir_in(t_redir *redir, t_data *data)
 		child_heredoc(data, redir, fd);
 	ft_sigmute(data->sig_a);
 	waitpid(pid, &g_sig_status, 0);
-  if (g_sig_status == 2)
-    write(1, "\n", 1);
+  	if (g_sig_status == 2)
+    	write(1, "\n", 1);
 	ft_interactive_mode(data->sig_a, data);
 	close(fd[1]);
 	redir->fd_heredoc = fd[0];

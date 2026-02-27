@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/26 13:18:16 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 13:30:29 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,10 +249,10 @@ t_redir					*ft_db_lstnew_redir(void);
 void					ft_display_list_redir(t_redir_list *lst);
 
 // BUILD IN
-int						ft_cd(char *path, t_env_list *env_list, t_data *data);
+int						ft_cd(char **path, t_env_list *env_list, t_data *data);
 void					ft_pwd(t_env_list *env_list);
-void					ft_export(char **args, t_env_list **env_list, t_data *data);
-void					ft_unset(char **args, t_env_list **env_list);
+int						ft_export(char **args, t_env_list **env_list, t_data *data);
+int						ft_unset(char **args, t_env_list **env_list);
 void					ft_del_env(t_env_list *todel, t_env_list **env_list);
 t_env_list				*ft_key_hunter(char *args, t_env_list *env_list);
 void					ft_echo(char **args);

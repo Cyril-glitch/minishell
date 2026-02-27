@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_lst_db_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:12:11 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/25 21:02:16 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:57:42 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,24 @@ void	ft_db_lstadd_back_cmd(t_cmd_list *cmd_list, t_cmd *new)
 	cmd_list->size++;
 }
 
-void	ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void *))
+void	ft_db_lstdelone_cmd(t_cmd *cmd, void (*del)(void *))
 {
 	int	i;
 
 	i = 0;
-	while (token->args[i])
+	while (cmd->args[i])
 	{
-		del(token->args[i]);
+		del(cmd->args[i]);
 		i++;
 	}
-	if (token->redirs_list)
-		ft_db_lstclear_redir(token->redirs_list, del);
-	if (token->args)
-		free(token->args);
-	if (token)
-		free(token);
+	if (cmd->way)
+		free(cmd->way);
+	if (cmd->redirs_list)
+		ft_db_lstclear_redir(cmd->redirs_list, del);
+	if (cmd->args)
+		free(cmd->args);
+	if (cmd)
+		free(cmd);
 }
 
 void	ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void *))
@@ -89,6 +91,7 @@ t_cmd	*ft_db_lstnew_cmd(void)
 	new_cmd->next = NULL;
 	new_cmd->prev = NULL;
 	new_cmd->args = NULL;
+	new_cmd->way = NULL;
 	new_cmd->redirs_list = NULL;
 	new_cmd->is_build = 0;
 	new_cmd->redirs_list = malloc(sizeof(t_redir_list));

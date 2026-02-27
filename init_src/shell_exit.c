@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:26:32 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:26:34 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 10:41:39 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,15 @@ void	ft_shell_exit(t_data *data)
 
 void	ft_shell_exit_hd(t_data *data, char *file)
 {
-  if (!data->child)
-	  tcsetattr(0, TCSANOW, data->orig_termios);
-  else
-	  tcsetattr(0, TCSANOW, data->new_termios);
-  if (!data->child)
-	  rl_clear_history();
-  ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
-  ft_putstr_fd(file, 2);
-  ft_putstr_fd("\')\n", 2);
-  ft_free_data(data);
+  	if (!data->child)
+		tcsetattr(0, TCSANOW, data->orig_termios);
+  	else
+		tcsetattr(0, TCSANOW, data->new_termios);
+  	if (!data->child)
+		rl_clear_history();
+  	ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+  	ft_putstr_fd(file, 2);
+  	ft_putstr_fd("\')\n", 2);
+  	ft_free_data(data);
 	exit(0);
 }

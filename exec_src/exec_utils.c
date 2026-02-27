@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/25 21:52:03 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:55:33 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**parse_path(char **env)
 	if (!path_str)
 		return (NULL);
 	path_tab = ft_split(path_str, ':');
+	free(path_str);
 	if (!path_tab)
 		return (NULL);
 	return (path_tab);

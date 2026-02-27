@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:35 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 13:31:31 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:14:12 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void	ft_pwd(t_env_list *env_list)
 		return ;
 	}
 	printf("%s\n", cur_path);
+	free(cur_path);
 }

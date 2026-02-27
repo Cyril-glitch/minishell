@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/25 21:42:22 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 13:29:29 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ void	exec_build(t_cmd *cmd, t_data *data)
 		ft_echo(cmd->args);
 	if (cmd->build == PWD)
 		ft_pwd(data->env_list);
-	if (cmd->build == EXPORT)
-		ft_export(cmd->args, &data->env_list, data);
-	if (cmd->build == UNSET)
-		ft_unset(cmd->args, &data->env_list);
+	// if (cmd->build == EXPORT)
+	// 	ft_export(cmd->args, &data->env_list, data);
+	// if (cmd->build == UNSET)
+	// 	ft_unset(cmd->args, &data->env_list);
 	if (cmd->build == ENV)
 		ft_env(cmd->args, data->env_list);
-	exit(1);
+	ft_free_data(data);
+	exit(0);
 }
 
 void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
@@ -46,7 +47,11 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 	int		fd_pipe[2];
 
 	if (cmd->build == CD)
-		return (ft_cd(cmd->args[1], data->env_list, data));
+		return (ft_cd(&cmd->args[1], data->env_list, data));
+	if (cmd->build == EXPORT)
+		return (ft_export(cmd->args, &data->env_list, data));
+	if (cmd->build == UNSET)
+		return (ft_unset(cmd->args, &data->env_list));
 	if (cmd->next)
 		pipe(fd_pipe);
 	pid = fork();
@@ -81,15 +86,16 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		if (!path_tab)
 			ft_shell_exit(data);
 		cmd->way = find_way_path(path_tab, cmd->args[0], data);
+		ft_tabclear(path_tab);
 		if (!cmd->way)
 		{
 			printf("command no found : %s\n", cmd->args[0]);
-			ft_tabclear(path_tab);
 			free(cmd->way);
 			return ;
 		}
 	}
-	exec_cmd(cmd, env, data);
+	if (cmd->is_build == 0 || cmd->is_build == 1)
+		exec_cmd(cmd, env, data);
 }
 
 void	execut(t_data *data, char **env)

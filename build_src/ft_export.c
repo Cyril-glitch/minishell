@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:12:31 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 13:30:50 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 		write(1, "\n", 1);
 		size++;
 	}
+	ft_tabclear(tab);
 }
 
 static int	ft_valid_args(char *s)
@@ -115,7 +116,7 @@ static int	ft_valid_args(char *s)
 	return (1);
 }
 
-void	ft_export(char **args, t_env_list **env_list, t_data *data)
+int	ft_export(char **args, t_env_list **env_list, t_data *data)
 {
 	int			i;
 	t_env_list	*tmp;
@@ -127,7 +128,7 @@ void	ft_export(char **args, t_env_list **env_list, t_data *data)
 	if (!args[i])
 	{
 		ft_printlst_export(*env_list, data);
-		return ;
+		return (0);
 	}
 	while (args[i])
 	{
@@ -143,4 +144,5 @@ void	ft_export(char **args, t_env_list **env_list, t_data *data)
 		}
 		i++;
 	}
+	return (1);
 }

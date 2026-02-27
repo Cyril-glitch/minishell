@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:19:47 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 12:41:07 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	ft_expd_zero(t_expand *expd)
 	{
 		free(expd->suffix);
 		expd->suffix = NULL;
+	}
+	if (expd->cat)
+	{
+		free(expd->cat);
+		expd->cat = NULL;
 	}
 	expd->quote = 0;
 }

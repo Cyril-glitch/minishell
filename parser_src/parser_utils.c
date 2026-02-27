@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/25 22:19:14 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 10:35:05 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_build(t_cmd **cmd)
 {
 	if (!((*cmd)->args[0]) || !ft_strlen(((*cmd)->args[0])))
-		return (2);
+		return ((*cmd)->build = DFL, 2);
 	if (!ft_strcmp((*cmd)->args[0], "echo"))
 		return ((*cmd)->build = ECHOO, 1);
 	if (!ft_strcmp((*cmd)->args[0], "cd"))
@@ -29,9 +29,8 @@ int	is_build(t_cmd **cmd)
 	if (!ft_strcmp((*cmd)->args[0], "env"))
 		return ((*cmd)->build = ENV, 1);
 	if (!ft_strcmp((*cmd)->args[0], "exit"))
-		return ((*cmd)->build = EXIT, 1);
-	else 
-		return ((*cmd)->build = DFL, 0);
+		return ((*cmd)->build = EXIT, 1); 
+	return ((*cmd)->build = DFL, 0);
 }
 
 void	ft_display_list_cmd(t_cmd_list *lst)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:42 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:12:45 by mathis           ###   ########.fr       */
+/*   Updated: 2026/02/27 13:30:06 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_del_env(t_env_list *todel, t_env_list **env_list)
 		next->prev = prev;
 }
 
-void	ft_unset(char **args, t_env_list **env_list)
+int	ft_unset(char **args, t_env_list **env_list)
 {
 	int			i;
 	t_env_list	*tmp;
@@ -62,4 +62,5 @@ void	ft_unset(char **args, t_env_list **env_list)
 			ft_del_env(tmp, env_list);
 		i++;
 	}
+	return (1);
 }
