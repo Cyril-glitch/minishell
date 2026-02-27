@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 17:04:19 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/27 17:47:08 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 	pid_t	pid;
 	int		fd_pipe[2];
 
+	if (cmd->next)
+		pipe(fd_pipe);
 	if (cmd->next || !cmd->is_build)
 	{	
-		pipe(fd_pipe);
 		pid = fork();
 		data->last_pid = pid;
 		if (pid == -1)
@@ -91,8 +92,8 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 			return ;
 		}
 	}
-	if (cmd->is_build == 0 || cmd->is_build == 1)
-		exec_cmd(cmd, env, data);
+	//if (cmd->is_build == 0 || cmd->is_build == 1)
+	exec_cmd(cmd, env, data);
 }
 
 void	execut(t_data *data, char **env)
