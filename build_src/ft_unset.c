@@ -40,6 +40,12 @@ void	ft_del_env(t_env_list *todel, t_env_list **env_list)
 	}
 	prev = todel->prev;
 	next = todel->next;
+  if (todel->line)
+    free(todel->line);
+  if (todel->key)
+    free(todel->key);
+  if (todel->content)
+    free(todel->content);
 	free(todel);
 	todel = NULL;
 	if (prev)
