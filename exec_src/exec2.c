@@ -6,13 +6,13 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 16:01:23 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/27 17:29:27 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	child_heredoc(t_data *data, t_redir *redir, int *fd)
+void	child_heredoc(t_data *data, t_redir *redir, int *fd, int next)
 {
 	char	*line;
 
@@ -23,13 +23,19 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 		if (!line)
 		{
 			free(line);	
-			ft_shell_exit_hd(data, redir->file);
+			if (next)
+				ft_shell_exit_hd(data, redir->file);
+			return ;
 		}
 		if (!ft_strcmp(line, redir->file))
 		{
 			free(line);
-			ft_free_data(data);
-			exit(0);
+			if (next)
+			{
+				ft_free_data(data);
+				exit(0);
+			}
+			return ;
 		}
 		ft_putstr_fd(line, fd[1]);
 		write(fd[1], "\n", 1);
@@ -37,24 +43,28 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 	}
 }
 
-void	d_redir_in(t_redir *redir, t_data *data)
+void	d_redir_in(t_redir *redir, t_data *data, t_cmd *cmd)
 {
 	int		fd[2];
 	pid_t	pid;
-
-	pid = fork();
+	
 	pipe(fd);
-	if (pid == 0)
-		child_heredoc(data, redir, fd);
-	ft_sigmute(data->sig_a);
-	waitpid(pid, &g_sig_status, 0);
-	if (WIFEXITED(g_sig_status))
-		g_sig_status = WEXITSTATUS(g_sig_status);
-	else if (WIFSIGNALED(g_sig_status))
-		g_sig_status = 128 + WTERMSIG(g_sig_status);
-	// if (g_sig_status == 130 || g_sig_status == 131)
-    //  	write(1, "\n", 1);
-	ft_interactive_mode(data->sig_a, data);
+	if (cmd->next)
+	{
+		
+		pid = fork();
+		if (pid == 0)
+			child_heredoc(data, redir, fd, 1);
+		//ft_sigmute(data->sig_a);
+		waitpid(pid, &g_sig_status, 0);
+		if (WIFEXITED(g_sig_status))
+			g_sig_status = WEXITSTATUS(g_sig_status);
+		else if (WIFSIGNALED(g_sig_status))
+			g_sig_status = 128 + WTERMSIG(g_sig_status);
+		//ft_interactive_mode(data->sig_a, data);
+	}
+	else 
+		child_heredoc(data, redir, fd, 0);
 	close(fd[1]);
 	redir->fd_heredoc = fd[0];
 }
@@ -71,7 +81,7 @@ void	check_heredoc(t_cmd_list *cmd_list, t_data *data)
 		while (current_redir)
 		{
 			if (current_redir->type == D_REDIR_IN)
-				d_redir_in(current_redir, data);
+				d_redir_in(current_redir, data, current_cmd);
 			current_redir = current_redir->next;
 		}
 		current_cmd = current_cmd->next;
