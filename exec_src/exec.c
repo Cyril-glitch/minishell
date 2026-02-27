@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 13:29:29 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/27 15:54:49 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,11 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 	if (cmd->next)
 		pipe(fd_pipe);
 	pid = fork();
+	data->last_pid = pid;
 	if (pid == -1)
 		ft_shell_exit(data);
 	if (pid == 0)
 		child(data, fd_pipe, cmd, env);
-	ft_sigmute(data->sig_a);
-	waitpid(pid, &g_sig_status, 0);
-  if (g_sig_status == 2)
-	  write(1, "\n", 1);
-	ft_interactive_mode(data->sig_a, data);
 	if (data->fd_tmp != 0)
 		close(data->fd_tmp);
 	if (cmd->next)
@@ -78,7 +74,7 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 {
 	char	**path_tab;
 
-	if (cmd->build == EXIT)
+	if (cmd->build == EXIT && !cmd->next)
 		ft_exit(cmd->args, data);
 	if (cmd->is_build == 0)
 	{
@@ -103,6 +99,7 @@ void	execut(t_data *data, char **env)
 	t_cmd	*current;
 
 	check_heredoc(data->cmd_list, data);
+	ft_sigmute(data->sig_a);
 	exec(data->cmd_list->head, env, data);
 	current = data->cmd_list->head->next;
 	while (current)
@@ -110,8 +107,19 @@ void	execut(t_data *data, char **env)
 		exec(current, env, data);
 		current = current->next;
 	}
+	if (data->last_pid > 0)
+    {
+        waitpid(data->last_pid, &g_sig_status, 0);
+        if (WIFEXITED(g_sig_status))
+            g_sig_status = WEXITSTATUS(g_sig_status);
+        else if (WIFSIGNALED(g_sig_status))
+            g_sig_status = 128 + WTERMSIG(g_sig_status);
+    }
 	while (wait(NULL) > 0)
 		;
 	if (data->fd_tmp != 0)
 		close(data->fd_tmp);
+	if (g_sig_status == 130 || g_sig_status == 131)
+        write(1, "\n", 1);
+    ft_interactive_mode(data->sig_a, data);
 }

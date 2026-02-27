@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 12:43:56 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/27 16:01:23 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ void	d_redir_in(t_redir *redir, t_data *data)
 		child_heredoc(data, redir, fd);
 	ft_sigmute(data->sig_a);
 	waitpid(pid, &g_sig_status, 0);
-  	if (g_sig_status == 2)
-    	write(1, "\n", 1);
+	if (WIFEXITED(g_sig_status))
+		g_sig_status = WEXITSTATUS(g_sig_status);
+	else if (WIFSIGNALED(g_sig_status))
+		g_sig_status = 128 + WTERMSIG(g_sig_status);
+	// if (g_sig_status == 130 || g_sig_status == 131)
+    //  	write(1, "\n", 1);
 	ft_interactive_mode(data->sig_a, data);
 	close(fd[1]);
 	redir->fd_heredoc = fd[0];

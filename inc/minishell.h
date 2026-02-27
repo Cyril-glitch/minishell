@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/27 13:30:29 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/02/27 15:11:16 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ typedef struct s_data
 	int					last_exit_code;
 	int					child;
 	t_prompt			*prompt;
+	pid_t				last_pid;
 }						t_data;
 
 // INIT
