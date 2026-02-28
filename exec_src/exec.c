@@ -46,6 +46,8 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
+    int save_in;
+    int save_out;
 
 	if (cmd->next)
 		pipe(fd_pipe);
@@ -60,9 +62,15 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 	}
 	else if (!cmd->next)
 	{
+        save_in = dup(0);
+        save_out = dup(1);
 		redirection(cmd, data);
 		if (cmd->is_build == 1)
 			exec_build(cmd, data);
+        dup2(save_in, 0);
+        dup2(save_out, 1);
+        close(save_in);
+        close(save_out);
 	}
 	if (data->fd_tmp != 0)
 		close(data->fd_tmp);

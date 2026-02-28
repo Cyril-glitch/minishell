@@ -27,7 +27,8 @@ INIT_SRC =	init_src/init_data.c \
 						init_src/set_sig_term.c \
 						init_src/copy_env.c \
 						init_src/shell_exit.c \
-						init_src/init_list.c 
+						init_src/init_list.c \
+						init_src/heredoc_mode.c
 INIT_OBJ = $(INIT_SRC:.c=.o)
 
 
