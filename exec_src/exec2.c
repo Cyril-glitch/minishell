@@ -42,22 +42,22 @@ void	d_redir_in(t_redir *redir, t_data *data)
 {
 	int		fd[2];
 	pid_t	pid;
-	
+	int		status;
+
 	pipe(fd);
-		
-		pid = fork();
-		if (pid == 0)
-		{
-			close(fd[0]);	
-			child_heredoc(data, redir, fd);
-		}
-		ft_sigmute(data->sig_a);
-		waitpid(pid, &g_sig_status, 0);
-		if (WIFEXITED(g_sig_status))
-			g_sig_status = WEXITSTATUS(g_sig_status);
-		else if (WIFSIGNALED(g_sig_status))
-			g_sig_status = 128 + WTERMSIG(g_sig_status);
-		ft_interactive_mode(data->sig_a, data);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);	
+		child_heredoc(data, redir, fd);
+	}
+	ft_sigmute(data->sig_a);	
+	waitpid(pid, &status, 0); 
+	if (WIFEXITED(status))
+		g_sig_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_sig_status = 128 + WTERMSIG(status);	
+	ft_interactive_mode(data->sig_a, data);
 	close(fd[1]);
 	redir->fd_heredoc = fd[0];
 }
