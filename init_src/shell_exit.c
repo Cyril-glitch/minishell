@@ -85,7 +85,7 @@ void	ft_shell_exit_hd(t_data *data, char *file)
     if (g_sig_status == 130)
     {
         ft_free_data(data);
-        exit (0);
+        exit (130);
     }
     ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
   	ft_putstr_fd(file, 2);

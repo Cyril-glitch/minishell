@@ -104,32 +104,38 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	exec_cmd(cmd, env, data);
 }
 
-void	execut(t_data *data, char **env)
+void    execut(t_data *data, char **env)
 {
-	t_cmd	*current;
+    t_cmd    *current;
+    int      status;
 
-	check_heredoc(data->cmd_list, data);
-	ft_sigmute(data->sig_a);
-	exec(data->cmd_list->head, env, data);
-	current = data->cmd_list->head->next;
-	while (current)
-	{
-		exec(current, env, data);
-		current = current->next;
-	}
-	if (data->last_pid > 0)
+    status = 0;
+    data->last_pid = -1;
+    check_heredoc(data->cmd_list, data);
+    if (g_sig_status == 130)
+        return ;
+    ft_sigmute(data->sig_a);
+    exec(data->cmd_list->head, env, data);
+    current = data->cmd_list->head->next;
+    while (current)
     {
-        waitpid(data->last_pid, &g_sig_status, 0);
-        if (WIFEXITED(g_sig_status))
-            g_sig_status = WEXITSTATUS(g_sig_status);
-        else if (WIFSIGNALED(g_sig_status))
-            g_sig_status = 128 + WTERMSIG(g_sig_status);
+        exec(current, env, data);
+        current = current->next;
     }
-	while (wait(NULL) > 0)
-		;
-	if (data->fd_tmp != 0)
-		close(data->fd_tmp);
-	if (g_sig_status == 130 || g_sig_status == 131)
-        write(1, "\n", 1);
+    if (data->last_pid > 0)
+    {
+        waitpid(data->last_pid, &status, 0);
+        if (WIFEXITED(status))
+            g_sig_status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+        {
+            g_sig_status = 128 + WTERMSIG(status);
+            write(1, "\n", 1);
+        }
+    }
+    while (wait(NULL) > 0)
+        ;
+    if (data->fd_tmp != 0)
+        close(data->fd_tmp);
     ft_interactive_mode(data->sig_a, data);
 }
