@@ -33,7 +33,7 @@ static char	*ft_expansion(char *key, t_env_list *env_lst, t_data *data)
 	char	*tmp;
 
 	tmp = NULL;
-	if (data->expd->quote == '\'')
+	if (data->expd->quote == '\'' || !*key)
 	{
 		tmp = ft_strjoin("$", key);
 		if (!tmp)
