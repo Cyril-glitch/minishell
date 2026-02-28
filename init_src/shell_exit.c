@@ -81,15 +81,15 @@ void	ft_shell_exit(t_data *data)
 
 void	ft_shell_exit_hd(t_data *data, char *file)
 {
-  	if (!data->child)
-		tcsetattr(0, TCSANOW, data->orig_termios);
-  	else
-		tcsetattr(0, TCSANOW, data->new_termios);
-  	if (!data->child)
-		rl_clear_history();
-  	ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+	tcsetattr(0, TCSANOW, data->new_termios);
+    if (g_sig_status == 130)
+    {
+        ft_free_data(data);
+        exit (0);
+    }
+    ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
   	ft_putstr_fd(file, 2);
   	ft_putstr_fd("\')\n", 2);
-  	ft_free_data(data);
+    ft_free_data(data);
 	exit(0);
 }

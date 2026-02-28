@@ -187,6 +187,7 @@ void					ft_add_token_list(t_data *data);
 void					ft_add_cmd_list(t_data *data);
 void					ft_add_expand(t_data *data);
 void					ft_childmode(struct sigaction *sig_a, t_data *data);
+void	ft_heredoc_mode(struct sigaction *sig_a, t_data *data);
 void					ft_sigmute(struct sigaction *sig_a);
 
 // INIT_ENV

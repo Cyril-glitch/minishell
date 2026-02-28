@@ -16,7 +16,7 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 {
 	char	*line;
 
-	ft_childmode(data->sig_a, data);
+    ft_heredoc_mode(data->sig_a, data);
 	while (1)
 	{
 		line = readline("> ");
