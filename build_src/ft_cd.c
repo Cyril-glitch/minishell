@@ -70,6 +70,8 @@ static void	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 		{
 			if (ft_strcmp(cur->key, "HOME") == 0)
 			{
+                if (*path)
+                    free(*path);
 				*path = ft_strdup(cur->content);
 				if (!*path)
 					ft_shell_exit(data);
@@ -86,12 +88,13 @@ static void	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 
 	check = 0;
 	cur = env_list;
-	if (**path == '-')
+	if (*path && ft_strcmp(*path, "-") == 0)
 	{
 		while (cur)
 		{
 			if (ft_strcmp(cur->key, "OLDPWD") == 0)
 			{
+                free(*path);
 				*path = ft_strdup(cur->content);
 				if (!*path)
 					ft_shell_exit(data);
