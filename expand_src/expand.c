@@ -27,34 +27,31 @@ static size_t	ft_newlen(t_list *expd_lst)
 	return (len);
 }
 
-static void	ft_expanded(t_token *token_lst, t_list *expd_lst, t_data *data)
+static void	ft_expanded(t_token *token,t_list *expd_lst, t_data *data)
 {
 	size_t	len;
 	size_t	i;
 	size_t	j;
-	t_list	*current;
+    char *tmp;
 
 	j = 0;
-	i = 0;
-	len = 0;
 	len = ft_newlen(expd_lst);
-	current = expd_lst;
-	free(token_lst->content);
-	token_lst->content = malloc(sizeof(char) * (len + 1));
-	if (!token_lst->content)
+	tmp = malloc(sizeof(char) * (len + 1));
+	if (!tmp)
 		ft_shell_exit(data);
-	while (current)
+	while (expd_lst)
 	{
 		i = 0;
-		while (((char *)current->content)[i])
+		while (((char *)expd_lst->content)[i])
 		{
-			token_lst->content[j] = ((char *)current->content)[i];
-			i++;
-			j++;
+			tmp[j++] = ((char *)expd_lst->content)[i++];
 		}
-		token_lst->content[j] = 0;
-		current = current->next;
+		tmp[j] = 0;
+		expd_lst = expd_lst->next;
 	}
+    free(token->content);
+    token->content = ft_delquote(tmp);
+    free(tmp);
 }
 
 void	ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
@@ -65,7 +62,7 @@ void	ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
 	while (current)
 	{
 		ft_subtitute(current->content, current, env_lst, data);
-		ft_expanded(current, data->expd_lst, data);
+		ft_expanded(current,data->expd_lst, data);
 		ft_lstclear(&data->expd_lst, free);
 		current = current->next;
 	}

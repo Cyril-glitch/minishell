@@ -103,13 +103,6 @@ static int	ft_cat(char *str, t_expand *expd, t_data *data)
 		ft_shell_exit(data);
 	expd->cat = ft_strjoin(tmp, expd->suffix);
 	free(tmp);
-	if (!expd->cat)
-		ft_shell_exit(data);
-	tmp = ft_delquote(expd->cat);
-	if (!tmp)
-		ft_shell_exit(data);
-	free(expd->cat);
-	expd->cat = tmp;
 	return (i);
 }
 

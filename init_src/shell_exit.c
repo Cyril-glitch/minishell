@@ -61,6 +61,7 @@ void	ft_free_data(t_data *data)
 	if (data->expd)
 	{
 		ft_expd_zero(data->expd);
+        expd->quote = 0;
 		free(data->expd);
 	}
     free(data);
