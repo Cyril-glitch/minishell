@@ -270,6 +270,6 @@ char					**parse_path(char **env);
 char					*find_way_path(char **path_tab, char *cmd, t_data *data);
 void					execut(t_data *data, char **env);
 void					pipex(t_cmd *cmd, t_data *data, int *fd_pipe);
-void					check_heredoc(t_cmd_list *cmd_list, t_data *data);
+int				        check_heredoc(t_cmd_list *cmd_list, t_data *data);
 
 #endif

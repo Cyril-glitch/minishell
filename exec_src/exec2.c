@@ -63,7 +63,7 @@ void	d_redir_in(t_redir *redir, t_data *data)
 	redir->fd_heredoc = fd[0];
 }
 
-void	check_heredoc(t_cmd_list *cmd_list, t_data *data)
+int	check_heredoc(t_cmd_list *cmd_list, t_data *data)
 {
 	t_cmd	*current_cmd;
 	t_redir	*current_redir;
@@ -76,10 +76,13 @@ void	check_heredoc(t_cmd_list *cmd_list, t_data *data)
 		{
 			if (current_redir->type == D_REDIR_IN)
 				d_redir_in(current_redir, data);
+            if (g_sig_status == 130)
+                return (-1);
 			current_redir = current_redir->next;
 		}
 		current_cmd = current_cmd->next;
 	}
+    return 0;
 }
 
 void	pipex(t_cmd *cmd, t_data *data, int *fd_pipe)

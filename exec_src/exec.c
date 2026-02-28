@@ -111,8 +111,7 @@ void    execut(t_data *data, char **env)
 
     status = 0;
     data->last_pid = -1;
-    check_heredoc(data->cmd_list, data);
-    if (g_sig_status == 130)
+    if (check_heredoc(data->cmd_list, data) == -1)
         return ;
     ft_sigmute(data->sig_a);
     exec(data->cmd_list->head, env, data);
