@@ -16,6 +16,7 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 {
 	char	*line;
 
+    g_sig_status = 0;
     ft_heredoc_mode(data->sig_a, data);
 	while (1)
 	{
