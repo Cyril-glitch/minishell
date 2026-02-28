@@ -74,7 +74,7 @@ static int	ft_val(char *str, t_expand *expd, t_env_list *env_lst, t_data *data)
 		return (2);
 	}
 	i++;
-	while (ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"')
+	while ((ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"') || str[i] == '_' )
 		i++;
 	expd->key = ft_substr(str, 1, (i - 1));
 	if (!expd->key)
@@ -93,20 +93,16 @@ static int	ft_cat(char *str, t_expand *expd, t_data *data)
 	i = 0;
 	tmp = NULL;
 	while (str[i] && str[i] != '$')
+    {
+        ft_quote_status(expd, str[i]);
 		i++;
+    }
 	expd->suffix = ft_substr(str, 0, i);
 	tmp = ft_strjoin(expd->prefix, expd->val);
 	if (!tmp || !expd->suffix)
 		ft_shell_exit(data);
 	expd->cat = ft_strjoin(tmp, expd->suffix);
 	free(tmp);
-	if (!expd->cat)
-		ft_shell_exit(data);
-	tmp = ft_delquote(expd->cat);
-	if (!tmp)
-		ft_shell_exit(data);
-	free(expd->cat);
-	expd->cat = tmp;
 	return (i);
 }
 

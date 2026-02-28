@@ -41,7 +41,7 @@ void	ft_expd_zero(t_expand *expd)
 		free(expd->cat);
 		expd->cat = NULL;
 	}
-	expd->quote = 0;
+	//expd->quote = 0;
 }
 
 void	ft_print_lst(t_list *lst)
