@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:26:44 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/25 21:00:46 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/02 13:52:56 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	open_file(t_redir *current, int *fd, int *flag, t_cmd *cmd)
+void	open_file(t_redir *current, int *fd, int *flag)
 {
 	if (current->type == REDIR_IN)
 	{
@@ -58,7 +58,7 @@ void	redirection(t_cmd *cmd, t_data *data)
 	flag = 0;
 	while (current)
 	{
-		open_file(current, &fd, &flag, cmd);
+		open_file(current, &fd, &flag);
 		if (fd == -1 && current->type == D_REDIR_IN)
 			ft_shell_exit(data);
 		if (fd == -1 && current->type == REDIR_IN)
