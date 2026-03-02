@@ -15,7 +15,7 @@
 int	is_build(t_cmd **cmd)
 {
 	if (!((*cmd)->args[0]) || !ft_strlen(((*cmd)->args[0])))
-		return ((*cmd)->build = DFL, 2);
+		return ((*cmd)->build = DFL, -1);
 	if (!ft_strcmp((*cmd)->args[0], "echo"))
 		return ((*cmd)->build = ECHOO, 1);
 	if (!ft_strcmp((*cmd)->args[0], "cd"))

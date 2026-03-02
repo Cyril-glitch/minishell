@@ -12,7 +12,7 @@ ifeq ($(UNAME_S), Darwin)
 	RL_LIB  = -L$(RL_PATH)/lib -lreadline
 else
 	# Linux
-	RL_INC  = 
+	RL_INC  =
 	RL_LIB  = -lreadline
 endif
 
@@ -51,7 +51,7 @@ PARSER_OBJ = $(PARSER_SRC:.c=.o)
 EXPAND_SRC = 	expand_src/expand.c \
 							expand_src/subtitute.c \
 							expand_src/quote.c \
-							expand_src/expand_utils.c 
+							expand_src/expand_utils.c
 EXPAND_OBJ = $(EXPAND_SRC:.c=.o)
 
 BUILD_SRC =		build_src/ft_cd.c \

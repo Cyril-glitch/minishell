@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-void	open_file(t_redir *current, int *fd, int *flag)
+void	open_file(t_redir *current, int *fd, int *flag, t_cmd *cmd)
 {
 	if (current->type == REDIR_IN)
 	{
@@ -23,6 +23,13 @@ void	open_file(t_redir *current, int *fd, int *flag)
 			ft_putstr_fd(current->file, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 		}
+		// else if (!cmd->way)
+		// {
+		// 	ft_putstr_fd("minishell: ", 2);
+    	// 	ft_putstr_fd(cmd->args[0], 2);
+    	// 	ft_putstr_fd(": command no found\n", 2);
+		// 	free(cmd->way);
+		// }
 		*flag = 1;
 	}
 	if (current->type == D_REDIR_IN)
@@ -30,7 +37,6 @@ void	open_file(t_redir *current, int *fd, int *flag)
 		*fd = current->fd_heredoc;
 		*flag = 2;
 	}
-	*flag = 1;
 	if (current->type == REDIR_OUT || current->type == D_REDIR_OUT)
 	{
 		if (current->type == REDIR_OUT)
@@ -52,9 +58,14 @@ void	redirection(t_cmd *cmd, t_data *data)
 	flag = 0;
 	while (current)
 	{
-		open_file(current, &fd, &flag);
-		if (fd == -1)
+		open_file(current, &fd, &flag, cmd);
+		if (fd == -1 && current->type == D_REDIR_IN)
 			ft_shell_exit(data);
+		if (fd == -1 && current->type == REDIR_IN)
+    {
+      ft_free_data(data);
+      exit(0);
+    }
 		if (flag == 1)
 			dup2(fd, 0);
 		if (flag == 2)
