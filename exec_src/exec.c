@@ -51,8 +51,8 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 
 	if (cmd->next)
 		pipe(fd_pipe);
-	if (cmd->next || !cmd->is_build)
-	{	
+	if (cmd->next || !cmd->is_build || cmd->is_build == -1)
+	{
 		pid = fork();
 		data->last_pid = pid;
 		if (pid == -1)
@@ -60,7 +60,7 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 		if (pid == 0)
 			child(data, fd_pipe, cmd, env);
 	}
-	else if (!cmd->next)
+	else
 	{
         save_in = dup(0);
         save_out = dup(1);
@@ -95,12 +95,12 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		ft_tabclear(path_tab);
 		if (!cmd->way)
 		{
-			printf("command no found : %s\n", cmd->args[0]);
+    		ft_putstr_fd("minishell: ", 2);
+    		ft_putstr_fd(cmd->args[0], 2);
+    		ft_putstr_fd(": command no found\n", 2);
 			free(cmd->way);
-			return ;
 		}
 	}
-	//if (cmd->is_build == 0 || cmd->is_build == 1)
 	exec_cmd(cmd, env, data);
 }
 
