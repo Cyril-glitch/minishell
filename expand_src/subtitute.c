@@ -33,7 +33,7 @@ static char	*ft_expansion(char *key, t_env_list *env_lst, t_data *data)
 	char	*tmp;
 
 	tmp = NULL;
-	if (data->expd->quote == '\'' || !*key)
+	if (data->expd->quote == '\'')
 	{
 		tmp = ft_strjoin("$", key);
 		if (!tmp)
@@ -57,22 +57,13 @@ static char	*ft_expansion(char *key, t_env_list *env_lst, t_data *data)
 static int	ft_val(char *str, t_expand *expd, t_env_list *env_lst, t_data *data)
 {
 	int	i;
+  int res;
 
 	i = 0;
-	if (!str[i])
-	{
-		expd->val = ft_strdup("");
-		if (!expd->val)
-			ft_shell_exit(data);
-		return (0);
-	}
-	if (str[i] && str[i] == '$' && str[i + 1] == '?')
-	{
-		expd->val = ft_itoa(g_sig_status);
-		if (!expd->val)
-			ft_shell_exit(data);
-		return (2);
-	}
+  res = 0;
+  res = ft_val_edge_case(str, expd,data);
+  if (res != -1)
+    return res;
 	i++;
 	while ((ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"') || str[i] == '_' )
 		i++;

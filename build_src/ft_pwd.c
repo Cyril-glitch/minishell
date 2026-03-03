@@ -70,11 +70,13 @@ char	*ft_prompt_pwd(t_env_list *env_list, t_data *data)
 	cur_path = NULL;
 	cur_path = getcwd(cur_path, PATH_MAX);
 	if (!cur_path)
+  {
+    if (data->prompt->prompt)
+      free(data->prompt->prompt);
 		return (data->prompt->prompt = ft_strdup("@losmachinos🏭:~"));
+  }
 	else
-    {
 		return (ft_make_prompt(env_list, data, cur_path));
-    }
 }
 
 void	ft_pwd(t_env_list *env_list)

@@ -121,6 +121,7 @@ typedef struct s_cmd_list
 
 typedef struct s_token
 {
+  char        *origin;
 	char				*content;
 	t_type				type;
 	struct s_token		*next;
@@ -193,7 +194,7 @@ void					ft_sigmute(struct sigaction *sig_a);
 
 // INIT_ENV
 t_env_list				*ft_new_env(char *str);
-t_env_list				*ft_env_list(char **env);
+t_env_list	*ft_env_list(char **env, t_data *data);
 
 // ENV_LST_UTILS
 void					ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
@@ -232,6 +233,7 @@ void					ft_expd_zero(t_expand *expd);
 int						ft_quote_status(t_expand *expd, char c);
 void					ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
 char					*ft_delquote(char *str);
+int	ft_val_edge_case(char *str, t_expand *expd, t_data *data);
 
 // PARSER
 void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);
@@ -255,13 +257,14 @@ void					ft_display_list_redir(t_redir_list *lst);
 int						ft_cd(char **path, t_env_list *env_list, t_data *data);
 void					ft_pwd(t_env_list *env_list);
 int						ft_export(char **args, t_env_list **env_list, t_data *data);
-int						ft_unset(char **args, t_env_list **env_list);
+int						ft_unset(char **args, t_env_list **env_list, t_data *data);
 void					ft_del_env(t_env_list *todel, t_env_list **env_list);
-t_env_list				*ft_key_hunter(char *args, t_env_list *env_list);
+t_env_list	*ft_key_hunter(char *args, t_env_list *env_list, t_data *data);
 void					ft_echo(char **args);
 void					ft_exit(t_cmd *cmd, t_data *data);
 void					ft_env(char **args, t_env_list *env_list);
 char					*ft_prompt_pwd(t_env_list *env_list, t_data *data);
+
 
 // EXEC
 void					exec(t_cmd *cmd, char **env, t_data *data);

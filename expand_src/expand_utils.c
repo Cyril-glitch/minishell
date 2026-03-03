@@ -12,6 +12,30 @@
 
 #include "../inc/minishell.h"
 
+int	ft_val_edge_case(char *str, t_expand *expd, t_data *data)
+{
+	if (!*str)
+	{
+		expd->val = ft_strdup("");
+		if (!expd->val)
+			ft_shell_exit(data);
+		return (0);
+	} 
+	if (*str && *str == '$' && *(str + 1) == 0)
+  {
+    expd->val = ft_strdup("$");
+    return (1);
+  }
+	if (*str && *str == '$' && *(str + 1) == '?')
+	{
+		expd->val = ft_itoa(g_sig_status);
+		if (!expd->val)
+			ft_shell_exit(data);
+		return (2);
+	}
+  return (-1);
+}
+
 void	ft_expd_zero(t_expand *expd)
 {
 	if (!expd)

@@ -27,7 +27,7 @@ void	ft_add_env_list(t_data *data, char **env)
 {
 	t_env_list	*env_list;
 
-	env_list = ft_env_list(env);
+	env_list = ft_env_list(env, data);
 	data->env_list = env_list;
 }
 
