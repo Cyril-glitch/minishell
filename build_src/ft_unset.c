@@ -12,28 +12,34 @@
 
 #include "../inc/minishell.h"
 
-t_env_list	*ft_key_hunter(char *args, t_env_list *env_list)
+t_env_list	*ft_key_hunter(char *args, t_env_list *env_list, t_data *data)
 {
 	t_env_list	*cur;
+  t_env_list *tmp;
 
+  tmp = ft_new_env(args);
+  if (!tmp)
+    ft_shell_exit(data);
 	cur = env_list;
 	while (cur)
 	{
-		if (ft_strncmp(args, cur->key, ft_strlen(cur->key)) == 0)
+		if (ft_strcmp(tmp->key, cur->key) == 0)
+    {
+		  ft_lstclear_env(&tmp);
 			return (cur);
+    }
 		cur = cur->next;
 	}
+	ft_lstclear_env(&tmp);
 	return (NULL);
 }
 
 void	ft_del_env(t_env_list *todel, t_env_list **env_list)
 {
-	t_env_list	*cur;
 	t_env_list	*prev;
 	t_env_list	*next;
 
-	cur = *env_list;
-	if (cur == todel && !cur->next)
+	if (*env_list == todel && !(*env_list)->next)
 	{
 		ft_lstclear_env(env_list);
 		return ;
@@ -46,6 +52,8 @@ void	ft_del_env(t_env_list *todel, t_env_list **env_list)
     free(todel->key);
   if (todel->content)
     free(todel->content);
+  if (todel == *env_list)
+    *env_list = next;
 	free(todel);
 	todel = NULL;
 	if (prev)
@@ -54,7 +62,7 @@ void	ft_del_env(t_env_list *todel, t_env_list **env_list)
 		next->prev = prev;
 }
 
-int	ft_unset(char **args, t_env_list **env_list)
+int	ft_unset(char **args, t_env_list **env_list, t_data *data)
 {
 	int			i;
 	t_env_list	*tmp;
@@ -63,7 +71,7 @@ int	ft_unset(char **args, t_env_list **env_list)
 	tmp = NULL;
 	while (args[i])
 	{
-		tmp = ft_key_hunter(args[i], *env_list);
+		tmp = ft_key_hunter(args[i], *env_list, data);
 		if (tmp)
 			ft_del_env(tmp, env_list);
 		i++;

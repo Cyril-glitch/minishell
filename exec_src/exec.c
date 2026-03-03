@@ -21,7 +21,7 @@ void	exec_build(t_cmd *cmd, t_data *data)
 	if (cmd->build == EXPORT)
 		ft_export(cmd->args, &data->env_list, data);
 	if (cmd->build == UNSET)
-		ft_unset(cmd->args, &data->env_list);
+		ft_unset(cmd->args, &data->env_list, data);
 	if (cmd->build == ENV)
 		ft_env(cmd->args, data->env_list);
 	if (cmd->build == CD)

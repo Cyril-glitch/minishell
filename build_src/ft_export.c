@@ -135,7 +135,7 @@ int	ft_export(char **args, t_env_list **env_list, t_data *data)
 		if (ft_valid_args(args[i]))
 		{
 			tmp = ft_new_env(args[i]);
-			dup = ft_key_hunter(args[i], *env_list);
+			dup = ft_key_hunter(args[i], *env_list, data);
 			if (!tmp)
 				ft_shell_exit(data);
 			if (dup && ft_strcmp(dup->key, tmp->key) == 0)

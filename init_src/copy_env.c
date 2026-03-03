@@ -66,6 +66,7 @@ t_env_list	*ft_new_env(char *str)
 	else
 		new->content = ft_substr(str, (i + 1), ft_strlen(&str[i + 1]));
 	new->next = NULL;
+  new->prev = NULL;
 	if (!new->line || !new->key || !new->content)
 		return (NULL);
 	return (new);

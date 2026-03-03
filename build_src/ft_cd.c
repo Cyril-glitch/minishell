@@ -116,12 +116,13 @@ int	ft_cd(char **path, t_env_list *env_list, t_data *data)
         return (ft_putstr_fd("cd: HOME not set\n", 2), (-1));
     cur_path = getcwd(cur_path, PATH_MAX);
     if (!cur_path)
-        return (perror("getcwd"), (-1));
+        perror("getcwd");
     ft_back_home(env_list, path, data);
     ft_back_old(env_list, path, data);
     if (chdir(*path) == -1)
     {
-        free(cur_path);
+        if(cur_path)
+          free(cur_path);
         return (perror("chdir"), (-1));
     }
     ft_swap_pwd(cur_path, *path, env_list, data);

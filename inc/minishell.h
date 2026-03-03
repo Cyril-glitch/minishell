@@ -120,6 +120,7 @@ typedef struct s_cmd_list
 
 typedef struct s_token
 {
+  char        *origin;
 	char				*content;
 	t_type				type;
 	struct s_token		*next;
@@ -255,13 +256,14 @@ void					ft_display_list_redir(t_redir_list *lst);
 int						ft_cd(char **path, t_env_list *env_list, t_data *data);
 void					ft_pwd(t_env_list *env_list);
 int						ft_export(char **args, t_env_list **env_list, t_data *data);
-int						ft_unset(char **args, t_env_list **env_list);
+int						ft_unset(char **args, t_env_list **env_list, t_data *data);
 void					ft_del_env(t_env_list *todel, t_env_list **env_list);
-t_env_list				*ft_key_hunter(char *args, t_env_list *env_list);
+t_env_list	*ft_key_hunter(char *args, t_env_list *env_list, t_data *data);
 void					ft_echo(char **args);
 void					ft_exit(char **args, t_data *data);
 void					ft_env(char **args, t_env_list *env_list);
 char					*ft_prompt_pwd(t_env_list *env_list, t_data *data);
+
 
 // EXEC
 void					exec(t_cmd *cmd, char **env, t_data *data);
