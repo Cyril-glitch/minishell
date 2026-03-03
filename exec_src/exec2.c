@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:14:57 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:38:41 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 	char	*line;
 
 	g_sig_status = 0;
-    ft_heredoc_mode(data->sig_a, data);
+	ft_heredoc_mode(data->sig_a, data);
 	while (1)
 	{
 		line = readline("> ");
@@ -51,15 +51,15 @@ void	d_redir_in(t_redir *redir, t_data *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(fd[0]);	
+		close(fd[0]);
 		child_heredoc(data, redir, fd);
 	}
-	ft_sigmute(data->sig_a);	
-	waitpid(pid, &status, 0); 
+	ft_sigmute(data->sig_a);
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_sig_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_sig_status = 128 + WTERMSIG(status);	
+		g_sig_status = 128 + WTERMSIG(status);
 	ft_interactive_mode(data->sig_a, data);
 	close(fd[1]);
 	redir->fd_heredoc = fd[0];
@@ -78,13 +78,13 @@ int	check_heredoc(t_cmd_list *cmd_list, t_data *data)
 		{
 			if (current_redir->type == D_REDIR_IN)
 				d_redir_in(current_redir, data);
-            if (g_sig_status == 130)
-                return (-1);
+			if (g_sig_status == 130)
+				return (-1);
 			current_redir = current_redir->next;
 		}
 		current_cmd = current_cmd->next;
 	}
-    return (0);
+	return (0);
 }
 
 void	pipex(t_cmd *cmd, t_data *data, int *fd_pipe)

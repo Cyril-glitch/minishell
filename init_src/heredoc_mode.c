@@ -6,9 +6,9 @@ static void	ft_heredoc_handler(int signum, siginfo_t *client, void *context)
 	(void)client;
 	if (signum == SIGINT)
 	{
-        g_sig_status = 130;
-        close(0);
-        write(1, "\n", 1);
+		g_sig_status = 130;
+		close(0);
+		write(1, "\n", 1);
 	}
 }
 
@@ -24,4 +24,3 @@ void	ft_heredoc_mode(struct sigaction *sig_a, t_data *data)
 	sigaction(SIGQUIT, sig_a, NULL);
 	data->child = 1;
 }
-

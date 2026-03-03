@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 15:59:40 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:39:03 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
-    int save_in;
-    int save_out;
+	int		save_in;
+	int		save_out;
 
 	if (cmd->next)
 		pipe(fd_pipe);
@@ -63,15 +63,15 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 	}
 	else
 	{
-        save_in = dup(0);
-        save_out = dup(1);
+		save_in = dup(0);
+		save_out = dup(1);
 		redirection(cmd, data);
 		if (cmd->is_build == 1)
 			exec_build(cmd, data);
-        dup2(save_in, 0);
-        dup2(save_out, 1);
-        close(save_in);
-        close(save_out);
+		dup2(save_in, 0);
+		dup2(save_out, 1);
+		close(save_in);
+		close(save_out);
 	}
 	if (data->fd_tmp != 0)
 		close(data->fd_tmp);
@@ -95,9 +95,9 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 			ft_tabclear(path_tab);
 		if (!cmd->way)
 		{
-    		ft_putstr_fd("minishell: ", 2);
-    		ft_putstr_fd(cmd->args[0], 2);
-    		ft_putstr_fd(": command no found\n", 2);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": command no found\n", 2);
 			free(cmd->way);
 			cmd->build = DFL2;
 		}
@@ -105,37 +105,37 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	exec_cmd(cmd, env, data);
 }
 
-void    execut(t_data *data, char **env)
+void	execut(t_data *data, char **env)
 {
-    t_cmd    *current;
-    int      status;
+	t_cmd	*current;
+	int		status;
 
-    status = 0;
-    data->last_pid = -1;
-    if (check_heredoc(data->cmd_list, data) == -1)
+	status = 0;
+	data->last_pid = -1;
+	if (check_heredoc(data->cmd_list, data) == -1)
 		return ;
-    ft_sigmute(data->sig_a);
-    exec(data->cmd_list->head, env, data);
-    current = data->cmd_list->head->next;
-    while (current)
-    {
-        exec(current, env, data);
-        current = current->next;
-    }
-    if (data->last_pid > 0)
-    {
-        waitpid(data->last_pid, &status, 0);
-        if (WIFEXITED(status))
-            g_sig_status = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
-        {
-            g_sig_status = 128 + WTERMSIG(status);
-            write(1, "\n", 1);
-        }
-    }
-    while (wait(NULL) > 0)
-        ;
-    if (data->fd_tmp != 0)
-        close(data->fd_tmp);
-    ft_interactive_mode(data->sig_a, data);
+	ft_sigmute(data->sig_a);
+	exec(data->cmd_list->head, env, data);
+	current = data->cmd_list->head->next;
+	while (current)
+	{
+		exec(current, env, data);
+		current = current->next;
+	}
+	if (data->last_pid > 0)
+	{
+		waitpid(data->last_pid, &status, 0);
+		if (WIFEXITED(status))
+			g_sig_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			g_sig_status = 128 + WTERMSIG(status);
+			write(1, "\n", 1);
+		}
+	}
+	while (wait(NULL) > 0)
+		;
+	if (data->fd_tmp != 0)
+		close(data->fd_tmp);
+	ft_interactive_mode(data->sig_a, data);
 }

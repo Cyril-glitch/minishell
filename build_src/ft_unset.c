@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:42 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 13:30:06 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:38:26 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 t_env_list	*ft_key_hunter(char *args, t_env_list *env_list, t_data *data)
 {
 	t_env_list	*cur;
-  t_env_list *tmp;
+	t_env_list	*tmp;
 
-  tmp = ft_new_env(args);
-  if (!tmp)
-    ft_shell_exit(data);
+	tmp = ft_new_env(args);
+	if (!tmp)
+		ft_shell_exit(data);
 	cur = env_list;
 	while (cur)
 	{
 		if (ft_strcmp(tmp->key, cur->key) == 0)
-    {
-		  ft_lstclear_env(&tmp);
+		{
+			ft_lstclear_env(&tmp);
 			return (cur);
-    }
+		}
 		cur = cur->next;
 	}
 	ft_lstclear_env(&tmp);
@@ -46,14 +46,14 @@ void	ft_del_env(t_env_list *todel, t_env_list **env_list)
 	}
 	prev = todel->prev;
 	next = todel->next;
-  if (todel->line)
-    free(todel->line);
-  if (todel->key)
-    free(todel->key);
-  if (todel->content)
-    free(todel->content);
-  if (todel == *env_list)
-    *env_list = next;
+	if (todel->line)
+		free(todel->line);
+	if (todel->key)
+		free(todel->key);
+	if (todel->content)
+		free(todel->content);
+	if (todel == *env_list)
+		*env_list = next;
 	free(todel);
 	todel = NULL;
 	if (prev)

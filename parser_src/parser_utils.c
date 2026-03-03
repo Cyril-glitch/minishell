@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/03 16:29:19 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:41:07 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_build(t_cmd **cmd)
 	if (!ft_strcmp((*cmd)->args[0], "env"))
 		return ((*cmd)->build = ENV, 1);
 	if (!ft_strcmp((*cmd)->args[0], "exit"))
-		return ((*cmd)->build = EXIT, 1); 
+		return ((*cmd)->build = EXIT, 1);
 	return ((*cmd)->build = DFL, 0);
 }
 

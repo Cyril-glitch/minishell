@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:51 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 12:25:44 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:39:35 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@ static char	*ft_expansion(char *key, t_env_list *env_lst, t_data *data)
 static int	ft_val(char *str, t_expand *expd, t_env_list *env_lst, t_data *data)
 {
 	int	i;
-  int res;
+	int	res;
 
 	i = 0;
-  res = 0;
-  res = ft_val_edge_case(str, expd,data);
-  if (res != -1)
-    return res;
+	res = 0;
+	res = ft_val_edge_case(str, expd, data);
+	if (res != -1)
+		return (res);
 	i++;
-	while ((ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"') || str[i] == '_' )
+	while ((ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"')
+			|| str[i] == '_')
 		i++;
 	expd->key = ft_substr(str, 1, (i - 1));
 	if (!expd->key)
@@ -84,10 +85,10 @@ static int	ft_cat(char *str, t_expand *expd, t_data *data)
 	i = 0;
 	tmp = NULL;
 	while (str[i] && str[i] != '$')
-    {
-        ft_quote_status(expd, str[i]);
+	{
+		ft_quote_status(expd, str[i]);
 		i++;
-    }
+	}
 	expd->suffix = ft_substr(str, 0, i);
 	tmp = ft_strjoin(expd->prefix, expd->val);
 	if (!tmp || !expd->suffix)

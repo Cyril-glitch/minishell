@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 12:41:07 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:39:28 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_val_edge_case(char *str, t_expand *expd, t_data *data)
 		if (!expd->val)
 			ft_shell_exit(data);
 		return (0);
-	} 
+	}
 	if (*str && *str == '$' && *(str + 1) == 0)
-  {
-    expd->val = ft_strdup("$");
-    return (1);
-  }
+	{
+		expd->val = ft_strdup("$");
+		return (1);
+	}
 	if (*str && *str == '$' && *(str + 1) == '?')
 	{
 		expd->val = ft_itoa(g_sig_status);
@@ -33,7 +33,7 @@ int	ft_val_edge_case(char *str, t_expand *expd, t_data *data)
 			ft_shell_exit(data);
 		return (2);
 	}
-  return (-1);
+	return (-1);
 }
 
 void	ft_expd_zero(t_expand *expd)

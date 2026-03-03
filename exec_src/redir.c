@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:26:44 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 15:33:14 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:38:54 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	open_file(t_redir *current, int *fd, int *flag, t_cmd *cmd)
 		else if (!cmd->way)
 		{
 			ft_putstr_fd("minishell: ", 2);
-    		ft_putstr_fd(cmd->args[0], 2);
-    		ft_putstr_fd(": command no found\n", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": command no found\n", 2);
 			free(cmd->way);
 		}
 		*flag = 1;
@@ -47,8 +47,8 @@ void	open_file(t_redir *current, int *fd, int *flag, t_cmd *cmd)
 		if (*fd == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
-    		ft_putstr_fd(current->file, 2);
-    		ft_putstr_fd(": Permission denied\n", 2);
+			ft_putstr_fd(current->file, 2);
+			ft_putstr_fd(": Permission denied\n", 2);
 		}
 	}
 }
@@ -68,10 +68,10 @@ void	redirection(t_cmd *cmd, t_data *data)
 		if (fd == -1 && current->type == D_REDIR_IN)
 			ft_shell_exit(data);
 		if (fd == -1 && current->type == REDIR_IN)
-    	{
-      		ft_free_data(data);
-      		exit(0);
-    	}
+		{
+			ft_free_data(data);
+			exit(0);
+		}
 		if (flag == 1)
 			dup2(fd, 0);
 		if (flag == 2)

@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/03 17:12:54 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:39:47 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_cmd_list
 
 typedef struct s_token
 {
-  char        *origin;
+	char				*origin;
 	char				*content;
 	t_type				type;
 	struct s_token		*next;
@@ -160,7 +160,7 @@ typedef struct s_prompt
 	char				*group;
 	char				*pwd;
 	char				*prompt;
-} t_prompt;
+}						t_prompt;
 
 typedef struct s_data
 {
@@ -181,20 +181,22 @@ typedef struct s_data
 }						t_data;
 
 // INIT
-void					ft_interactive_mode(struct sigaction *sig_a, t_data *data);
-void					ft_init_termios(struct termios *orig_termios, struct termios *new_termios);
+void					ft_interactive_mode(struct sigaction *sig_a,
+							t_data *data);
+void					ft_init_termios(struct termios *orig_termios,
+							struct termios *new_termios);
 t_data					*ft_init_data(int ac, char **av, char **env);
 void					ft_add_env_list(t_data *data, char **env);
 void					ft_add_token_list(t_data *data);
 void					ft_add_cmd_list(t_data *data);
 void					ft_add_expand(t_data *data);
 void					ft_childmode(struct sigaction *sig_a, t_data *data);
-void	ft_heredoc_mode(struct sigaction *sig_a, t_data *data);
+void					ft_heredoc_mode(struct sigaction *sig_a, t_data *data);
 void					ft_sigmute(struct sigaction *sig_a);
 
 // INIT_ENV
 t_env_list				*ft_new_env(char *str);
-t_env_list	*ft_env_list(char **env, t_data *data);
+t_env_list				*ft_env_list(char **env, t_data *data);
 
 // ENV_LST_UTILS
 void					ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
@@ -206,14 +208,18 @@ void					ft_printlst_env(t_env_list *lst);
 // SHELL_EXIT
 void					ft_shell_exit(t_data *data);
 void					ft_free_data(t_data *data);
-void	ft_shell_exit_hd(t_data *data, char *file);
-void    ft_free_prompt(t_data *data);
+void					ft_shell_exit_hd(t_data *data, char *file);
+void					ft_free_prompt(t_data *data);
 
 // LEXER
-void					ft_db_lstadd_front_token(t_token_list *token_list, t_token *new);
-void					ft_db_lstadd_back_token(t_token_list *token_list, t_token *new);
-void					ft_db_lstdelone_token(t_token *token, void (*del)(void *));
-void					ft_db_lstclear_token(t_token_list *token_list, void (*del)(void *));
+void					ft_db_lstadd_front_token(t_token_list *token_list,
+							t_token *new);
+void					ft_db_lstadd_back_token(t_token_list *token_list,
+							t_token *new);
+void					ft_db_lstdelone_token(t_token *token,
+							void (*del)(void *));
+void					ft_db_lstclear_token(t_token_list *token_list,
+							void (*del)(void *));
 t_token					*ft_db_lstnew_token(void);
 void					init_word(t_data *data, t_token *token, int *i);
 void					init_pipe(t_data *data, t_token *token, int *i);
@@ -225,55 +231,68 @@ int						is_separator(char c);
 void					ft_display_list_token(t_token_list *lst);
 int						lexer(t_data *data);
 void					nb_of_malloc(char *str, int *i, int *j, char quote);
-void					copy_word(char *str, int *i, char quote, t_token *token);
+void					copy_word(char *str, int *i, char quote,
+							t_token *token);
 
 // EXPAND
-void					ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data);
+void					ft_expand(t_token *token_lst, t_env_list *env_lst,
+							t_data *data);
 void					ft_expd_zero(t_expand *expd);
 int						ft_quote_status(t_expand *expd, char c);
-void					ft_subtitute(char *s, t_token *token_lst, t_env_list *env_lst, t_data *data);
+void					ft_subtitute(char *s, t_token *token_lst,
+							t_env_list *env_lst, t_data *data);
 char					*ft_delquote(char *str);
-int	ft_val_edge_case(char *str, t_expand *expd, t_data *data);
+int						ft_val_edge_case(char *str, t_expand *expd,
+							t_data *data);
 
 // PARSER
-void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list, t_cmd *new);
+void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list,
+							t_cmd *new);
 void					ft_db_lstadd_back_cmd(t_cmd_list *cmd_list, t_cmd *new);
 void					ft_db_lstdelone_cmd(t_cmd *token, void (*del)(void *));
-void					ft_db_lstclear_cmd(t_cmd_list *cmd_list, void (*del)(void *));
+void					ft_db_lstclear_cmd(t_cmd_list *cmd_list,
+							void (*del)(void *));
 t_cmd					*ft_db_lstnew_cmd(void);
 void					ft_display_list_cmd(t_cmd_list *lst);
 int						parser(t_data *data);
 int						is_redir(t_token *current);
 int						is_build(t_cmd **cmd);
 int						check_error(t_token_list *token_list);
-void					ft_db_lstadd_front_redir(t_redir_list *redir_list, t_redir *new);
-void					ft_db_lstadd_back_redir(t_redir_list *redir_list, t_redir *new);
-void					ft_db_lstdelone_redir(t_redir *token, void (*del)(void *));
-void					ft_db_lstclear_redir(t_redir_list *redir_list, void (*del)(void *));
+void					ft_db_lstadd_front_redir(t_redir_list *redir_list,
+							t_redir *new);
+void					ft_db_lstadd_back_redir(t_redir_list *redir_list,
+							t_redir *new);
+void					ft_db_lstdelone_redir(t_redir *token,
+							void (*del)(void *));
+void					ft_db_lstclear_redir(t_redir_list *redir_list,
+							void (*del)(void *));
 t_redir					*ft_db_lstnew_redir(void);
 void					ft_display_list_redir(t_redir_list *lst);
 
 // BUILD IN
 int						ft_cd(char **path, t_env_list *env_list, t_data *data);
 void					ft_pwd(t_env_list *env_list);
-int						ft_export(char **args, t_env_list **env_list, t_data *data);
-int						ft_unset(char **args, t_env_list **env_list, t_data *data);
+int						ft_export(char **args, t_env_list **env_list,
+							t_data *data);
+int						ft_unset(char **args, t_env_list **env_list,
+							t_data *data);
 void					ft_del_env(t_env_list *todel, t_env_list **env_list);
-t_env_list	*ft_key_hunter(char *args, t_env_list *env_list, t_data *data);
+t_env_list				*ft_key_hunter(char *args, t_env_list *env_list,
+							t_data *data);
 void					ft_echo(char **args);
 void					ft_exit(t_cmd *cmd, t_data *data);
 void					ft_env(char **args, t_env_list *env_list);
 char					*ft_prompt_pwd(t_env_list *env_list, t_data *data);
-
 
 // EXEC
 void					exec(t_cmd *cmd, char **env, t_data *data);
 void					redirection(t_cmd *cmd, t_data *data);
 int						ft_tabclear(char **tab);
 char					**parse_path(char **env);
-char					*find_way_path(char **path_tab, char *cmd, t_data *data);
+char					*find_way_path(char **path_tab, char *cmd,
+							t_data *data);
 void					execut(t_data *data, char **env);
 void					pipex(t_cmd *cmd, t_data *data, int *fd_pipe);
-int				        check_heredoc(t_cmd_list *cmd_list, t_data *data);
+int						check_heredoc(t_cmd_list *cmd_list, t_data *data);
 
 #endif

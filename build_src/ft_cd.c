@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 12:36:23 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:38:03 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static void	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 		{
 			if (ft_strcmp(cur->key, "HOME") == 0)
 			{
-                if (*path)
-                    free(*path);
+				if (*path)
+					free(*path);
 				*path = ft_strdup(cur->content);
 				if (!*path)
 					ft_shell_exit(data);
@@ -94,7 +94,7 @@ static void	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 		{
 			if (ft_strcmp(cur->key, "OLDPWD") == 0)
 			{
-                free(*path);
+				free(*path);
 				*path = ft_strdup(cur->content);
 				if (!*path)
 					ft_shell_exit(data);
@@ -109,25 +109,25 @@ static void	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 
 int	ft_cd(char **path, t_env_list *env_list, t_data *data)
 {
-    char	*cur_path;
+	char	*cur_path;
 
-    cur_path = NULL;
-    if (!ft_check_home(env_list))
-        return (ft_putstr_fd("cd: HOME not set\n", 2), (-1));
-    cur_path = getcwd(cur_path, PATH_MAX);
-    if (!cur_path)
-        perror("getcwd");
-    ft_back_home(env_list, path, data);
-    ft_back_old(env_list, path, data);
-    if (chdir(*path) == -1)
-    {
-        if(cur_path)
-          free(cur_path);
-        return (perror("chdir"), (-1));
-    }
-    ft_swap_pwd(cur_path, *path, env_list, data);
-    free(*path);
-    *path = NULL;
-    free(cur_path);
-    return (0);
+	cur_path = NULL;
+	if (!ft_check_home(env_list))
+		return (ft_putstr_fd("cd: HOME not set\n", 2), (-1));
+	cur_path = getcwd(cur_path, PATH_MAX);
+	if (!cur_path)
+		perror("getcwd");
+	ft_back_home(env_list, path, data);
+	ft_back_old(env_list, path, data);
+	if (chdir(*path) == -1)
+	{
+		if (cur_path)
+			free(cur_path);
+		return (perror("chdir"), (-1));
+	}
+	ft_swap_pwd(cur_path, *path, env_list, data);
+	free(*path);
+	*path = NULL;
+	free(cur_path);
+	return (0);
 }

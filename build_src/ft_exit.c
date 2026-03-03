@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:17:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 13:12:35 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:37:55 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	ft_shell_exit_special(t_data *data, int value)
 }
 int	check_value_exit(char *args)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -69,7 +69,7 @@ int	check_value_exit(char *args)
 	if (i > 19)
 		return (0);
 	if (j)
-	{	
+	{
 		if (!ft_strcmp(args, "9223372036854775807"))
 			return (0);
 	}

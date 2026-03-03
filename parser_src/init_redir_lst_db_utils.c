@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:46:58 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 15:04:29 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:40:57 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	ft_db_lstdelone_redir(t_redir *redir, void (*del)(void *))
 {
 	if (redir->fd_heredoc != -1)
 	{
-    	close(redir->fd_heredoc);
-		redir->fd_heredoc = -1;	
+		close(redir->fd_heredoc);
+		redir->fd_heredoc = -1;
 	}
 	if (redir->file)
 		del(redir->file);
