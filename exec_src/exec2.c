@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 17:48:43 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:14:57 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 {
 	char	*line;
 
-    g_sig_status = 0;
+	g_sig_status = 0;
     ft_heredoc_mode(data->sig_a, data);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 		{
-			free(line);	
+			free(line);
+			close(fd[1]);
 			ft_shell_exit_hd(data, redir->file);
 		}
 		if (!ft_strcmp(line, redir->file))
 		{
 			free(line);
 			ft_free_data(data);
+			close(fd[1]);
 			exit(0);
 			return ;
 		}
@@ -82,7 +84,7 @@ int	check_heredoc(t_cmd_list *cmd_list, t_data *data)
 		}
 		current_cmd = current_cmd->next;
 	}
-    return 0;
+    return (0);
 }
 
 void	pipex(t_cmd *cmd, t_data *data, int *fd_pipe)

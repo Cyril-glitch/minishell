@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:29:05 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/27 15:38:50 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 12:57:31 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 static void	ft_signal_handler(int signum, siginfo_t *client, void *context)
 {
-	static int	client_pid = 0;
-
 	(void)context;
 	(void)client;
-	if (!client_pid)
-		client_pid = client->si_pid;
-	if (signum == SIGINT && client_pid == client->si_pid)
+	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_sig_status = signum;
+		g_sig_status = 130;
 	}
 }
 
@@ -52,7 +48,7 @@ void	ft_sigmute(struct sigaction *sig_a)
 
 void	ft_interactive_mode(struct sigaction *sig_a, t_data *data)
 {
-	tcsetattr(0, TCSANOW, data->new_termios);
+	tcsetattr(0, TCSANOW, data->orig_termios);
 	sig_a->sa_flags = SA_SIGINFO;
 	sig_a->sa_sigaction = ft_signal_handler;
 	sigemptyset(&sig_a->sa_mask);

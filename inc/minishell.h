@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/02/27 15:11:16 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:12:54 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef enum e_build
 	UNSET,
 	ENV,
 	EXIT,
-	DFL
+	DFL,
+	DFL2
 }						t_build;
 
 typedef struct s_redir
@@ -258,7 +259,7 @@ int						ft_unset(char **args, t_env_list **env_list);
 void					ft_del_env(t_env_list *todel, t_env_list **env_list);
 t_env_list				*ft_key_hunter(char *args, t_env_list *env_list);
 void					ft_echo(char **args);
-void					ft_exit(char **args, t_data *data);
+void					ft_exit(t_cmd *cmd, t_data *data);
 void					ft_env(char **args, t_env_list *env_list);
 char					*ft_prompt_pwd(t_env_list *env_list, t_data *data);
 

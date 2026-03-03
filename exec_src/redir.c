@@ -6,13 +6,13 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:26:44 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/02 13:52:56 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 15:33:14 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	open_file(t_redir *current, int *fd, int *flag)
+void	open_file(t_redir *current, int *fd, int *flag, t_cmd *cmd)
 {
 	if (current->type == REDIR_IN)
 	{
@@ -23,13 +23,13 @@ void	open_file(t_redir *current, int *fd, int *flag)
 			ft_putstr_fd(current->file, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 		}
-		// else if (!cmd->way)
-		// {
-		// 	ft_putstr_fd("minishell: ", 2);
-    	// 	ft_putstr_fd(cmd->args[0], 2);
-    	// 	ft_putstr_fd(": command no found\n", 2);
-		// 	free(cmd->way);
-		// }
+		else if (!cmd->way)
+		{
+			ft_putstr_fd("minishell: ", 2);
+    		ft_putstr_fd(cmd->args[0], 2);
+    		ft_putstr_fd(": command no found\n", 2);
+			free(cmd->way);
+		}
 		*flag = 1;
 	}
 	if (current->type == D_REDIR_IN)
@@ -44,6 +44,12 @@ void	open_file(t_redir *current, int *fd, int *flag)
 		if (current->type == D_REDIR_OUT)
 			*fd = open(current->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		*flag = 3;
+		if (*fd == -1)
+		{
+			ft_putstr_fd("minishell: ", 2);
+    		ft_putstr_fd(current->file, 2);
+    		ft_putstr_fd(": Permission denied\n", 2);
+		}
 	}
 }
 
@@ -58,20 +64,21 @@ void	redirection(t_cmd *cmd, t_data *data)
 	flag = 0;
 	while (current)
 	{
-		open_file(current, &fd, &flag);
+		open_file(current, &fd, &flag, cmd);
 		if (fd == -1 && current->type == D_REDIR_IN)
 			ft_shell_exit(data);
 		if (fd == -1 && current->type == REDIR_IN)
-    {
-      ft_free_data(data);
-      exit(0);
-    }
+    	{
+      		ft_free_data(data);
+      		exit(0);
+    	}
 		if (flag == 1)
 			dup2(fd, 0);
 		if (flag == 2)
 		{
 			dup2(fd, 0);
 			close(current->fd_heredoc);
+			current->fd_heredoc = -1;
 		}
 		if (flag == 3)
 			dup2(fd, 1);

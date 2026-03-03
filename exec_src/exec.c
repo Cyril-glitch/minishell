@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 17:47:08 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/03 15:59:40 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exec_build(t_cmd *cmd, t_data *data)
 	if (cmd->build == CD)
 		ft_cd(&cmd->args[1], data->env_list, data);
 	if (cmd->build == EXIT)
-		ft_exit(cmd->args, data);
+		ft_exit(cmd, data);
 }
 
 void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
@@ -35,9 +35,10 @@ void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
 	ft_childmode(data->sig_a, data);
 	pipex(cmd, data, fd_pipe);
 	redirection(cmd, data);
-	if (!cmd->is_build)
+	if (cmd->build == DFL)
 		execve(cmd->way, cmd->args, env);
-	exec_build(cmd, data);
+	else
+		exec_build(cmd, data);
 	ft_free_data(data);
 	exit(0);
 }
@@ -51,7 +52,7 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 
 	if (cmd->next)
 		pipe(fd_pipe);
-	if (cmd->next || !cmd->is_build || cmd->is_build == -1)
+	if (cmd->prev || cmd->next || !cmd->is_build || cmd->is_build == -1)
 	{
 		pid = fork();
 		data->last_pid = pid;
@@ -89,16 +90,16 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	if (cmd->is_build == 0)
 	{
 		path_tab = parse_path(env);
-		if (!path_tab)
-			ft_shell_exit(data);
 		cmd->way = find_way_path(path_tab, cmd->args[0], data);
-		ft_tabclear(path_tab);
+		if (path_tab)
+			ft_tabclear(path_tab);
 		if (!cmd->way)
 		{
     		ft_putstr_fd("minishell: ", 2);
     		ft_putstr_fd(cmd->args[0], 2);
     		ft_putstr_fd(": command no found\n", 2);
 			free(cmd->way);
+			cmd->build = DFL2;
 		}
 	}
 	exec_cmd(cmd, env, data);
@@ -112,7 +113,7 @@ void    execut(t_data *data, char **env)
     status = 0;
     data->last_pid = -1;
     if (check_heredoc(data->cmd_list, data) == -1)
-        return ;
+		return ;
     ft_sigmute(data->sig_a);
     exec(data->cmd_list->head, env, data);
     current = data->cmd_list->head->next;

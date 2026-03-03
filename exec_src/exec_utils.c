@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 12:55:33 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:36:13 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	**parse_path(char **env)
 	int		i;
 
 	i = 0;
-	if (!env)
-		return (NULL);
+	if (!env[0])
+		return(ft_split("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin", ':'));
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
 	if (!env[i])
