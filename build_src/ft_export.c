@@ -102,9 +102,9 @@ static int	ft_valid_args(char *s)
 		ft_putstr_fd(" \" : identifiant non valable\n", 2);
 		return (0);
 	}
-	while (s[i])
+	while (s[i] && s[i] != '=')
 	{
-		if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?' && s[i] != '=')
+		if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?')
 		{
 			ft_putstr_fd("losmaquinos: export: \" ", 2);
 			ft_putstr_fd(s, 2);

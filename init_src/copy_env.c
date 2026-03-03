@@ -12,6 +12,37 @@
 
 #include "../inc/minishell.h"
 
+static void ft_envoid(t_env_list **env_list, t_data *data)
+{
+  char *old[3];
+  char *pwd[3];
+  char *shlvl[3];
+  char *current_path;
+
+  current_path = NULL;
+  current_path = getcwd(current_path, PATH_MAX);
+  if (!current_path)
+  {
+      perror("getcwd");
+      ft_shell_exit(data);
+  }
+  old[0] = "export";
+  old[1] = "OLDPWD";
+  old[2] = NULL;
+  pwd[0] = "export";
+  pwd[1] = ft_strjoin("PWD=", current_path);
+  pwd[2] = NULL;
+  shlvl[0] = "export";
+  shlvl[1] = "SHLVL=1";
+  shlvl[2] = NULL;
+
+
+  ft_export(old, env_list, data);
+  ft_export(pwd, env_list, data);
+  free(pwd[1]);
+  ft_export(shlvl, env_list, data);
+}
+
 t_env_list	*ft_new_env(char *str)
 {
 	int			i;
@@ -40,7 +71,7 @@ t_env_list	*ft_new_env(char *str)
 	return (new);
 }
 
-t_env_list	*ft_env_list(char **env)
+t_env_list	*ft_env_list(char **env, t_data *data)
 {
 	int			i;
 	t_env_list	*env_list;
@@ -49,6 +80,8 @@ t_env_list	*ft_env_list(char **env)
 	i = 0;
 	env_list = NULL;
 	tmp = NULL;
+  if (!env[i])
+    ft_envoid(&env_list, data);
 	while (env[i])
 	{
 		tmp = ft_new_env(env[i]);
