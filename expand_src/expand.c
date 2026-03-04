@@ -12,6 +12,27 @@
 
 #include "../inc/minishell.h"
 
+static int  ft_no_expand(t_token *token, t_data *data)
+{
+    char *tmp;
+    tmp = NULL;
+
+    if (token && token->prev)
+    {
+        if(ft_strcmp(token->prev->content, "<<") == 0)
+        {
+            tmp = ft_delquote(token->content);
+            if (!tmp)
+                ft_shell_exit(data);
+            free(token->content);
+            token->content = tmp;
+            return (1);
+        }
+
+    }
+    return (0);
+}
+
 static size_t	ft_newlen(t_list *expd_lst)
 {
 	size_t	len;
@@ -61,9 +82,12 @@ void	ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
 	current = token_lst;
 	while (current)
 	{
-		ft_subtitute(current->content, current, env_lst, data);
-		ft_expanded(current, data->expd_lst, data);
-		ft_lstclear(&data->expd_lst, free);
+        if (!ft_no_expand(current,data))
+        {
+		    ft_subtitute(current->content, current, env_lst, data);
+		    ft_expanded(current, data->expd_lst, data);
+		    ft_lstclear(&data->expd_lst, free);
+        }
 		current = current->next;
 	}
 }
