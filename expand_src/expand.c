@@ -71,15 +71,15 @@ static void	ft_expanded(t_token *token, t_list *expd_lst, t_data *data)
 		expd_lst = expd_lst->next;
 	}
 	free(token->content);
-	token->content = ft_delquote(tmp);
-	free(tmp);
+	token->content = tmp;
 }
 
-void	ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
+
+void	ft_expand(t_token_list *lst, t_env_list *env_lst, t_data *data)
 {
 	t_token	*current;
 
-	current = token_lst;
+	current = lst->head;
 	while (current)
 	{
         if (!ft_no_expand(current,data))
@@ -90,4 +90,7 @@ void	ft_expand(t_token *token_lst, t_env_list *env_lst, t_data *data)
         }
 		current = current->next;
 	}
+    ft_split_expand(lst, data);
 }
+
+

@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **env)
 			ft_shell_exit(data);
 		add_history(data->line);
 		lexer(data);
-		ft_expand(data->token_list->head, data->env_list, data);
+		ft_expand(data->token_list, data->env_list, data);
 		if (parser(data))
 			execut(data, env);
 		ft_db_lstclear_token(data->token_list, free);
