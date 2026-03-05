@@ -44,28 +44,30 @@ static void	ft_free_list(t_data *data)
 
 void	ft_free_data(t_data *data)
 {
-	ft_free_list(data);
-	if (data->prompt)
-	{
-		ft_free_prompt(data);
-		free(data->prompt);
-	}
-	if (data->line)
-		free(data->line);
-	if (data->sig_a)
-		free(data->sig_a);
-	if (data->orig_termios)
-		free(data->orig_termios);
-	if (data->new_termios)
-		free(data->new_termios);
-	if (data->expd)
-	{
-		ft_expd_zero(data->expd);
-		data->expd->quote = 0;
-		free(data->expd);
-	}
-	free(data);
-	data = NULL;
+    ft_free_list(data);
+    if (data->prompt)
+    {
+        ft_free_prompt(data);
+        free(data->prompt);
+    }
+    if (data->line)
+        free(data->line);
+    if (data->sig_a)
+        free(data->sig_a);
+    if (data->orig_termios)
+        free(data->orig_termios);
+    if (data->new_termios)
+        free(data->new_termios);
+    if (data->expd)
+    {
+        ft_expd_zero(data->expd);
+        data->expd->quote = 0;
+        free(data->expd);
+    }
+    if (data->my_env)
+        ft_tabclear(data->my_env);
+    free(data);
+    data = NULL;
 }
 
 void	ft_shell_exit(t_data *data)

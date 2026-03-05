@@ -53,6 +53,8 @@ t_data	*ft_init_data(int ac, char **av, char **env)
 	ft_add_termios(data);
 	ft_add_signal(data);
 	ft_add_env_list(data, env);
+    ft_shlvl(&data->env_list, data);
+    ft_my_env(data->env_list, data);
 	ft_add_token_list(data);
 	ft_add_cmd_list(data);
 	ft_add_expand(data);
