@@ -93,4 +93,19 @@ void	ft_expand(t_token_list *lst, t_env_list *env_lst, t_data *data)
     ft_split_expand(lst, data);
 }
 
+void ft_expand_line(char **line, t_data *data)
+{
+    char *tmp;
+    t_env_list *dup;
 
+    tmp = *line;
+    if(*tmp == '$')
+        tmp++;
+    else
+        return ;
+    dup = ft_key_hunter(tmp, data->env_list, data);
+    if (!dup)
+        return ;
+    free(*line);
+    *line = ft_strdup(dup->content);
+}

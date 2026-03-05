@@ -12,6 +12,57 @@
 
 #include "../inc/minishell.h"
 
+void ft_my_env(t_env_list *env_list, t_data *data)
+{
+    int i;
+    char **my_env;
+    t_env_list *tmp;
+
+    i = 0;
+    tmp = env_list;
+    while(tmp)
+    {
+        tmp = tmp->next;
+        i++;
+    }
+    my_env = malloc(sizeof(char *) * (i + 1));
+    if (!my_env)
+        ft_shell_exit(data);
+    i = 0;
+    while (env_list)
+    {
+        my_env[i] = ft_strdup(env_list->line);
+        if (!my_env[i])
+            ft_shell_exit(data);
+        env_list = env_list->next;
+        i++;
+    }
+    my_env[i] = NULL;
+    data->my_env = my_env;
+}
+
+void ft_shlvl(t_env_list **env_list, t_data *data)
+{
+    int lvl;
+    char *tmp;
+    t_env_list *dup;
+
+    lvl = 0;
+    dup = ft_key_hunter("SHLVL", *env_list, data);
+    if (dup)
+    {
+        lvl = ft_atoi(dup->content);
+        free(dup->line);
+        free(dup->content);
+        dup->content = ft_itoa((lvl + 1));
+        tmp = ft_strjoin(dup->key, "="); 
+        if (!tmp)
+            ft_shell_exit(data);
+        dup->line = ft_strjoin(tmp, dup->content);
+    }
+    free(tmp);
+}
+
 static void	ft_envoid(t_env_list **env_list, t_data *data)
 {
 	char	*old[3];

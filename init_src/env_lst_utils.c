@@ -81,3 +81,4 @@ void	ft_lstclear_env(t_env_list **lst)
 	}
 	*lst = NULL;
 }
+
