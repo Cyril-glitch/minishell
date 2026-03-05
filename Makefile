@@ -51,7 +51,9 @@ PARSER_OBJ = $(PARSER_SRC:.c=.o)
 EXPAND_SRC = 	expand_src/expand.c \
 							expand_src/subtitute.c \
 							expand_src/quote.c \
-							expand_src/expand_utils.c
+							expand_src/expand_utils.c \
+							expand_src/split_expand.c
+							
 EXPAND_OBJ = $(EXPAND_SRC:.c=.o)
 
 BUILD_SRC =		build_src/ft_cd.c \
@@ -74,9 +76,8 @@ all: $(NAME)
 $(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ) $(LIB)
 	mkdir -p bin
 	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ)  $(LIB) $(RL_LIB) -o $(NAME)
-
-#%.o: %.c
-	#$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
+	mkdir -p obj
+	mv $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ) obj/
 
 $(LIB) :
 	make bonus -C $(LIBDIR)
@@ -84,13 +85,7 @@ $(LIB) :
 .PHONY: all clean fclean re
 
 clean:
-	rm -f $(INIT_OBJ)
-	rm -f $(MAIN_OBJ)
-	rm -f $(LEXER_OBJ)
-	rm -f $(PARSER_OBJ)
-	rm -f $(EXEC_OBJ)
-	rm -f $(EXPAND_OBJ)
-	rm -f $(BUILD_OBJ)
+	rm -rf obj
 	make clean -C $(LIBDIR)
 
 bin: all clean

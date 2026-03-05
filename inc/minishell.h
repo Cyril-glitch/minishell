@@ -235,7 +235,7 @@ void					copy_word(char *str, int *i, char quote,
 							t_token *token);
 
 // EXPAND
-void					ft_expand(t_token *token_lst, t_env_list *env_lst,
+void					ft_expand(t_token_list *token_lst, t_env_list *env_lst,
 							t_data *data);
 void					ft_expd_zero(t_expand *expd);
 int						ft_quote_status(t_expand *expd, char c);
@@ -244,6 +244,7 @@ void					ft_subtitute(char *s, t_token *token_lst,
 char					*ft_delquote(char *str);
 int						ft_val_edge_case(char *str, t_expand *expd,
 							t_data *data);
+void ft_split_expand(t_token_list *lst, t_data *data);
 
 // PARSER
 void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list,
