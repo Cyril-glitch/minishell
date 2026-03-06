@@ -1,4 +1,4 @@
-NAME = bin/minishell
+NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
@@ -74,7 +74,6 @@ EXEC_OBJ = $(EXEC_SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ) $(LIB)
-	mkdir -p bin
 	mkdir -p obj
 	$(CC) $(CFLAGS) $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ)  $(LIB) $(RL_LIB) -o $(NAME)
 	mv $(MAIN_OBJ) $(INIT_OBJ) $(LEXER_OBJ) $(EXPAND_OBJ) $(PARSER_OBJ) $(BUILD_OBJ) $(EXEC_OBJ) obj/
@@ -91,10 +90,13 @@ clean:
 bin: all clean
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./bin/minishell
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp $(NAME)
+
+start : all 
+	./$(NAME)
 
 fclean: clean
-	rm -rf bin
+	rm $(NAME)
 	make fclean -C $(LIBDIR)
 
 re: fclean all
