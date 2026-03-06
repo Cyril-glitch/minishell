@@ -83,7 +83,10 @@ static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 	while (tab[size])
 	{
 		ft_putstr("export ");
-		ft_putstr(tab[size]);
+        ft_putstr(ft_key_hunter(tab[size], env_list, data)->key);
+		ft_putstr("=\"");
+        ft_putstr(ft_key_hunter(tab[size], env_list, data)->content);
+		ft_putstr("\"");
 		write(1, "\n", 1);
 		size++;
 	}
