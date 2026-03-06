@@ -43,6 +43,7 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
         ft_expand_line(&line, data);
 		ft_putstr_fd(line, fd[1]);
 		write(fd[1], "\n", 1);
+        data->doc_line++;
 		free(line);
 	}
 }

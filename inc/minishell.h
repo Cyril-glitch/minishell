@@ -179,6 +179,7 @@ typedef struct s_data
 	t_prompt			*prompt;
 	pid_t				last_pid;
     char                **my_env;
+    int                 doc_line;
 }						t_data;
 
 // INIT
