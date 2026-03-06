@@ -70,7 +70,7 @@ void	redirection(t_cmd *cmd, t_data *data)
 		if (fd == -1 && current->type == REDIR_IN)
 		{
 			ft_free_data(data);
-			exit(0);
+			exit(1);
 		}
 		if (flag == 1)
 			dup2(fd, 0);

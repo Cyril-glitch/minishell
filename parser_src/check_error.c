@@ -94,9 +94,15 @@ int	check_error(t_token_list *token_list)
 	while (current)
 	{
 		if (!check_error_pipe(current))
+        {
+            g_sig_status = 2;
 			return (0);
+        }
 		if (!check_error_redir(current))
+        {
+            g_sig_status = 2;
 			return (0);
+        }
 		current = current->next;
 	}
 	return (1);

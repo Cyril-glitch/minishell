@@ -40,7 +40,7 @@ void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
 	else
 		exec_build(cmd, data);
 	ft_free_data(data);
-	exit(0);
+	exit(g_sig_status);
 }
 
 int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
@@ -98,6 +98,7 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putstr_fd(": command no found\n", 2);
+            g_sig_status = 127;
 			free(cmd->way);
 			cmd->build = DFL2;
 		}
