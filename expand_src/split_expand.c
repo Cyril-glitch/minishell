@@ -32,7 +32,7 @@ static void ft_splitoken(t_token *cur, char *str, t_token_list *newlst, t_data *
     new = ft_db_lstnew_token();
     if (!new)
         ft_shell_exit(data);
-    while ((str[i] && str[i] != ' ') || quote == '\"')
+    while ((str[i] && str[i] != ' ') || quote)
         quote = ft_q_status(quote ,str[i++]);
     tmp = ft_substr(str,0,i);
     if (!tmp)

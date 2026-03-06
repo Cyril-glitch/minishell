@@ -28,7 +28,10 @@ int	ft_val_edge_case(char *str, t_expand *expd, t_data *data)
 	}
 	if (*str && *str == '$' && *(str + 1) == '?')
 	{
-		expd->val = ft_itoa(g_sig_status);
+        if (expd->quote == '\'')
+            expd->val = ft_strdup("$?");
+        else
+		    expd->val = ft_itoa(g_sig_status);
 		if (!expd->val)
 			ft_shell_exit(data);
 		return (2);

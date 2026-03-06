@@ -92,7 +92,7 @@ bin: all clean
 val: all
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp $(NAME)
 
-start : all 
+it : all 
 	./$(NAME)
 
 fclean: clean
