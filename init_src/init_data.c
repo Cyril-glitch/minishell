@@ -63,5 +63,6 @@ t_data	*ft_init_data(int ac, char **av, char **env)
 	data->child = 0;
 	ft_add_prompt(data);
 	data->fd_tmp = 0;
+    data->doc_line = 0;
 	return (data);
 }

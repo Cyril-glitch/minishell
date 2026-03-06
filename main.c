@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 			execut(data, data->my_env);
 		ft_db_lstclear_token(data->token_list, free);
 		ft_db_lstclear_cmd(data->cmd_list, free);
+        data->doc_line++;
 		free(data->line);
 	}
 }
