@@ -55,6 +55,7 @@ void	ft_shell_exit_special(t_data *data, int value)
 	rl_clear_history();
 	exit(value);
 }
+
 int	check_value_exit(char *args)
 {
 	int	i;
