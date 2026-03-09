@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:38:46 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 13:45:24 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*find_way_path(char **path_tab, char *cmd, t_data *data)
 {
 	if (!access(cmd, X_OK))
 		return (ft_strdup(cmd));
-	if (!path_tab | !cmd)
+	if (!path_tab | !cmd | !ft_strlen(cmd))
 		return (NULL);
 	return (shearch_way(path_tab, data, cmd));
 	return (NULL);

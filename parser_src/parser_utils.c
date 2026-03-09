@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/03 17:41:07 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 12:26:02 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_build(t_cmd **cmd)
 {
 	if (!((*cmd)->args[0]) || !ft_strlen(((*cmd)->args[0])))
-		return ((*cmd)->build = DFL2, -1);
+		return ((*cmd)->build = DFL2, 0);
 	if (!ft_strcmp((*cmd)->args[0], "echo"))
 		return ((*cmd)->build = ECHOO, 1);
 	if (!ft_strcmp((*cmd)->args[0], "cd"))
