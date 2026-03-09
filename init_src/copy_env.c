@@ -48,6 +48,7 @@ void ft_shlvl(t_env_list **env_list, t_data *data)
     t_env_list *dup;
 
     lvl = 0;
+    tmp = NULL;
     dup = ft_key_hunter("SHLVL", *env_list, data);
     if (dup)
     {
