@@ -32,12 +32,17 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make bonus -C ./libft
-	mkdir -p obj
 	$(CC) $(CFLAGS) $(OBJS) ./libft/lib/libft.a $(RL_LIB) -o $(NAME)
 
 obj/%.o: %.c
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c $< -o $@
+
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(NAME)
+
+it : all 
+	./$(NAME)
 
 clean:
 	rm -rf obj
