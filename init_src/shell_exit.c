@@ -78,7 +78,7 @@ void	ft_shell_exit(t_data *data)
 		rl_clear_history();
 	ft_putstr("exit\n");
 	ft_free_data(data);
-	exit(0);
+	exit(g_sig_status);
 }
 
 void	ft_shell_exit_hd(t_data *data, char *file)
@@ -102,5 +102,5 @@ void	ft_shell_exit_hd(t_data *data, char *file)
 	ft_putstr_fd(file, 2);
 	ft_putstr_fd("\')\n", 2);
 	ft_free_data(data);
-	exit(0);
+	exit(g_sig_status);
 }
