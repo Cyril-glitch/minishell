@@ -67,7 +67,7 @@ void	redirection(t_cmd *cmd, t_data *data)
 		open_file(current, &fd, &flag, cmd);
 		if (fd == -1 && current->type == D_REDIR_IN)
 			ft_shell_exit(data);
-		if (fd == -1 && current->type == REDIR_IN)
+		if (fd == -1 && (current->type == REDIR_IN || current->type == REDIR_OUT || current->type == D_REDIR_OUT))
 		{
 			ft_free_data(data);
 			exit(1);
