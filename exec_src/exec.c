@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 14:21:07 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 14:52:23 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 void	exec(t_cmd *cmd, char **env, t_data *data)
 {
 	char	**path_tab;
+	struct stat sb;
 
 	if (cmd->is_build == 0)
 	{
@@ -93,6 +94,14 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		cmd->way = find_way_path(path_tab, cmd->args[0], data);
 		if (path_tab)
 			ft_tabclear(path_tab);
+		stat(cmd->way, &sb);
+		if (S_ISDIR(sb.st_mode))
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+    		ft_putstr_fd(": Is a directory\n", 2);
+    		g_sig_status = 126;
+		}
 		if (!cmd->way)
 		{
 			ft_putstr_fd("minishell: ", 2);

@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:40 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:39:15 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 14:42:02 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int  ft_no_expand(t_token *token, t_data *data)
   char *tmp;
 
   tmp = NULL;
-  if(ft_strcmp(token->content, "\"\"") == 0)
+  if(ft_strcmp(token->content, "\"\"") == 0 || ft_strcmp(token->content, "\'\'") == 0)
   {
     if(!token->prev || ft_strcmp(token->prev->content, "|") == 0)
     {
