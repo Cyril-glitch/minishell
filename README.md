@@ -2,32 +2,33 @@
 
 ## 1. Description
 **Minishell** is a minimalist implementation of a Unix shell, designed to replicate the core behavior of **Bash**. This project focuses on the fundamental interaction between the user and the kernel, specifically handling the lifecycle of processes and the management of file descriptors.
+
 ---
+
 <br />
-<br />
-<br />
+
 ## 2. Technical Instructions & Features
 The shell is built to handle the mandatory requirements of the 42 curriculum:
+
 ---
+
 <br />
-<br />
-<br />
+
 * **Execution Pipeline**: Supports complex commands with multiple pipes (`|`), connecting processes via `pipe()` and `dup2()`.
 * **Redirections**: Full support for input (`<`), output (`>`), append (`>>`), and Here-doc (`<<`).
 * **Built-in Commands**: Native implementations of `echo -n`, `cd`, `pwd`, `export`, `unset`, `env`, and `exit`.
 * **Environment Handling**: Dynamic expansion of environment variables (`$VAR`) and the exit status variable (`$?`).
 * **Signal Management**: Intercepts `Ctrl-C`, `Ctrl-D`, and `Ctrl-\` to match Bash's interactive behavior.
+
 ---
+
 <br />
-<br />
-<br />
+
 ## 3. Resources & Technical Choices
 Our implementation follows specific technical decisions to satisfy the subject's constraints:
 
 ---
 
-<br />
-<br />
 <br />
 
 ### 🧠 Centralized Memory Management (The `t_data` Structure)
@@ -38,8 +39,6 @@ Our implementation follows specific technical decisions to satisfy the subject's
 ---
 
 <br />
-<br />
-<br />
 
 ### 📡 Signal Handling Strategy
 * **Single Global Variable**: As mandated, we use exactly one global variable to communicate with signal handlers, ensuring no direct access to main data structures.
@@ -47,8 +46,7 @@ Our implementation follows specific technical decisions to satisfy the subject's
 * **Atomic Updates**: The global variable only stores the signal number, keeping the handler lightweight and safe.
 
 ---
-<br />
-<br />
+
 <br />
 
 ### 🚦 Process Control & Exit Codes
@@ -60,24 +58,23 @@ Our implementation follows specific technical decisions to satisfy the subject's
     * **2**: Syntax errors (e.g., unexpected tokens). 
     
 ---
-<br />
-<br />
+
 <br />
 
 ### 📜 Authorized Functions
 This project is built strictly using authorized system calls, including `readline` for history management, `pipe` for inter-process communication, and `execve` for execution.
 
 ---
+
 <br />
-<br />
-<br />
+
 ## 💻 How to Compile and Run
 To compile and start the shell, use the following commands:
 
 ---
+
 <br />
-<br />
-<br />
+
 ```bash
 # Clone the repo
 https://github.com/Cyril-glitch/minishell.git
