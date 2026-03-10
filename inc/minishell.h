@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/10 14:42:50 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:46:00 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ typedef struct s_data
 	pid_t				last_pid;
 	char				**my_env;
 	int					doc_line;
+	char				quote;
 }						t_data;
 
 // INIT
@@ -207,7 +208,6 @@ void					ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
 void					ft_clear_node_env(t_env_list *node);
 void					ft_lstclear_env(t_env_list **lst);
 t_env_list				*ft_lstlast_env(t_env_list *lst);
-void					ft_printlst_env(t_env_list *lst);
 
 // SHELL_EXIT
 void					ft_shell_exit(t_data *data);

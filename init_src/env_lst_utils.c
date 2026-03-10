@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:39 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/03/10 13:53:09 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:50:19 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	ft_printlst_env(t_env_list *lst)
-{
-	t_env_list	*current;
-
-	current = NULL;
-	current = lst;
-	while (current)
-	{
-		printf("export %s\n", (char *)current->line);
-		current = current->next;
-	}
-}
 
 t_env_list	*ft_lstlast_env(t_env_list *lst)
 {

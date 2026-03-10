@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:38:03 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 14:40:10 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ static void	ft_swap_pwd(char *old, char *new, t_env_list *env_list,
 		t_data *data)
 {
 	t_env_list	*cur;
-	int			check;
 
-	check = 0;
 	cur = env_list;
 	while (cur)
 	{
@@ -42,7 +40,6 @@ static void	ft_swap_pwd(char *old, char *new, t_env_list *env_list,
 			cur->content = ft_strdup(new);
 			if (!cur->content)
 				ft_shell_exit(data);
-			check++;
 		}
 		else if (ft_strcmp(cur->key, "OLDPWD") == 0)
 		{
@@ -50,11 +47,8 @@ static void	ft_swap_pwd(char *old, char *new, t_env_list *env_list,
 			cur->content = ft_strdup(old);
 			if (!cur->content)
 				ft_shell_exit(data);
-			check++;
 		}
 		cur = cur->next;
-		if (check == 2)
-			return ;
 	}
 }
 

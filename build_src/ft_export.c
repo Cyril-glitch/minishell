@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 13:50:46 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:15:39 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,19 @@ static char	**ft_tab_list(t_env_list *lst)
 static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 {
 	char		**tab;
-	int			size;
+	int			len;
 	t_env_list	*dup;
 
-	size = 0;
 	tab = ft_tab_list(env_list);
 	if (!tab)
 		ft_shell_exit(data);
-	while (tab[size])
-		size++;
-	ft_sort(size, tab);
-	size = 0;
-	while (tab[size])
+	len = ft_tablen(tab);
+	ft_sort(len, tab);
+	len = 0;
+	while (tab[len])
 	{
 		ft_putstr("export ");
-		dup = ft_key_hunter(tab[size], env_list, data);
+		dup = ft_key_hunter(tab[len], env_list, data);
 		ft_putstr(dup->key);
 		if (dup->content)
 		{
@@ -93,7 +91,7 @@ static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 			ft_putstr("\"");
 		}
 		write(1, "\n", 1);
-		size++;
+		len++;
 	}
 	ft_tabclear(tab);
 }
@@ -131,13 +129,8 @@ int	ft_export(char **args, t_env_list **env_list, t_data *data)
 	t_env_list	*dup;
 
 	i = 1;
-	tmp = NULL;
-	dup = NULL;
 	if (!args[i])
-	{
-		ft_printlst_export(*env_list, data);
-		return (0);
-	}
+		return (ft_printlst_export(*env_list, data), 0);
 	while (args[i])
 	{
 		if (ft_valid_args(args[i]))
@@ -146,9 +139,11 @@ int	ft_export(char **args, t_env_list **env_list, t_data *data)
 			dup = ft_key_hunter(args[i], *env_list, data);
 			if (!tmp)
 				ft_shell_exit(data);
-			if (dup && ft_strcmp(dup->key, tmp->key) == 0)
+			if (dup && ft_strcmp(dup->key, tmp->key) == 0 && tmp->content)
 				ft_del_env(dup, env_list);
-			ft_lstadd_back_env(env_list, tmp);
+			if ((dup && ft_strcmp(dup->key, tmp->key) == 0 && tmp->content) \
+			|| !dup)
+				ft_lstadd_back_env(env_list, tmp);
 		}
 		i++;
 	}

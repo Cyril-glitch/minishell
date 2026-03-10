@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:35 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:38:18 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:16:19 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static char	*ft_make_prompt(t_env_list *env_list, t_data *data, char *cur_path)
 	data->prompt->user = ft_color(ft_user(env_list), MINT);
 	data->prompt->pwd = ft_color(ft_strrchr(cur_path, '/'), LAVENDER);
 	free(cur_path);
-	data->prompt->group = ft_strdup(ICE_BLUE "@" RESET B_L_RED "losmachinos🏭" RESET B_BLUE " ~" RESET);
+	data->prompt->group = ft_strdup(ICE_BLUE "@" RESET B_L_RED \
+		"losmachinos🏭" RESET B_BLUE " ~" RESET);
 	if (!data->prompt->user || !data->prompt->pwd || !data->prompt->group)
 		ft_shell_exit(data);
 	tmp = ft_strjoin(data->prompt->user, data->prompt->group);
