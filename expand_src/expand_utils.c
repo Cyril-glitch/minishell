@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 14:34:09 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:24:03 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	ft_val_edge_case(char *str, t_expand *expd, t_data *data)
 
 void	ft_expd_zero(t_expand *expd)
 {
-	if (!expd)
-		return ;
 	if (expd->prefix)
 	{
 		free(expd->prefix);
@@ -68,18 +66,4 @@ void	ft_expd_zero(t_expand *expd)
 		free(expd->cat);
 		expd->cat = NULL;
 	}
-}
-
-void	ft_print_lst(t_list *lst)
-{
-	t_list	*current;
-
-	current = NULL;
-	current = lst;
-	while (current)
-	{
-		printf("%s", (char *)current->content);
-		current = current->next;
-	}
-	printf("\n");
 }

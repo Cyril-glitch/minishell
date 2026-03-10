@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:12:55 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 14:13:11 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:47:35 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_q_status(char quote, char c)
 }
 
 static void	ft_splitoken(t_token *cur, char *str, t_token_list *newlst,
-		t_data *data, char quote)
+		t_data *data)
 {
 	t_token	*new;
 	char	*tmp;
@@ -45,8 +45,8 @@ static void	ft_splitoken(t_token *cur, char *str, t_token_list *newlst,
 	new = ft_db_lstnew_token();
 	if (!new)
 		ft_shell_exit(data);
-	while ((str[i] && str[i] != ' ') || quote)
-		quote = ft_q_status(quote, str[i++]);
+	while ((str[i] && str[i] != ' ') || data->quote)
+		data->quote = ft_q_status(data->quote, str[i++]);
 	tmp = ft_substr(str, 0, i);
 	if (!tmp)
 		ft_shell_exit(data);
@@ -58,7 +58,7 @@ static void	ft_splitoken(t_token *cur, char *str, t_token_list *newlst,
 	ft_db_lstadd_back_token(newlst, new);
 	str += (i + (str[i] == ' '));
 	if (*str)
-		ft_splitoken(cur, str, newlst, data, quote);
+		ft_splitoken(cur, str, newlst, data);
 }
 
 void	ft_split_expand(t_token_list *lst, t_data *data)
@@ -72,7 +72,8 @@ void	ft_split_expand(t_token_list *lst, t_data *data)
 		ft_shell_exit(data);
 	while (current)
 	{
-		ft_splitoken(current, current->content, newlst, data, 0);
+		data->quote = 0;
+		ft_splitoken(current, current->content, newlst, data);
 		current = current->next;
 	}
 	ft_db_lstclear_token(data->token_list, free);
