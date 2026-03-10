@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:26:44 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 14:23:52 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:22:51 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	open_file(t_redir *current, int *fd, int *flag, t_cmd *cmd)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(current->file, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			if (errno == ENOENT)
+				ft_putstr_fd(": No such file or directory\n", 2);
+			else if (errno == EACCES)
+				ft_putstr_fd(": Permission denied\n", 2);
 		}
 		else if (!cmd->way && cmd->build == DFL)
 		{

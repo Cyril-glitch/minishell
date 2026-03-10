@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:17:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 15:29:35 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:07:39 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,32 @@ int	check_value_exit(char *args)
 {
 	int	i;
 	int	j;
+	int k;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	if (args[j] == '-')
 		j++;
-	while (args[i + j])
+	if (args[k] == '+')
+		k++;
+	while (args[i + j + k])
 		i++;
 	if (i > 19)
 		return (0);
-	if (j)
+	if (!j && !k)
 	{
-		if (!ft_strcmp(args, "9223372036854775807"))
+		if (ft_strcmp(args, "9223372036854775807") > 0)
 			return (0);
 	}
-	else
+	else if (k)
 	{
-		if (!ft_strcmp(args, "-9223372036854775808"))
+		if (ft_strcmp(args, "+9223372036854775807") > 0)
+			return (0);
+	}
+	else if (j)
+	{
+		if (ft_strcmp(args, "-9223372036854775808") > 0)
 			return (0);
 	}
 	return (1);
@@ -99,7 +108,6 @@ int	ft_exit_utils(char **args, t_data *data)
 	}
 	if (ft_atoll(args[1]) < 0)
 	{
-		printf("arg = %lld\n", ft_atoll(args[1]));
 		ft_putstr_fd("exit\n", 1);
 		ft_shell_exit_special(data, 256 + (ft_atoll(args[1]) % 256));
 	}
