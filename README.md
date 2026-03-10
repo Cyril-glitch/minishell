@@ -1,50 +1,51 @@
-# 🐚 Minishell - As beautiful as a shell
+# 🐚 Minishell - Technical Documentation
 
-## 📝 Description
-[cite_start]**Minishell** is a 42 school project that consists of creating a simple shell[cite: 6]. [cite_start]This "little Bash" was developed to gain extensive knowledge about processes, file descriptors, and system calls[cite: 7, 8].
+## 1. Description
+**Minishell** is a minimalist implementation of a Unix shell, designed to replicate the core behavior of **Bash**. This project focuses on the fundamental interaction between the user and the kernel, specifically handling the lifecycle of processes and the management of file descriptors.
 
 
 
-## 🚀 Features
-[cite_start]This implementation covers the mandatory requirements of the subject[cite: 96, 98]:
+## 2. Technical Instructions & Features
+The shell is built to handle the mandatory requirements of the 42 curriculum:
 
-* [cite_start]**Interactive Prompt**: Displays a prompt when waiting for a new command[cite: 99].
-* [cite_start]**Command Execution**: Searches and launches the right executable based on the `PATH` variable or using relative/absolute paths[cite: 101].
-* [cite_start]**History**: Includes a working command history (via `readline`)[cite: 100].
-* **Quoting Management**: 
-    * [cite_start]**Single quotes (`'`)**: Prevents the shell from interpreting meta-characters[cite: 112].
-    * [cite_start]**Double quotes (`"`)**: Prevents interpretation except for the dollar sign (`$`)[cite: 113].
-* **Redirections**:
-    * [cite_start]`<`: Redirects input[cite: 115].
-    * [cite_start]`>`: Redirects output (truncate mode)[cite: 116].
-    * [cite_start]`>>`: Redirects output (append mode)[cite: 119].
-    * [cite_start]`<<` (Heredoc): Reads input until a specific delimiter is seen[cite: 117].
-* [cite_start]**Pipes (`|`)**: Connects the output of one command to the input of the next in a pipeline[cite: 120].
-* [cite_start]**Environment Variables**: Expands `$VAR` to its environment value[cite: 121].
-* [cite_start]**Exit Status**: Expands `$?` to the exit status of the last executed foreground pipeline[cite: 122].
-* [cite_start]**Signals**: Handles `Ctrl-C`, `Ctrl-D`, and `Ctrl-\` as in Bash[cite: 123]:
-    * [cite_start]**Ctrl-C**: Displays a new prompt on a new line[cite: 125].
-    * [cite_start]**Ctrl-D**: Exits the shell[cite: 126].
-    * [cite_start]**Ctrl-\**: Does nothing[cite: 127].
+* **Execution Pipeline**: Supports complex commands with multiple pipes (`|`), connecting processes via `pipe()` and `dup2()`.
+* **Redirections**: Full support for input (`<`), output (`>`), append (`>>`), and Here-doc (`<<`).
+* **Built-in Commands**: Native implementations of `echo -n`, `cd`, `pwd`, `export`, `unset`, `env`, and `exit`.
+* **Environment Handling**: Dynamic expansion of environment variables (`$VAR`) and the exit status variable (`$?`).
+* **Signal Management**: Intercepts `Ctrl-C`, `Ctrl-D`, and `Ctrl-\` to match Bash's interactive behavior.
 
-## 🛠️ Built-in Commands
-[cite_start]The following built-ins are implemented natively[cite: 128]:
-* [cite_start]`echo` (with option `-n`) [cite: 129]
-* [cite_start]`cd` (relative or absolute path only) [cite: 130]
-* [cite_start]`pwd` (no options) [cite: 131]
-* [cite_start]`export` (no options) [cite: 132]
-* [cite_start]`unset` (no options) [cite: 133]
-* [cite_start]`env` (no options or arguments) [cite: 134]
-* [cite_start]`exit` (no options) [cite: 135]
+## 3. Resources & Technical Choices
+Our implementation follows specific technical decisions to satisfy the subject's constraints:
 
-## 🏗️ Technical Details
-* [cite_start]**Language**: C[cite: 22].
-* [cite_start]**Signal Handling**: Uses at most one global variable to store the signal number, ensuring no access to main data structures from the handler[cite: 102, 105].
-* [cite_start]**Memory Management**: All heap-allocated memory is properly freed[cite: 27]. [cite_start]Note: `readline()` leaks are acknowledged and tolerated by the subject[cite: 139, 140].
-* [cite_start]**No Relinking**: The Makefile is optimized to avoid unnecessary relinking[cite: 29].
+### 🧠 Centralized Memory Management (The `t_data` Structure)
+* **Unified Data Access**: We chose to implement a "Super Structure" (typically named `t_data`) that holds all essential pointers (environment, command lists, token lists).
+* **Leak Prevention**: This architecture ensures that all heap-allocated memory can be systematically freed from a single point of exit. 
+* **Safe Exits**: Whether the shell exits normally or encounters a fatal error, the centralized structure allows for a clean cleanup process, fulfilling the strict "no memory leak" policy of the school.
 
-## 📦 Installation & Usage
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-link>
-   cd minishell
+### 📡 Signal Handling Strategy
+* **Single Global Variable**: As mandated, we use exactly one global variable to communicate with signal handlers, ensuring no direct access to main data structures.
+* **Choice of sigaction**: We opted for `sigaction` over `signal` for more reliable behavior and better management of signal masks.
+* **Atomic Updates**: The global variable only stores the signal number, keeping the handler lightweight and safe.
+
+### 🚦 Process Control & Exit Codes
+* **The fork/execve Lifecycle**: Every command is executed in a child process created via `fork()`The parent waits for completion using `waitpid()` to capture the status.
+* **Strict Error Codes**: We implemented standard POSIX exit codes to match Bash behavior:
+    * **127**: Command not found or invalid path.
+    * **126**: Command found but lacks execution permissions.
+    * **1**: General errors (e.g., failed redirections).
+    * **2**: Syntax errors (e.g., unexpected tokens).
+
+
+
+### 📜 Authorized Functions
+This project is built strictly using authorized system calls, including `readline` for history management, `pipe` for inter-process communication, and `execve` for execution.
+
+## 💻 How to Compile and Run
+To compile and start the shell, use the following commands:
+
+```bash
+# Compile the project
+make
+
+# Run the shell
+./minishell
