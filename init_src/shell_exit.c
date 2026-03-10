@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:26:32 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:40:16 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 16:01:29 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_shell_exit_hd(t_data *data, char *file)
     {
         ft_putstr_fd(nbr_line, 2);
         free(nbr_line);
-        data->doc_line = 0;
+        // data->doc_line = 0;
     }
     ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(file, 2);

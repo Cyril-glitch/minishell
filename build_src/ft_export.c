@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/27 13:30:50 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:36:54 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 		ft_putstr("export ");
         dup = ft_key_hunter(tab[size], env_list, data);
         ft_putstr(dup->key);
-		ft_putstr("=\"");
-        ft_putstr(dup->content);
-		ft_putstr("\"");
+		if (dup->content)
+		{
+			ft_putstr("=\"");
+			ft_putstr(dup->content);
+			ft_putstr("\"");
+		}
 		write(1, "\n", 1);
 		size++;
 	}
