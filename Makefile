@@ -68,7 +68,8 @@ BUILD_OBJ = $(BUILD_SRC:.c=.o)
 EXEC_SRC =	exec_src/exec.c \
 			exec_src/redir.c \
 			exec_src/exec_utils.c \
-			exec_src/exec2.c
+			exec_src/exec2.c \
+			exec_src/exec_utils2.c
 EXEC_OBJ = $(EXEC_SRC:.c=.o)
 
 all: $(NAME)
