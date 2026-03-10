@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 16:48:36 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 14:29:39 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,26 @@ void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
 	exit(g_sig_status);
 }
 
+void	nofork(t_cmd *cmd, t_data *data)
+{
+	int		save_in;
+	int		save_out;
+
+	save_in = dup(0);
+	save_out = dup(1);
+	redirection(cmd, data);
+	if (cmd->is_build == 1)
+		exec_build(cmd, data);
+	dup2(save_in, 0);
+	dup2(save_out, 1);
+	close(save_in);
+	close(save_out);
+}
+
 int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
-	int		save_in;
-	int		save_out;
 
 	if (cmd->next)
 		pipe(fd_pipe);
@@ -63,17 +77,7 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 			child(data, fd_pipe, cmd, env);
 	}
 	else
-	{
-		save_in = dup(0);
-		save_out = dup(1);
-		redirection(cmd, data);
-		if (cmd->is_build == 1)
-			exec_build(cmd, data);
-		dup2(save_in, 0);
-		dup2(save_out, 1);
-		close(save_in);
-		close(save_out);
-	}
+		nofork(cmd, data);
 	if (data->fd_tmp != 0)
 		close(data->fd_tmp);
 	if (cmd->next)
@@ -84,10 +88,23 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 	return (1);
 }
 
+void	if_is_directory(t_cmd *cmd)
+{
+	struct stat	sb;
+
+	stat(cmd->way, &sb);
+	if (S_ISDIR(sb.st_mode))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		g_sig_status = 126;
+	}
+}
+
 void	exec(t_cmd *cmd, char **env, t_data *data)
 {
-	char	**path_tab;
-	struct stat sb;
+	char		**path_tab;
 
 	if (cmd->is_build == 0)
 	{
@@ -100,23 +117,26 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-            g_sig_status = 127;
+			g_sig_status = 127;
 			free(cmd->way);
 			cmd->build = DFL2;
 		}
 		else
-		{
-			stat(cmd->way, &sb);
-			if (S_ISDIR(sb.st_mode))
-			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(cmd->args[0], 2);
-				ft_putstr_fd(": Is a directory\n", 2);
-				g_sig_status = 126;
-			}
-		}
+			if_is_directory(cmd);
 	}
 	exec_cmd(cmd, env, data);
+}
+
+void	get_status(t_data *data, int status)
+{
+	waitpid(data->last_pid, &status, 0);
+	if (WIFEXITED(status))
+		g_sig_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		g_sig_status = 128 + WTERMSIG(status);
+		write(1, "\n", 1);
+	}
 }
 
 void	execut(t_data *data, char **env)
@@ -137,16 +157,7 @@ void	execut(t_data *data, char **env)
 		current = current->next;
 	}
 	if (data->last_pid > 0)
-	{
-		waitpid(data->last_pid, &status, 0);
-		if (WIFEXITED(status))
-			g_sig_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-		{
-			g_sig_status = 128 + WTERMSIG(status);
-			write(1, "\n", 1);
-		}
-	}
+		get_status(data, status);
 	while (wait(NULL) > 0)
 		;
 	if (data->fd_tmp != 0)

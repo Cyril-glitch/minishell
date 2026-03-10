@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:45 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:39:28 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 14:34:09 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	ft_val_edge_case(char *str, t_expand *expd, t_data *data)
 	}
 	if (*str && *str == '$' && *(str + 1) == '?')
 	{
-        if (expd->quote == '\'')
-            expd->val = ft_strdup("$?");
-        else
-		    expd->val = ft_itoa(g_sig_status);
+		if (expd->quote == '\'')
+			expd->val = ft_strdup("$?");
+		else
+			expd->val = ft_itoa(g_sig_status);
 		if (!expd->val)
 			ft_shell_exit(data);
 		return (2);
@@ -68,7 +68,6 @@ void	ft_expd_zero(t_expand *expd)
 		free(expd->cat);
 		expd->cat = NULL;
 	}
-	//expd->quote = 0;
 }
 
 void	ft_print_lst(t_list *lst)

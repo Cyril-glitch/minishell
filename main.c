@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:46 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/09 12:45:23 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 13:49:04 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **env)
 			execut(data, data->my_env);
 		ft_db_lstclear_token(data->token_list, free);
 		ft_db_lstclear_cmd(data->cmd_list, free);
-        data->doc_line++;
+		data->doc_line++;
 		free(data->line);
 	}
 }

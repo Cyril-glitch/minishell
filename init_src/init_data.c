@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:05:09 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:40:08 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 13:53:51 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_data	*ft_init_data(int ac, char **av, char **env)
 	ft_add_termios(data);
 	ft_add_signal(data);
 	ft_add_env_list(data, env);
-    ft_shlvl(&data->env_list, data);
-    ft_my_env(data->env_list, data);
+	ft_shlvl(&data->env_list, data);
+	ft_my_env(data->env_list, data);
 	ft_add_token_list(data);
 	ft_add_cmd_list(data);
 	ft_add_expand(data);
@@ -63,6 +63,6 @@ t_data	*ft_init_data(int ac, char **av, char **env)
 	data->child = 0;
 	ft_add_prompt(data);
 	data->fd_tmp = 0;
-    data->doc_line = 0;
+	data->doc_line = 0;
 	return (data);
 }

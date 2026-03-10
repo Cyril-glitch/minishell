@@ -6,47 +6,11 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:17:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 12:07:39 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 14:12:19 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-long long	ft_atoll(const char *nbr)
-{
-	int			i;
-	int			signe;
-	long long	res;
-
-	i = 0;
-	signe = 1;
-	res = 0;
-	while (ft_isspace(nbr[i]))
-		i++;
-	if (nbr[i] == '-' || nbr[i] == '+')
-	{
-		if (nbr[i] == '-')
-			signe = -1;
-		i++;
-	}
-	while (ft_isdigit(nbr[i]))
-	{
-		res *= 10;
-		res += nbr[i] - '0';
-		i++;
-	}
-	return (res * signe);
-}
-
-int	tablen(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
 
 void	ft_shell_exit_special(t_data *data, int value)
 {
@@ -56,23 +20,8 @@ void	ft_shell_exit_special(t_data *data, int value)
 	exit(value);
 }
 
-int	check_value_exit(char *args)
+int	lookandreturn(char *args, int j, int k)
 {
-	int	i;
-	int	j;
-	int k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	if (args[j] == '-')
-		j++;
-	if (args[k] == '+')
-		k++;
-	while (args[i + j + k])
-		i++;
-	if (i > 19)
-		return (0);
 	if (!j && !k)
 	{
 		if (ft_strcmp(args, "9223372036854775807") > 0)
@@ -91,9 +40,31 @@ int	check_value_exit(char *args)
 	return (1);
 }
 
+int	check_value_exit(char *args)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	if (args[j] == '-')
+		j++;
+	if (args[k] == '+')
+		k++;
+	while (args[i + j + k])
+		i++;
+	if (i > 19)
+		return (0);
+	if (!lookandreturn(args, j, k))
+		return (0);
+	return (1);
+}
+
 int	ft_exit_utils(char **args, t_data *data)
 {
-	if (tablen(args) > 2)
+	if (ft_tablen(args) > 2)
 	{
 		ft_putstr_fd("exit\nminishell: too many arguments\n", 2);
 		g_sig_status = 1;

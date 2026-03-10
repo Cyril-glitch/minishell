@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/10 12:15:51 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 13:49:44 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,8 @@ typedef struct s_data
 	int					child;
 	t_prompt			*prompt;
 	pid_t				last_pid;
-    char                **my_env;
-    int                 doc_line;
+	char				**my_env;
+	int					doc_line;
 }						t_data;
 
 // INIT
@@ -199,8 +199,8 @@ void					ft_sigmute(struct sigaction *sig_a);
 // INIT_ENV
 t_env_list				*ft_new_env(char *str);
 t_env_list				*ft_env_list(char **env, t_data *data);
-void                    ft_shlvl(t_env_list **env_list, t_data *data);
-void                    ft_my_env(t_env_list *env_list, t_data *data);
+void					ft_shlvl(t_env_list **env_list, t_data *data);
+void					ft_my_env(t_env_list *env_list, t_data *data);
 
 // ENV_LST_UTILS
 void					ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
@@ -247,8 +247,8 @@ void					ft_subtitute(char *s, t_token *token_lst,
 char					*ft_delquote(char *str);
 int						ft_val_edge_case(char *str, t_expand *expd,
 							t_data *data);
-void                    ft_split_expand(t_token_list *lst, t_data *data);
-void                    ft_expand_line(char **line, t_data *data);
+void					ft_split_expand(t_token_list *lst, t_data *data);
+void					ft_expand_line(char **line, t_data *data);
 
 // PARSER
 void					ft_db_lstadd_front_cmd(t_cmd_list *cmd_list,

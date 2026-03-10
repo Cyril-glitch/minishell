@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subtitute.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:51 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:39:35 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 14:34:26 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_val(char *str, t_expand *expd, t_env_list *env_lst, t_data *data)
 		return (res);
 	i++;
 	while ((ft_isalnum(str[i]) && str[i] != '\'' && str[i] != '\"')
-			|| str[i] == '_')
+		|| str[i] == '_')
 		i++;
 	expd->key = ft_substr(str, 1, (i - 1));
 	if (!expd->key)
