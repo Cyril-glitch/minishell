@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 14:40:28 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:59:50 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	exec_build(t_cmd *cmd, t_data *data)
 		ft_cd(&cmd->args[1], data->env_list, data);
 	if (cmd->build == EXIT)
 		ft_exit(cmd, data);
-  g_sig_status = 0;
+	g_sig_status = 0;
 }
 
 void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
@@ -74,7 +74,7 @@ int	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 
 void	exec(t_cmd *cmd, char **env, t_data *data)
 {
-	char		**path_tab;
+	char	**path_tab;
 
 	if (cmd->is_build == 0)
 	{
