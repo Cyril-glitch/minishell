@@ -146,9 +146,13 @@ int	ft_export(char **args, t_env_list **env_list, t_data *data)
 			dup = ft_key_hunter(args[i], *env_list, data);
 			if (!tmp)
 				ft_shell_exit(data);
-			if (dup && ft_strcmp(dup->key, tmp->key) == 0)
+			if (dup && ft_strcmp(dup->key, tmp->key) == 0 && tmp->content)
+      {
 				ft_del_env(dup, env_list);
-			ft_lstadd_back_env(env_list, tmp);
+			  ft_lstadd_back_env(env_list, tmp);
+      }
+      else if (!dup)
+			  ft_lstadd_back_env(env_list, tmp);
 		}
 		i++;
 	}

@@ -28,6 +28,7 @@ void	exec_build(t_cmd *cmd, t_data *data)
 		ft_cd(&cmd->args[1], data->env_list, data);
 	if (cmd->build == EXIT)
 		ft_exit(cmd, data);
+  g_sig_status = 0;
 }
 
 void	child(t_data *data, int *fd_pipe, t_cmd *cmd, char **env)
