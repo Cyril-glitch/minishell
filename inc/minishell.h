@@ -207,7 +207,6 @@ void					ft_lstadd_back_env(t_env_list **lst, t_env_list *new);
 void					ft_clear_node_env(t_env_list *node);
 void					ft_lstclear_env(t_env_list **lst);
 t_env_list				*ft_lstlast_env(t_env_list *lst);
-void					ft_printlst_env(t_env_list *lst);
 
 // SHELL_EXIT
 void					ft_shell_exit(t_data *data);

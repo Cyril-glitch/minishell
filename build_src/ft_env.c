@@ -16,7 +16,7 @@ static void	ft_printenv(t_env_list *lst)
 {
 	while (lst)
 	{
-		if (lst->content)
+		if (lst->content && *lst->content)
 		{
 			ft_putstr(lst->line);
 			write(1, "\n", 1);

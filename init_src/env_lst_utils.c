@@ -12,18 +12,6 @@
 
 #include "../inc/minishell.h"
 
-void	ft_printlst_env(t_env_list *lst)
-{
-	t_env_list	*current;
-
-	current = NULL;
-	current = lst;
-	while (current)
-	{
-		printf("export %s\n", (char *)current->line);
-		current = current->next;
-	}
-}
 
 t_env_list	*ft_lstlast_env(t_env_list *lst)
 {
