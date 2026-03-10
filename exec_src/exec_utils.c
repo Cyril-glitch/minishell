@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 13:45:24 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 14:38:58 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,16 @@ char	*find_way_path(char **path_tab, char *cmd, t_data *data)
 		return (NULL);
 	return (shearch_way(path_tab, data, cmd));
 	return (NULL);
+}
+
+void	get_status(t_data *data, int status)
+{
+	waitpid(data->last_pid, &status, 0);
+	if (WIFEXITED(status))
+		g_sig_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		g_sig_status = 128 + WTERMSIG(status);
+		write(1, "\n", 1);
+	}
 }

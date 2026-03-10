@@ -300,5 +300,9 @@ char					*find_way_path(char **path_tab, char *cmd,
 void					execut(t_data *data, char **env);
 void					pipex(t_cmd *cmd, t_data *data, int *fd_pipe);
 int						check_heredoc(t_cmd_list *cmd_list, t_data *data);
+void					nofork(t_cmd *cmd, t_data *data);
+void					if_is_directory(t_cmd *cmd);
+void					get_status(t_data *data, int status);
+void					exec_build(t_cmd *cmd, t_data *data);
 
 #endif
