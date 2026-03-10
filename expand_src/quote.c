@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:33 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:19:35 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:31:03 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ char	*ft_delquote(char *s)
 	i = 0;
 	j = 0;
 	quote = 0;
-	if (!s)
-		return (NULL);
 	len = new_len(s);
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)

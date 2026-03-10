@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:26:08 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/26 09:26:24 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:26:01 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	ft_add_expand(t_data *data)
 {
 	data->expd = malloc(sizeof(t_expand));
+	if (!data->expd)
+		ft_shell_exit(data);
 	data->expd->prefix = NULL;
 	data->expd->key = NULL;
 	data->expd->val = NULL;
@@ -28,6 +30,8 @@ void	ft_add_env_list(t_data *data, char **env)
 	t_env_list	*env_list;
 
 	env_list = ft_env_list(env, data);
+	if (!env_list)
+		ft_shell_exit(data);
 	data->env_list = env_list;
 }
 

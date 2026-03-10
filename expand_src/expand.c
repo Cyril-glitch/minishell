@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:19:40 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 13:52:44 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 15:19:44 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ static int	ft_no_expand(t_token *token, t_data *data)
 {
 	char	*tmp;
 
-	tmp = NULL;
 	if (ft_strcmp(token->content, "\"\"") == 0 || ft_strcmp(token->content,
 			"\'\'") == 0)
 	{
 		if (!token->prev || ft_strcmp(token->prev->content, "|") == 0)
 		{
-			ft_putstr_fd("minishell : command not found", 2);
-			write(1, "\n", 1);
+			ft_putstr_fd("minishell : command not found\n", 2);
 			g_sig_status = 127;
 			return (1);
 		}
