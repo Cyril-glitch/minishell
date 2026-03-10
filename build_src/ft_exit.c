@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:17:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:37:55 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:29:35 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_value_exit(char *args)
 	}
 	else
 	{
-		if (!ft_strcmp(args, "-9223372036854775807"))
+		if (!ft_strcmp(args, "-9223372036854775808"))
 			return (0);
 	}
 	return (1);
@@ -97,16 +97,16 @@ int	ft_exit_utils(char **args, t_data *data)
 		ft_putstr_fd(": numeric argement required\n", 2);
 		ft_shell_exit_special(data, 2);
 	}
-	if (atoll(args[1]) < 0)
+	if (ft_atoll(args[1]) < 0)
 	{
-		printf("arg = %lld\n", atoll(args[1]));
+		printf("arg = %lld\n", ft_atoll(args[1]));
 		ft_putstr_fd("exit\n", 1);
-		ft_shell_exit_special(data, 256 + (atoll(args[1]) % 256));
+		ft_shell_exit_special(data, 256 + (ft_atoll(args[1]) % 256));
 	}
-	if (atoi(args[1]) > 255)
+	if (ft_atoi(args[1]) > 255)
 	{
 		ft_putstr_fd("exit\n", 1);
-		ft_shell_exit_special(data, atoi(args[1]) % 256);
+		ft_shell_exit_special(data, ft_atoi(args[1]) % 256);
 	}
 	return (1);
 }
@@ -137,5 +137,5 @@ void	ft_exit(t_cmd *cmd, t_data *data)
 		return ;
 	if (!cmd->prev && !cmd->next)
 		ft_putstr_fd("exit\n", 1);
-	ft_shell_exit_special(data, atoi(cmd->args[1]));
+	ft_shell_exit_special(data, ft_atoi(cmd->args[1]));
 }

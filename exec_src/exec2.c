@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:38:41 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/09 16:46:15 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	check_heredoc(t_cmd_list *cmd_list, t_data *data)
 	t_redir	*current_redir;
 
 	current_cmd = cmd_list->head;
+	g_sig_status = 0;
 	while (current_cmd)
 	{
 		current_redir = current_cmd->redirs_list->head;
