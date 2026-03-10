@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 15:36:54 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 13:50:46 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ static char	**ft_tab_list(t_env_list *lst)
 
 static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 {
-	char	**tab;
-	int		size;
-    t_env_list *dup;
+	char		**tab;
+	int			size;
+	t_env_list	*dup;
 
 	size = 0;
 	tab = ft_tab_list(env_list);
@@ -84,8 +84,8 @@ static void	ft_printlst_export(t_env_list *env_list, t_data *data)
 	while (tab[size])
 	{
 		ft_putstr("export ");
-        dup = ft_key_hunter(tab[size], env_list, data);
-        ft_putstr(dup->key);
+		dup = ft_key_hunter(tab[size], env_list, data);
+		ft_putstr(dup->key);
 		if (dup->content)
 		{
 			ft_putstr("=\"");

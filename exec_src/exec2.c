@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:34:05 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/09 16:46:15 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 13:54:28 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static void	ft_exit_heredoc(char *line, t_data *data, t_redir *redir, int *fd)
 {
-    if (!line)
-    {
-        free(line);
-        close(fd[1]);
-        ft_shell_exit_hd(data, redir->file);
-    }
-    if (!ft_strcmp(line, redir->file))
-    {
-        free(line);
-        ft_free_data(data);
-        close(fd[1]);
-        exit(0);
-    }
+	if (!line)
+	{
+		free(line);
+		close(fd[1]);
+		ft_shell_exit_hd(data, redir->file);
+	}
+	if (!ft_strcmp(line, redir->file))
+	{
+		free(line);
+		ft_free_data(data);
+		close(fd[1]);
+		exit(0);
+	}
 }
 
 void	child_heredoc(t_data *data, t_redir *redir, int *fd)
@@ -37,13 +37,13 @@ void	child_heredoc(t_data *data, t_redir *redir, int *fd)
 	ft_heredoc_mode(data->sig_a, data);
 	while (1)
 	{
-		line = readline("> ");	
-        if (!line || !ft_strcmp(line, redir->file))
-            ft_exit_heredoc(line, data, redir, fd);
-        ft_expand_line(&line, data);
+		line = readline("> ");
+		if (!line || !ft_strcmp(line, redir->file))
+			ft_exit_heredoc(line, data, redir, fd);
+		ft_expand_line(&line, data);
 		ft_putstr_fd(line, fd[1]);
 		write(fd[1], "\n", 1);
-        data->doc_line++;
+		data->doc_line++;
 		free(line);
 	}
 }

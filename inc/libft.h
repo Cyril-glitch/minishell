@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:56:38 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/02/10 14:04:47 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:11:47 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ size_t				ft_strlen(const char *s);
 size_t				ft_dtablen(void *s);
 void				ft_putstr(char *str);
 char				*ft_strcpy(char *dst, const char *src);
+int					ft_tablen(char **tab);
 
 char				*ft_strncpy(char *dst, const char *src, size_t dsize);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
@@ -93,6 +94,7 @@ void				ft_putnbr_fd(int n, int fd);
 //affichage des bases
 int					ft_atoi(const char *nptr);
 long				ft_atol(const char *nbr);
+long long			ft_atoll(const char *nbr);
 char				*ft_itoa(int n);
 char				*ft_dtoa(double d, int precision);
 void				ft_putnbr(int nbr);

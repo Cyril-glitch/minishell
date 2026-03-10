@@ -6,7 +6,7 @@
 /*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 20:46:59 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 12:41:58 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/10 13:50:55 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,15 @@ int	check_error(t_token_list *token_list)
 	while (current)
 	{
 		if (!check_error_pipe(current))
-        {
-            g_sig_status = 2;
+		{
+			g_sig_status = 2;
 			return (0);
-        }
+		}
 		if (!check_error_redir(current))
-        {
-            g_sig_status = 2;
+		{
+			g_sig_status = 2;
 			return (0);
-        }
+		}
 		current = current->next;
 	}
 	return (1);

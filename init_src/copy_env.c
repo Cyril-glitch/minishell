@@ -3,65 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:53 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/03/03 17:40:26 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/10 13:54:41 by mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void ft_my_env(t_env_list *env_list, t_data *data)
+void	ft_my_env(t_env_list *env_list, t_data *data)
 {
-    int i;
-    char **my_env;
-    t_env_list *tmp;
+	int			i;
+	char		**my_env;
+	t_env_list	*tmp;
 
-    i = 0;
-    tmp = env_list;
-    while(tmp)
-    {
-        tmp = tmp->next;
-        i++;
-    }
-    my_env = malloc(sizeof(char *) * (i + 1));
-    if (!my_env)
-        ft_shell_exit(data);
-    i = 0;
-    while (env_list)
-    {
-        my_env[i] = ft_strdup(env_list->line);
-        if (!my_env[i])
-            ft_shell_exit(data);
-        env_list = env_list->next;
-        i++;
-    }
-    my_env[i] = NULL;
-    data->my_env = my_env;
+	i = 0;
+	tmp = env_list;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	my_env = malloc(sizeof(char *) * (i + 1));
+	if (!my_env)
+		ft_shell_exit(data);
+	i = 0;
+	while (env_list)
+	{
+		my_env[i] = ft_strdup(env_list->line);
+		if (!my_env[i])
+			ft_shell_exit(data);
+		env_list = env_list->next;
+		i++;
+	}
+	my_env[i] = NULL;
+	data->my_env = my_env;
 }
 
-void ft_shlvl(t_env_list **env_list, t_data *data)
+void	ft_shlvl(t_env_list **env_list, t_data *data)
 {
-    int lvl;
-    char *tmp;
-    t_env_list *dup;
+	int			lvl;
+	char		*tmp;
+	t_env_list	*dup;
 
-    lvl = 0;
-    tmp = NULL;
-    dup = ft_key_hunter("SHLVL", *env_list, data);
-    if (dup)
-    {
-        lvl = ft_atoi(dup->content);
-        free(dup->line);
-        free(dup->content);
-        dup->content = ft_itoa((lvl + 1));
-        tmp = ft_strjoin(dup->key, "="); 
-        if (!tmp)
-            ft_shell_exit(data);
-        dup->line = ft_strjoin(tmp, dup->content);
-    }
-    free(tmp);
+	lvl = 0;
+	tmp = NULL;
+	dup = ft_key_hunter("SHLVL", *env_list, data);
+	if (dup)
+	{
+		lvl = ft_atoi(dup->content);
+		free(dup->line);
+		free(dup->content);
+		dup->content = ft_itoa((lvl + 1));
+		tmp = ft_strjoin(dup->key, "=");
+		if (!tmp)
+			ft_shell_exit(data);
+		dup->line = ft_strjoin(tmp, dup->content);
+	}
+	free(tmp);
 }
 
 static void	ft_envoid(t_env_list **env_list, t_data *data)
