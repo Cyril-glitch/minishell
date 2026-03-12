@@ -45,6 +45,8 @@ static int	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 
 	check = 0;
 	cur = env_list;
+	while (*path && !**path)
+    (*path)++;
 	if (!*path || !**path || ((ft_strcmp(*path, "~") == 0)))
 	{
 		while (cur)
@@ -73,6 +75,8 @@ static int	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 
 	check = 0;
 	cur = env_list;
+	while (*path && !**path)
+    (*path)++;
 	if (*path && ft_strcmp(*path, "-") == 0)
 	{
 		while (cur)

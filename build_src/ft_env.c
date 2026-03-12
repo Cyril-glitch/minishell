@@ -30,6 +30,8 @@ void	ft_env(char **args, t_env_list *env_list)
 	int	i;
 
 	i = 1;
+	while (args[i] && !*(args[i]))
+    i++;
 	if (args[i])
 	{
 		ft_putstr_fd("losmaquinos: env: `", 2);
