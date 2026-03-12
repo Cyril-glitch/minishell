@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 21:05:09 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 13:53:51 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/11 15:59:41 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_data	*ft_init_data(int ac, char **av, char **env)
 	(void)av;
 	g_sig_status = 0;
 	data = malloc(sizeof(t_data));
+	data->unset = 0;
+	data->envi = 0;
 	ft_add_termios(data);
 	ft_add_signal(data);
 	ft_add_env_list(data, env);

@@ -59,9 +59,6 @@ clean:
 	rm -rf $(OBJ_DIR)
 	make clean -C $(LIBDIR)
 
-val: all
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(NAME)
-
 fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBDIR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:53 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/03/10 13:54:41 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/11 16:00:07 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ t_env_list	*ft_env_list(char **env, t_data *data)
 	env_list = NULL;
 	tmp = NULL;
 	if (!env[i])
+	{
 		ft_envoid(&env_list, data);
+		data->envi = 1;
+	}
 	while (env[i])
 	{
 		tmp = ft_new_env(env[i]);

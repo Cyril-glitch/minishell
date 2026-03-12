@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:56:38 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/03/10 14:11:47 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/11 16:22:54 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 int					ft_countword(const char *s, char set);
 char				**ft_split(char const *s, char c);
+void				ft_sort(int size, char **tab);
 
 //manipulation de chaines avec pointeur de fonctions
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));

@@ -6,37 +6,11 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:28 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 15:15:39 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:54:51 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-static void	ft_sort(int size, char **tab)
-{
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = 0;
-	j = 0;
-	temp = 0;
-	while (i < size)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (ft_strcmp(tab[i], tab[j]) > 0)
-			{
-				temp = tab[i];
-				tab[i] = tab[j];
-				tab[j] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
 
 static char	**ft_tab_list(t_env_list *lst)
 {
@@ -103,18 +77,20 @@ static int	ft_valid_args(char *s)
 	i = 0;
 	if (!ft_isalpha(s[i]) && s[i] != '_')
 	{
-		ft_putstr_fd("losmaquinos: export: \" ", 2);
+		ft_putstr_fd("losmaquinos: export: `", 2);
 		write(2, &s[i], 1);
-		ft_putstr_fd(" \" : identifiant non valable\n", 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		g_sig_status = 1;
 		return (0);
 	}
 	while (s[i] && s[i] != '=')
 	{
 		if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?')
 		{
-			ft_putstr_fd("losmaquinos: export: \" ", 2);
+			ft_putstr_fd("losmaquinos: export: `", 2);
 			ft_putstr_fd(s, 2);
-			ft_putstr_fd(" \" : identifiant non valable\n", 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			g_sig_status = 1;
 			return (0);
 		}
 		i++;
@@ -122,30 +98,41 @@ static int	ft_valid_args(char *s)
 	return (1);
 }
 
-int	ft_export(char **args, t_env_list **env_list, t_data *data)
+static void	ft_add_export(char *args, t_env_list **env_list, t_data *data)
 {
-	int			i;
 	t_env_list	*tmp;
 	t_env_list	*dup;
+
+	if (!ft_valid_args(args))
+		return ;
+	tmp = ft_new_env(args);
+	if (!tmp)
+		ft_shell_exit(data);
+	dup = ft_key_hunter(args, *env_list, data);
+	if (dup)
+	{
+		if (ft_strcmp(dup->key, tmp->key) == 0 && tmp->content)
+		{
+			ft_del_env(dup, env_list);
+			ft_lstadd_back_env(env_list, tmp);
+		}
+		else
+			ft_clear_node_env(tmp);
+	}
+	else
+		ft_lstadd_back_env(env_list, tmp);
+	if (!ft_strcmp(args, "PATH"))
+		data->unset = 0;
+}
+
+int	ft_export(char **args, t_env_list **env_list, t_data *data)
+{
+	int	i;
 
 	i = 1;
 	if (!args[i])
 		return (ft_printlst_export(*env_list, data), 0);
 	while (args[i])
-	{
-		if (ft_valid_args(args[i]))
-		{
-			tmp = ft_new_env(args[i]);
-			dup = ft_key_hunter(args[i], *env_list, data);
-			if (!tmp)
-				ft_shell_exit(data);
-			if (dup && ft_strcmp(dup->key, tmp->key) == 0 && tmp->content)
-				ft_del_env(dup, env_list);
-			if ((dup && ft_strcmp(dup->key, tmp->key) == 0 && tmp->content) \
-			|| !dup)
-				ft_lstadd_back_env(env_list, tmp);
-		}
-		i++;
-	}
+		ft_add_export(args[i++], env_list, data);
 	return (1);
 }

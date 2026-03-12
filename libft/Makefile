@@ -75,7 +75,8 @@ SRC =  src/ft_atoi.c \
 	   src/ft_putdouble.c \
 	   src/ft_dtoa.c \
            src/ft_tablen.c \
-           src/ft_atoll.c
+           src/ft_atoll.c \
+           src/ft_sort_dtab.c
 
 OBJ = $(SRC:.c=.o)
 

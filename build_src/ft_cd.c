@@ -6,25 +6,11 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 14:40:10 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:15:53 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-static int	ft_check_home(t_env_list *env_list)
-{
-	t_env_list	*cur;
-
-	cur = env_list;
-	while (cur)
-	{
-		if (ft_strcmp(cur->key, "HOME") == 0)
-			return (1);
-		cur = cur->next;
-	}
-	return (0);
-}
 
 static void	ft_swap_pwd(char *old, char *new, t_env_list *env_list,
 		t_data *data)
@@ -52,13 +38,14 @@ static void	ft_swap_pwd(char *old, char *new, t_env_list *env_list,
 	}
 }
 
-static void	ft_back_home(t_env_list *env_list, char **path, t_data *data)
+static int	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 {
 	t_env_list	*cur;
+	int			check;
 
+	check = 0;
 	cur = env_list;
-	if (!*path || ((ft_strcmp(*path, "--") == 0) || ((ft_strcmp(*path,
-						"~") == 0))))
+	if (!*path || ((ft_strcmp(*path, "~") == 0)))
 	{
 		while (cur)
 		{
@@ -69,13 +56,17 @@ static void	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 				*path = ft_strdup(cur->content);
 				if (!*path)
 					ft_shell_exit(data);
+				check = 1;
 			}
 			cur = cur->next;
 		}
+		if (!check)
+			return (0);
 	}
+	return (1);
 }
 
-static void	ft_back_old(t_env_list *env_list, char **path, t_data *data)
+static int	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 {
 	t_env_list	*cur;
 	int			check;
@@ -92,13 +83,31 @@ static void	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 				*path = ft_strdup(cur->content);
 				if (!*path)
 					ft_shell_exit(data);
+				ft_putstr(*path);
+				write(1, "\n", 1);
 				check = 1;
 			}
 			cur = cur->next;
 		}
 		if (!check)
-			ft_putstr_fd("cd: OLDPWD not set\n", 2);
+			return (0);
 	}
+	return (1);
+}
+
+static int	ft_old_home(t_env_list *env_list, char **path, t_data *data)
+{
+	if (!ft_back_home(env_list, path, data))
+	{
+		ft_putstr_fd("cd: HOME not set\n", 2);
+		return (0);
+	}
+	if (!ft_back_old(env_list, path, data))
+	{
+		ft_putstr_fd("cd: OLDPWD not set\n", 2);
+		return (0);
+	}
+	return (1);
 }
 
 int	ft_cd(char **path, t_env_list *env_list, t_data *data)
@@ -106,17 +115,19 @@ int	ft_cd(char **path, t_env_list *env_list, t_data *data)
 	char	*cur_path;
 
 	cur_path = NULL;
-	if (!ft_check_home(env_list))
-		return (ft_putstr_fd("cd: HOME not set\n", 2), (-1));
 	cur_path = getcwd(cur_path, PATH_MAX);
 	if (!cur_path)
 		perror("getcwd");
-	ft_back_home(env_list, path, data);
-	ft_back_old(env_list, path, data);
+	if (!ft_old_home(env_list, path, data))
+	{
+		g_sig_status = 1;
+		return (-1);
+	}
 	if (chdir(*path) == -1)
 	{
 		if (cur_path)
 			free(cur_path);
+		g_sig_status = 1;
 		return (perror("chdir"), (-1));
 	}
 	ft_swap_pwd(cur_path, *path, env_list, data);

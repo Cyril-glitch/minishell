@@ -1,3 +1,5 @@
+*This project has been created as part of the 42 curriculum by cycolonn, mtagand.*
+
 # 🐚 Minishell - Technical Documentation
 
 ## 1. Description

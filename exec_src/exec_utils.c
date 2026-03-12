@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:15:36 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 14:38:58 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/11 16:03:56 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	ft_tabclear(char **tab)
 	return (0);
 }
 
-char	**parse_path(char **env)
+char	**parse_path(char **env, t_data *data)
 {
 	char	**path_tab;
 	char	*path_str;
 	int		i;
 
 	i = 0;
-	if (!env[0])
+	if (data->envi && !data->unset)
 		return (ft_split("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin", ':'));
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;

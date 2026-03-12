@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:00 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/10 15:46:00 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/11 16:04:38 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ typedef struct s_data
 	char				**my_env;
 	int					doc_line;
 	char				quote;
+	int					unset;
+	int					envi;
 }						t_data;
 
 // INIT
@@ -294,7 +296,7 @@ char					*ft_prompt_pwd(t_env_list *env_list, t_data *data);
 void					exec(t_cmd *cmd, char **env, t_data *data);
 void					redirection(t_cmd *cmd, t_data *data);
 int						ft_tabclear(char **tab);
-char					**parse_path(char **env);
+char					**parse_path(char **env, t_data *data);
 char					*find_way_path(char **path_tab, char *cmd,
 							t_data *data);
 void					execut(t_data *data, char **env);

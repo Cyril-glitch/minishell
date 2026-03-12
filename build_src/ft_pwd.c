@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:35 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 15:16:19 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:10:27 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ void	ft_pwd(t_env_list *env_list)
 	if (!cur_path)
 	{
 		perror("getcwd");
+		g_sig_status = 1;
 		return ;
 	}
-	printf("%s\n", cur_path);
+	ft_putstr(cur_path);
+	ft_putstr("\n");
 	free(cur_path);
 }

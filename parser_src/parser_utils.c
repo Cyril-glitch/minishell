@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 18:33:55 by mtagand           #+#    #+#             */
-/*   Updated: 2026/03/09 14:12:16 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/11 12:59:44 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_build(t_cmd **cmd)
 		return ((*cmd)->build = EXIT, 1);
 	return ((*cmd)->build = DFL, 0);
 }
-
+/*
 void	ft_display_list_cmd(t_cmd_list *lst)
 {
 	t_cmd	*current;
@@ -69,6 +69,7 @@ void	ft_display_list_redir(t_redir_list *lst)
 	printf("NULL\n");
 	printf("size = %d\n", lst->size);
 }
+*/
 
 int	is_redir(t_token *current)
 {

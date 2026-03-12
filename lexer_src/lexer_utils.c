@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mathis <mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:41:01 by mathis            #+#    #+#             */
-/*   Updated: 2026/02/25 21:07:58 by mathis           ###   ########.fr       */
+/*   Updated: 2026/03/11 12:54:50 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	swipe_space(char *str, int *i)
 {
-	while (str[*i] == ' ')
+	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
 }
 
@@ -24,7 +24,7 @@ int	is_separator(char c)
 		return (1);
 	return (0);
 }
-
+/*
 void	ft_display_list_token(t_token_list *lst)
 {
 	t_token	*current;
@@ -45,3 +45,4 @@ void	ft_display_list_token(t_token_list *lst)
 	printf("NULL\n");
 	printf("size = %d\n", lst->size);
 }
+	*/

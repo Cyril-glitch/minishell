@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:12:55 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 15:47:35 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:15:20 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,27 @@ static int	ft_q_status(char quote, char c)
 	return (quote);
 }
 
+static int	ft_single(t_token *new, char *str, t_data *data)
+{
+	if (!str)
+		return (0);
+	if (!ft_strcmp(str, "\'"))
+	{
+		new->content = ft_strdup("\'");
+		if (!new->content)
+			ft_shell_exit(data);
+		return (1);
+	}
+	if (!ft_strcmp(str, "\""))
+	{
+		new->content = ft_strdup("\"");
+		if (!new->content)
+			ft_shell_exit(data);
+		return (1);
+	}
+	return (0);
+}
+
 static void	ft_splitoken(t_token *cur, char *str, t_token_list *newlst,
 		t_data *data)
 {
@@ -45,12 +66,13 @@ static void	ft_splitoken(t_token *cur, char *str, t_token_list *newlst,
 	new = ft_db_lstnew_token();
 	if (!new)
 		ft_shell_exit(data);
-	while ((str[i] && str[i] != ' ') || data->quote)
+	while (str[i] && (str[i] != ' ' || data->quote))
 		data->quote = ft_q_status(data->quote, str[i++]);
 	tmp = ft_substr(str, 0, i);
 	if (!tmp)
 		ft_shell_exit(data);
-	new->content = ft_delquote(tmp);
+	if (!ft_single(new, str, data))
+		new->content = ft_delquote(tmp);
 	new->type = cur->type;
 	if (!new)
 		ft_shell_exit(data);

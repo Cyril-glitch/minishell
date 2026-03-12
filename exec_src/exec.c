@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:07:41 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/10 17:43:54 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/11 16:04:11 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 
 	if (cmd->is_build == 0)
 	{
-		path_tab = parse_path(env);
+		path_tab = parse_path(env, data);
 		cmd->way = find_way_path(path_tab, cmd->args[0], data);
 		if (path_tab)
 			ft_tabclear(path_tab);

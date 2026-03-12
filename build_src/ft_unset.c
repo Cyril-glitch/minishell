@@ -6,7 +6,7 @@
 /*   By: mtagand <mtagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:42 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/03 17:38:26 by mtagand          ###   ########.fr       */
+/*   Updated: 2026/03/11 15:57:51 by mtagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	ft_unset(char **args, t_env_list **env_list, t_data *data)
 	while (args[i])
 	{
 		tmp = ft_key_hunter(args[i], *env_list, data);
+		if (!ft_strcmp(args[i], "PATH"))
+			data->unset = 1;
 		if (tmp)
 			ft_del_env(tmp, env_list);
 		i++;
