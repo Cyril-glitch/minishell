@@ -45,7 +45,7 @@ static int	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 
 	check = 0;
 	cur = env_list;
-	if (!*path || ((ft_strcmp(*path, "~") == 0)))
+	if (!*path || !**path || ((ft_strcmp(*path, "~") == 0)))
 	{
 		while (cur)
 		{
@@ -120,6 +120,8 @@ int	ft_cd(char **path, t_env_list *env_list, t_data *data)
 		perror("getcwd");
 	if (!ft_old_home(env_list, path, data))
 	{
+		if (cur_path)
+			free(cur_path);
 		g_sig_status = 1;
 		return (-1);
 	}
