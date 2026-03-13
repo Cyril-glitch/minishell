@@ -51,11 +51,9 @@ void	ft_echo(char **args)
 	int	newline;
 
 	i = 1;
-  while (args[i] && !*(args[i]))
-    i++;
 	i += ft_option(args);
 	newline = (i < 2);
- 	while (args[i])
+	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
 		i++;

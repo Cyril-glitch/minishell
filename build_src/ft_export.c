@@ -130,9 +130,7 @@ int	ft_export(char **args, t_env_list **env_list, t_data *data)
 	int	i;
 
 	i = 1;
-	while (args[i] && !*(args[i]))
-    i++;
-  if (!args[i])
+	if (!args[i])
 		return (ft_printlst_export(*env_list, data), 0);
 	while (args[i])
 		ft_add_export(args[i++], env_list, data);

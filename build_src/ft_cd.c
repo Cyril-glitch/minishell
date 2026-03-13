@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 09:12:13 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/12 17:15:53 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/13 11:31:19 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static int	ft_back_home(t_env_list *env_list, char **path, t_data *data)
 
 	check = 0;
 	cur = env_list;
-	while (*path && !**path)
-    (*path)++;
 	if (!*path || !**path || ((ft_strcmp(*path, "~") == 0)))
 	{
 		while (cur)
@@ -75,8 +73,6 @@ static int	ft_back_old(t_env_list *env_list, char **path, t_data *data)
 
 	check = 0;
 	cur = env_list;
-	while (*path && !**path)
-    (*path)++;
 	if (*path && ft_strcmp(*path, "-") == 0)
 	{
 		while (cur)
