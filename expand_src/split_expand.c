@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:12:55 by mathis            #+#    #+#             */
-/*   Updated: 2026/03/12 12:15:20 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/03/13 11:34:22 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,11 @@ void	ft_split_expand(t_token_list *lst, t_data *data)
 		ft_shell_exit(data);
 	while (current)
 	{
-		data->quote = 0;
-		ft_splitoken(current, current->content, newlst, data);
+		if (*current->content)
+		{
+			data->quote = 0;
+			ft_splitoken(current, current->content, newlst, data);
+		}
 		current = current->next;
 	}
 	ft_db_lstclear_token(data->token_list, free);
