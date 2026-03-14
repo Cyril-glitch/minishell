@@ -5,6 +5,10 @@
 ## 1. Description
 **Minishell** is a minimalist implementation of a Unix shell, designed to replicate the core behavior of **Bash**. This project focuses on the fundamental interaction between the user and the kernel, specifically handling the lifecycle of processes and the management of file descriptors.
 
+<p align="center">
+  <img src="./assets/demo.gif" alt="Fractol Demo" height="700" width="900">
+</p>
+
 ---
 
 <br />
