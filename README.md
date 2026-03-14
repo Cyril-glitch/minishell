@@ -6,8 +6,7 @@
 **Minishell** is a minimalist implementation of a Unix shell, designed to replicate the core behavior of **Bash**. This project focuses on the fundamental interaction between the user and the kernel, specifically handling the lifecycle of processes and the management of file descriptors.
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/98e580b4-7d46-4b68-bccc-79ee24fe24ac" width="700" autoplay loop muted playsinline>
-  </video>
+  <video src="https://github.com/user-attachments/assets/98e580b4-7d46-4b68-bccc-79ee24fe24ac" width="700" autoplay loop muted playsinline></video>
 </p>
 
 ---
@@ -84,7 +83,7 @@ To compile and start the shell, use the following commands:
 
 ```bash
 # Clone the repo
-https://github.com/Cyril-glitch/minishell.git
+git clone https://github.com/Cyril-glitch/minishell.git
 
 # Compile the project
 cd minishell
