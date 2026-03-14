@@ -6,7 +6,9 @@
 **Minishell** is a minimalist implementation of a Unix shell, designed to replicate the core behavior of **Bash**. This project focuses on the fundamental interaction between the user and the kernel, specifically handling the lifecycle of processes and the management of file descriptors.
 
 <p align="center">
-  <video src="./assets/demo.mp4" width="700" autoplay loop muted playsinline></video>
+  <video src="./assets/demo.mp4" width="700" autoplay loop muted playsinline>
+    Votre navigateur ne supporte pas la lecture de vidéos.
+  </video>
 </p>
 
 ---
