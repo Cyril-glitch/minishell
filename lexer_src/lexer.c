@@ -18,7 +18,7 @@ int	verif_quote(char *str)
 	char	quote;
 
 	i = 0;
-	quote = 'q';
+	quote = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
