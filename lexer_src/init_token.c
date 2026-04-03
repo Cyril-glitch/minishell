@@ -18,7 +18,7 @@ void	init_word(t_data *data, t_token *token, int *i)
 	char	quote;
 
 	j = 0;
-	quote = 'c';
+	quote = 0;
 	nb_of_malloc(data->line, i, &j, quote);
 	token->content = malloc(sizeof(char) * (j + 1));
 	if (!token->content)
